@@ -1,30 +1,35 @@
 from app.services.video_service import VideoService
 from app.services.transcription_service import TranscriptionService
+from app.services.subtitle_service import SubtitleService
+import os
 
 def run_translator():
-    video_tool = VideoService()
-    ai_tool = TranscriptionService()
-    url = "https://youtu.be/CkLiND6qa34?si=GgYXGMWb0eBp1JMg"
-    print("\n---Downloading audio from YouTube---")
-    video_res = video_tool.download_audio(url)
-    if video_res.get("status") == "success":
-        audio_path = video_res.get("file_path")
-        
-        print("\n---Transcription with the help of Whisper---")
-        transcript_res = ai_tool.transcribe(audio_path)
+    video_service = VideoService()
+    transcriber = TranscriptionService()
+    subtitle_service = SubtitleService()
     
-        if transcript_res["success"]:
-            print("\nThe project work")
-            print("-" * 30)
-            print(f"languag: {transcript_res['language']}") 
-            print(f"text: {transcript_res['text'][:300]}")  
-            print("-" * 30)
-        else:
-            print(f"Transcription error: {transcript_res.get('error')}")
-    else:
-        print(f"Transcription error: {video_res.get('message')}")        
-        
-        
+    link = input("Pleas enter a link")
+    download_res = video_service.download_audio(link)
+    
+    if download_res["status"] != "success":
+        print(f"The download fail: {download_res.get('message')}")
+        return
+    
+    audio_path = download_res["file_path"]
+    transcription_result = transcriber.transcribe(audio_path)
+    
+    if not transcription_result["success"]:
+        print(f"Transcription failed: {transcription_result.get('error')}")
+        return
+    
+    filename = os.path.basename(audio_path)
+    video_id = os.path.splitext(filename)[0]
+    
+    srt_path = f"storage/subtitles/{video_id}.srt"
+    json_path = f"storage/subtitles/{video_id}.json"
+    subtitle_service.generate_srt(transcription_result["segments"], srt_path)
+    subtitle_service.save_transcript_json(transcription_result, json_path)
+    print(f"Success! Subtitles saved to: {srt_path}")
         
         
 if __name__ == "__main__":
