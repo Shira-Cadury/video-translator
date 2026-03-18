@@ -29,15 +29,27 @@ def run_translator():
             return
         audio_path = download_res["file_path"]
     
-    print("Transcribing (this might take a few minutes)")
+    filename = os.path.basename(audio_path)
+    video_id = os.path.splitext(filename)[0]
+    
+    summary_path = f"storage/subtitles/{video_id}_summary.txt"
+    srt_heb_path = f"storage/subtitles/{video_id}_he.srt"
+
+    if os.path.exists(summary_path):
+        print(f"\nCache Hit! Found existing summary for {video_id}.")
+        with open(summary_path, "r", encoding="utf-8") as f:
+            existing_summary = f.read()
+            print("\n=== VIDEO SUMMARY (FROM CACHE) ===")
+            print(existing_summary)
+            print("====================")
+        return 
+
+    print("Transcribing (this might take a few minutes)...")
     transcription_result = transcriber.transcribe(audio_path)
     
     if not transcription_result["success"]:
         print(f"Transcription failed: {transcription_result.get('error')}")
         return
-    
-    filename = os.path.basename(audio_path)
-    video_id = os.path.splitext(filename)[0]
     
     srt_path = f"storage/subtitles/{video_id}.srt"
     json_path = f"storage/subtitles/{video_id}.json"
@@ -49,16 +61,13 @@ def run_translator():
     print("Translating to Hebrew...")
     heb_segments = translator.translate_segments(transcription_result["segments"])
     
-    srt_heb_path = f"storage/subtitles/{video_id}_he.srt"
-    
     subtitle_service.generate_srt(heb_segments, srt_heb_path)
     print(f"Success! Hebrew subtitles saved to: {srt_heb_path}")
     
-    print("\nGenerating AI Summary in Hebrew")
+    print("\nGenerating AI Summary in Hebrew...")
     hebrew_text_for_summary = summary_service.build_text_from_segments(heb_segments)
     video_summary = summary_service.generate_summary(hebrew_text_for_summary, sentences_count=3)
     
-    summary_path = f"storage/subtitles/{video_id}_summary.txt"
     with open(summary_path, "w", encoding="utf-8") as f:
         f.write(video_summary)
         
