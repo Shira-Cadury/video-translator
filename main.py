@@ -5,6 +5,16 @@ from app.services.translation_service import TranslationService
 from app.services.summary_service import SummaryService
 import os
 import time
+import re
+
+def get_video_id(user_input):
+    if os.path.exists(user_input):
+        return os.path.splitext(os.path.basename(user_input))[0]
+    
+    video_id_match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", user_input)
+    if video_id_match:
+        return video_id_match.group(1)
+    return None
 
 def run_translator():
     video_service = VideoService()
@@ -17,32 +27,33 @@ def run_translator():
     
     start_total = time.time()
     
+    video_id = get_video_id(user_input)
+    if not video_id:
+        print("Could not determine video ID.")
+        return
+
+    summary_path = f"storage/subtitles/{video_id}_summary.txt"
+    srt_heb_path = f"storage/subtitles/{video_id}_he.srt"
+
+    if os.path.exists(summary_path):
+        print(f"\n✨ Cache Hit! Found existing summary for {video_id}.")
+        with open(summary_path, "r", encoding="utf-8") as f:
+            existing_summary = f.read()
+            print("\n=== VIDEO SUMMARY (FROM CACHE) ===")
+            print(existing_summary)
+            print("====================")
+        return
+
     if os.path.exists(user_input):
         audio_path = user_input
         print(f"Using local file: {audio_path}")
     else:
         print("Link detected, starting download...")
         download_res = video_service.download_audio(user_input)
-        
         if download_res["status"] != "success":
             print(f"The download failed: {download_res.get('message')}")
             return
         audio_path = download_res["file_path"]
-    
-    filename = os.path.basename(audio_path)
-    video_id = os.path.splitext(filename)[0]
-    
-    summary_path = f"storage/subtitles/{video_id}_summary.txt"
-    srt_heb_path = f"storage/subtitles/{video_id}_he.srt"
-
-    if os.path.exists(summary_path):
-        print(f"\nCache Hit! Found existing summary for {video_id}.")
-        with open(summary_path, "r", encoding="utf-8") as f:
-            existing_summary = f.read()
-            print("\n=== VIDEO SUMMARY (FROM CACHE) ===")
-            print(existing_summary)
-            print("====================")
-        return 
 
     print("Transcribing (this might take a few minutes)...")
     transcription_result = transcriber.transcribe(audio_path)

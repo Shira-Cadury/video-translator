@@ -6,9 +6,9 @@ class TranscriptionService:
 
     def __init__(self):
         if TranscriptionService.model is None:
-            print("Loading Whisper model ('base')...")
+            print("Loading Whisper model ('small')...")
             try:
-                TranscriptionService.model = whisper.load_model("base")
+                TranscriptionService.model = whisper.load_model("small")
                 print("Model loaded successfully.")
             except Exception as e:
                 print(f"Failed to load model: {e}")
