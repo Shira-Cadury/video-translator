@@ -10,6 +10,7 @@ from app.services.summary_service import SummaryService
 import os
 import re
 import time
+import json
 
 video_service = VideoService()
 transcription_service = TranscriptionService()
@@ -27,12 +28,60 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-if not os.path.exists("storage"):
-    os.makedirs("storage")
+os.makedirs("storage", exist_ok=True)
 app.mount("/storage", StaticFiles(directory="storage"), name="storage")
 
 class VideoRequest(BaseModel):
     url: str
+
+
+def extract_video_id(url: str):
+    video_id_match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", url)
+    if not video_id_match:
+        raise Exception("Invalid YouTube URL")
+    return video_id_match.group(1)
+
+def get_video_paths(video_id: str):
+    return {
+        "json": f"storage/subtitles/{video_id}.json",
+        "trans_he": f"storage/subtitles/{video_id}_he.json",
+        "summary": f"storage/subtitles/{video_id}_summary_he.txt",
+        "srt_en": f"storage/subtitles/{video_id}.srt",
+        "srt_he": f"storage/subtitles/{video_id}_he.srt",
+        "vtt_he": f"storage/subtitles/{video_id}_he.vtt"
+    }
+
+def handle_audio(url: str):
+    start = time.time()
+    res = video_service.download_audio(url) 
+    if res["status"] != "success":
+        raise Exception(f"Audio download failed: {res.get('message')}")
+    print(f"[TIME] Audio: {time.time()-start:.2f}s")
+    return res["file_path"]
+
+def handle_transcription(audio_path: str, json_path: str):
+    start = time.time()
+    res = transcription_service.transcribe(audio_path, json_path)
+    if not res["success"]:
+        raise Exception("Transcription failed")
+    
+    source = "CACHE" if res.get("from_cache") else "WHISPER"
+    print(f"[TIME] Transcription ({source}): {time.time()-start:.2f}s")
+    return res["segments"]
+
+def handle_translation(segments, trans_he_path: str):
+    start = time.time()
+    heb_segments = translation_service.translate_segments(segments, trans_he_path)
+    print(f"[TIME] Translation: {time.time()-start:.2f}s")
+    return heb_segments
+
+def handle_summary(heb_segments, summary_path: str):
+    start = time.time()
+    raw_text = summary_service.build_text(heb_segments)
+    video_summary = summary_service.summarize(raw_text, summary_path)
+    print(f"[TIME] Summary: {time.time()-start:.2f}s")
+    return video_summary
+
 
 @app.get("/")
 def root():
@@ -43,99 +92,49 @@ def process_video(request: VideoRequest):
     try:
         start_time = time.time()
         url = request.url
-        print(f"\nReceived new request for: {url}")
-    
-        video_id_match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", url)
-        if not video_id_match:
-            return {"status": "error", "message": "Invalid YouTube URL"}
-    
-        video_id = video_id_match.group(1)
         
-        summary_he_path = f"storage/subtitles/{video_id}_summary_he.txt"
-        srt_en_path = f"storage/subtitles/{video_id}.srt"
-        srt_he_path = f"storage/subtitles/{video_id}_he.srt"
-        vtt_he_path = f"storage/subtitles/{video_id}_he.vtt"
-    
-        video_res = video_service.download_video(url)
-        if video_res["status"] != "success":
-            return {"status": "error", "message": f"Video download fail: {video_res.get('message')}"}
-    
-        video_path = video_res["file_path"]
-    
-        if os.path.exists(summary_he_path):
-            print(f"[Cache Hit] Found existing work for {video_id}")
-            
-            if not os.path.exists(vtt_he_path) and os.path.exists(srt_he_path):
-                subtitle_service.convert_srt_to_vtt(srt_he_path, vtt_he_path)
-        
-            with open(summary_he_path, "r", encoding="utf-8") as f:
-                cached_summary = f.read()
-            
-            return {
-                "status": "success",
-                "source": "cache",
-                "video_id": video_id,
-                "summary": cached_summary,
-                "video": video_path,
-                "subtitles_vtt": vtt_he_path,
-                "processing_time": "0 seconds (cached)",
-                "files": {
-                    "english_srt": srt_en_path,
-                    "hebrew_srt": srt_he_path,
-                    "hebrew_vtt": vtt_he_path
+        video_id = extract_video_id(url)
+        paths = get_video_paths(video_id)
+
+        if os.path.exists(paths["summary"]) and os.path.exists(paths["vtt_he"]):
+            print(f"[API CACHE] Fast-track hit for {video_id}")
+            video_res = video_service.download_video(url)
+            with open(paths["summary"], "r", encoding="utf-8") as f:
+                return {
+                    "status": "success",
+                    "source": "cache",
+                    "summary": f.read(),
+                    "video": video_res['file_path'],
+                    "subtitles_vtt": paths['vtt_he'],
+                    "processing_time": "0s (cached)"
                 }
-            }
-        
-        print(f"Starting full process for {video_id}")
 
-        download_res = video_service.download_audio(url)
-        if download_res["status"] != "success":
-            return {"status": "error", "message": f"Download failed: {download_res.get('message')}"}
-        
-        audio_path = download_res["file_path"]
+        print(f"[START] Full process for {video_id}")
 
-        trans_res = transcription_service.transcribe(audio_path)
-        if not trans_res["success"]:
-            return {"status": "error", "message": "Transcription engine failed"}
+        video_res = video_service.download_video(url)
+        audio_path = handle_audio(url)
         
-        segments = trans_res["segments"]
-        json_path = f"storage/subtitles/{video_id}.json"
-        
-        subtitle_service.generate_srt(segments, srt_en_path)
-        subtitle_service.save_transcript_json(trans_res, json_path)
+        segments = handle_transcription(audio_path, paths["json"])
+        subtitle_service.generate_srt(segments, paths["srt_en"])
+        subtitle_service.save_transcript_json(segments, paths["json"]) 
 
-        print("Translating to Hebrew")
-        heb_segments = translation_service.translate_segments(segments)
-        subtitle_service.generate_srt(heb_segments, srt_he_path)
-        
-        subtitle_service.convert_srt_to_vtt(srt_he_path, vtt_he_path)
+        heb_segments = handle_translation(segments, paths["trans_he"])
+        subtitle_service.generate_srt(heb_segments, paths["srt_he"]) 
 
-        print("Generating summary")
-        hebrew_text = summary_service.build_text_from_segments(heb_segments)
-        video_summary = summary_service.generate_summary(hebrew_text, sentences_count=3)
-
-        with open(summary_he_path, "w", encoding="utf-8") as f:
-            f.write(video_summary)
+        video_summary = handle_summary(heb_segments, paths["summary"])
 
         total_time = round(time.time() - start_time, 2)
-        print(f"Finished! Total time: {total_time}s")
+        print(f"[FINISHED] Total: {total_time}s")
 
         return {
             "status": "success",
-            "source": "newly_processed",
-            "video_id": video_id,
-            "video": video_path,
-            "subtitles_vtt": vtt_he_path,
+            "source": "processed",
             "summary": video_summary,
-            "processing_time": f"{total_time} seconds",
-            "files": {
-                "english_srt": srt_en_path,
-                "hebrew_srt": srt_he_path,
-                "hebrew_vtt": vtt_he_path,
-                "transcript_json": json_path
-            }
+            "video": video_res['file_path'],
+            "subtitles_vtt": paths['vtt_he'],
+            "processing_time": f"{total_time}s"
         }
-        
+
     except Exception as e:
-        print(f"Fatal error: {str(e)}")
+        print(f"[ERROR] {str(e)}")
         return {"status": "error", "message": str(e)}
