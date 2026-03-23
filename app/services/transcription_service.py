@@ -11,9 +11,9 @@ class TranscriptionService:
 
     def load_model(self):
         if TranscriptionService._model is None:
-            print("Loading Whisper model ('base')...")
+            print("Loading Whisper model ('large')...")
             try:
-                TranscriptionService._model = whisper.load_model("base")
+                TranscriptionService._model = whisper.load_model("large")
                 print("Model loaded.")
             except Exception as e:
                 print(f"Failed to load model: {e}")
@@ -38,7 +38,7 @@ class TranscriptionService:
         start = time.time()
 
         try:
-            result = self.model.transcribe(audio_path)
+            result = self.model.transcribe(audio_path, fp16 =False, language="en")
 
             if json_path:
                 self._save_to_cache(result, json_path)

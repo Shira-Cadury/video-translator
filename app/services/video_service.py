@@ -116,3 +116,10 @@ class VideoService:
                 "status": "error",
                 "message": str(e)
             }
+            
+            
+    def get_video_duration(self, url):
+        import yt_dlp
+        with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
+            info = ydl.extract_info(url, download=False)
+            return info.get('duration', 0)        
