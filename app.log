@@ -2,3 +2,27 @@
 2026-03-22 12:30:10,151 | ERROR | [ERROR] 'VideoService' object has no attribute 'ydl'
 2026-03-22 12:43:37,412 | INFO | [START] Full process for skso_fkQcg0
 2026-03-22 12:55:51,222 | INFO | [FINISHED] Total: 737.86s
+2026-03-23 12:16:25,436 | INFO | [f7910d99] 🚀 Request received: https://youtu.be/6YW7Zu9KO98?si=wR0vR38GbCGqopTG | Lang: he
+2026-03-23 12:16:29,164 | INFO | [f7910d99] Video duration: 212s
+2026-03-23 12:16:29,165 | INFO | [f7910d99] [START] Full process for 6YW7Zu9KO98
+2026-03-23 12:19:16,179 | INFO | [f7910d99] Finished in 170.73s
+2026-03-23 12:48:47,817 | INFO | [012bb641] 🚀 Request received: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp | Lang: he
+2026-03-23 12:48:50,837 | INFO | [012bb641] Video duration: 203s
+2026-03-23 12:48:50,837 | INFO | [012bb641] [START] Full process for ra0FlN5NBG4
+2026-03-23 12:59:41,271 | INFO | [API] Translating segments via Google Translator...
+2026-03-23 13:00:55,033 | INFO | [SAVED] Translation cache created: storage/subtitles/ra0FlN5NBG4_he.json
+2026-03-23 13:00:55,052 | INFO | [012bb641] Finished in 727.23s
+2026-03-23 13:16:09,002 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-23 13:16:09,020 | INFO | [CLEANUP] Deleted 5 old files from storage/video
+2026-03-23 13:16:09,033 | INFO | [CLEANUP] Deleted 5 old files from storage/audio
+2026-03-23 13:16:09,069 | INFO | [CLEANUP] Deleted 26 old files from storage/subtitles
+2026-03-23 13:20:31,002 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-23 13:23:31,626 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-23 13:23:31,635 | INFO | [CLEANUP] Deleted 1 old files from storage/video
+2026-03-23 13:23:31,639 | INFO | [CLEANUP] Deleted 1 old files from storage/audio
+2026-03-23 13:23:31,654 | INFO | [CLEANUP] Deleted 7 old files from storage/subtitles
+2026-03-23 13:37:46,877 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-23 13:37:58,734 | INFO | [f234d50f] Request received: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp | Lang: he
+2026-03-23 13:38:02,786 | INFO | [33aff658] Request received: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp | Lang: he
+2026-03-23 13:38:06,065 | INFO | [f234d50f] Super Fast Cache Hit! No network calls needed.
+2026-03-23 13:38:06,069 | INFO | [33aff658] Super Fast Cache Hit! No network calls needed.

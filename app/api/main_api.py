@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles 
 from app.services.video_service import VideoService
@@ -44,6 +44,25 @@ app.mount("/storage", StaticFiles(directory="storage"), name="storage")
 
 class VideoRequest(BaseModel):
     url: str
+    generate_summary: bool = True
+    summary_sentences: int = Field(default=3, ge=1, le=10)
+    target_language: str = "he" 
+    
+def cleanup_old_files(folder_path, max_age_hours=24):
+    if not os.path.exists(folder_path):
+        return
+    
+    now = time.time()
+    count = 0
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        if os.path.isfile(file_path):
+            file_age = now - os.path.getmtime(file_path)
+            if file_age > (max_age_hours * 3600):
+                os.remove(file_path)
+                count += 1
+    if count > 0:
+        logger.info(f"[CLEANUP] Deleted {count} old files from {folder_path}")                
 
 def extract_video_id(url: str):
     video_id_match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", url)
@@ -51,90 +70,108 @@ def extract_video_id(url: str):
         raise HTTPException(status_code=400, detail="Invalid YouTube URL format")
     return video_id_match.group(1)
 
-def get_video_paths(video_id: str):
+def get_video_paths(video_id: str, lang: str):
     return {
         "json": f"storage/subtitles/{video_id}.json",
-        "trans_he": f"storage/subtitles/{video_id}_he.json",
-        "summary": f"storage/subtitles/{video_id}_summary_he.txt",
+        "trans": f"storage/subtitles/{video_id}_{lang}.json",
+        "summary": f"storage/subtitles/{video_id}_summary_{lang}.txt",
         "srt_en": f"storage/subtitles/{video_id}.srt",
-        "srt_he": f"storage/subtitles/{video_id}_he.srt",
-        "vtt_he": f"storage/subtitles/{video_id}_he.vtt"
+        "srt_lang": f"storage/subtitles/{video_id}_{lang}.srt",
+        "vtt_lang": f"storage/subtitles/{video_id}_{lang}.vtt"
     }
-
-@app.get("/")
-def root():
-    return {"message": "Video Translator API is running"}
-
-@app.get("/health")
-def health_check():
-    return {"status": "healthy", "version": "1.0.0"}
-
+    
+@app.on_event("startup")
+async def startup_event():
+    logger.info("--- Server starting up... Running Cleanup ---")
+    cleanup_old_files("storage/video")
+    cleanup_old_files("storage/audio")
+    cleanup_old_files("storage/subtitles")
+    
+    
+@app.get("/files")
+def list_files():
+    return{
+        "videos": os.listdir("storage/video") if os.path.exists("storage/video") else [],
+        "audio": os.listdir("storage/audio") if os.path.exists("storage/audio") else [],
+        "subtitles": os.listdir("storage/subtitles") if os.path.exists("storage/subtitles") else []
+    }
+    
+    
 @app.post("/process-video")
 def process_video(request: VideoRequest):
     request_id = str(uuid.uuid4())[:8]
     try:
         start_time = time.time()
         url = request.url
+        lang = request.target_language 
         
-        logger.info(f"[{request_id}] Started processing: {url}")
+        logger.info(f"[{request_id}] Request received: {url} | Lang: {lang}")
         
         video_id = extract_video_id(url)
-        paths = get_video_paths(video_id)
+        paths = get_video_paths(video_id, lang=lang)
         
-        MAX_DURATION = 1200 
         try:
             duration = video_service.get_video_duration(url)
-            if duration > MAX_DURATION:
-                logger.warning(f"[{request_id}] Video too long: {duration}s")
-                raise HTTPException(status_code=400, detail="Video is too long (max 20 minutes)")
-        except HTTPException:
-            raise
+            if duration > 1200:
+                logger.warning(f"[{request_id}] Long video: {duration}s. Expect delay.")
         except Exception as e:
-            logger.warning(f"[{request_id}] Could not check duration: {e}")
+            logger.warning(f"[{request_id}] Duration check skipped: {e}")
 
-        if os.path.exists(paths["summary"]) and os.path.exists(paths["vtt_he"]):
-            logger.info(f"[{request_id}] [CACHE] Fast-track hit for {video_id}")
-            video_res = video_service.download_video(url)
-            with open(paths["summary"], "r", encoding="utf-8") as f:
+        video_file_path = f"storage/video/{video_id}.mp4"
+        
+        if os.path.exists(paths["trans"]) and os.path.exists(video_file_path):
+            if not request.generate_summary or os.path.exists(paths["summary"]):
+                logger.info(f"[{request_id}] Super Fast Cache Hit! No network calls needed.")
+                
+                summary_text = None
+                if request.generate_summary and os.path.exists(paths["summary"]):
+                    with open(paths["summary"], "r", encoding="utf-8") as f:
+                        summary_text = f.read()
+                
                 return {
-                    "status": "success",
-                    "request_id": request_id,
-                    "source": "cache",
-                    "summary": f.read(),
-                    "video": video_res['file_path'],
-                    "subtitles_vtt": paths['vtt_he'],
-                    "processing_time": "0s (cached)"
+                    "status": "success", "request_id": request_id, "video_id": video_id,
+                    "source": "cache", "language": lang, "summary": summary_text,
+                    "video": video_file_path, "processing_time": "0s (cached)"
                 }
 
         logger.info(f"[{request_id}] [START] Full process for {video_id}")
-
+        
         video_res = video_service.download_video(url)
         
+        MAX_SIZE_MB = 500
+        actual_size = os.path.getsize(video_res['file_path']) / (1024 * 1024)
+        if actual_size > MAX_SIZE_MB:
+            os.remove(video_res['file_path']) 
+            logger.error(f"[{request_id}] File too large: {actual_size:.2f}MB")
+            raise HTTPException(status_code=413, detail=f"Video too heavy (Max {MAX_SIZE_MB}MB)")
+
         audio_path = video_service.download_audio(url)["file_path"]
         segments = transcription_service.transcribe(audio_path, paths["json"])["segments"]
         
-        subtitle_service.generate_srt(segments, paths["srt_en"])
-        heb_segments = translation_service.translate_segments(segments, paths["trans_he"])
-        subtitle_service.generate_srt(heb_segments, paths["srt_he"]) 
+        translated_segments = translation_service.translate_segments(
+            segments, paths["trans"], target_lang=lang
+        )
+        subtitle_service.generate_srt(translated_segments, paths["srt_lang"]) 
 
-        raw_text = summary_service.build_text(heb_segments)
-        video_summary = summary_service.summarize(raw_text, paths["summary"])
+        video_summary = None
+        if request.generate_summary:
+            raw_text = summary_service.build_text(translated_segments)
+            video_summary = summary_service.summarize(
+                raw_text, paths["summary"], sentences_count=request.summary_sentences
+            )
 
         total_time = round(time.time() - start_time, 2)
-        logger.info(f"[{request_id}] [FINISHED] Total: {total_time}s")
+        logger.info(f"[{request_id}] Finished in {total_time}s")
 
         return {
-            "status": "success",
-            "request_id": request_id,
-            "source": "processed",
-            "summary": video_summary,
-            "video": video_res['file_path'],
-            "subtitles_vtt": paths['vtt_he'],
+            "status": "success", "request_id": request_id, "video_id": video_id,
+            "source": "processed", "language": lang, "summary": video_summary,
+            "video": video_res['file_path'], "subtitles_vtt": paths["vtt_lang"],
             "processing_time": f"{total_time}s"
         }
 
     except HTTPException as e:
-        raise e
+        raise e 
     except Exception as e:
-        logger.error(f"[{request_id}] [FATAL ERROR] {str(e)}")
+        logger.error(f"[{request_id}] Fatal: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))

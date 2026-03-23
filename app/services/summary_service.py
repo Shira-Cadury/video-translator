@@ -33,10 +33,8 @@ class SummaryService:
         return text
 
     def summarize(self, text, output_path=None, sentences_count=3):
-        
-        cached = self._load_cache(output_path)
-        if cached:
-            return cached
+        if not text:
+            return "No text to summarize"
         
         cleaned_text = self.clean_text(text)
 
