@@ -2,6 +2,9 @@ import whisper
 import os
 import json
 import time
+import logging
+
+logger = logging.getLogger(__name__)
 
 class TranscriptionService:
     _model = None  
@@ -11,12 +14,12 @@ class TranscriptionService:
 
     def load_model(self):
         if TranscriptionService._model is None:
-            print("Loading Whisper model ('large')...")
+            logger.info("Loading Whisper model ('large')...")
             try:
                 TranscriptionService._model = whisper.load_model("large")
-                print("Model loaded.")
+                logger.info("Model loaded.")
             except Exception as e:
-                print(f"Failed to load model: {e}")
+                logger.error(f"Failed to load model: {e}")
                 TranscriptionService._model = None
 
         self.model = TranscriptionService._model
@@ -25,7 +28,7 @@ class TranscriptionService:
         if json_path and os.path.exists(json_path):
             cached = self._load_from_cache(json_path)
             if cached:
-                print("Using cached transcription")
+                logger.info("Using cached transcription")
                 return cached
 
         if self.model is None:
@@ -34,16 +37,22 @@ class TranscriptionService:
         if not os.path.exists(audio_path):
             return {"success": False, "error": "Audio file not found"}
 
-        print(f"Transcribing: {audio_path}")
+        logger.info(f"Transcribing: {audio_path}")
         start = time.time()
+        MAX_TIME = 600
 
         try:
             result = self.model.transcribe(audio_path, fp16 =False, language="en")
+            elapsed = time.time() - start
+            
+            if elapsed > MAX_TIME:
+                logger.error(f"[TIMEOUT] Transcription took too long: {elapsed:.2f}s")
+                raise Exception (f"Transcription timeout (Exceeded {MAX_TIME}s)")
 
             if json_path:
                 self._save_to_cache(result, json_path)
 
-            print(f"[TIME] Transcription: {time.time() - start:.2f}s")
+            logger.info(f"[TIME] Transcription: {time.time() - start:.2f}s")
 
             return {
                 **result,
@@ -52,6 +61,7 @@ class TranscriptionService:
             }
 
         except Exception as e:
+            logger.error(f"Transcription error: {e}")
             return {"success": False, "error": str(e)}
 
     def _load_from_cache(self, json_path):
@@ -64,13 +74,13 @@ class TranscriptionService:
                     "from_cache": True
                 }
         except Exception:
-            print("Cache corrupted, ignoring")
+            logger.warning(f"Cache corrupted or missing at {json_path}")
             return None
 
     def _save_to_cache(self, data, json_path):
         try:
             with open(json_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
-            print("Saved transcription to cache")
+            logger.info("Saved transcription to cache")
         except Exception as e:
-            print(f"Failed to save cache: {e}")
+            logger.error(f"Failed to save cache: {e}")

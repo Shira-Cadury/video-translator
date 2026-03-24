@@ -26,3 +26,14 @@
 2026-03-23 13:38:02,786 | INFO | [33aff658] Request received: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp | Lang: he
 2026-03-23 13:38:06,065 | INFO | [f234d50f] Super Fast Cache Hit! No network calls needed.
 2026-03-23 13:38:06,069 | INFO | [33aff658] Super Fast Cache Hit! No network calls needed.
+2026-03-24 09:52:51,814 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:25:12,114 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:31:22,808 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:36:55,561 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:37:58,359 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:41:55,317 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:43:29,105 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:44:32,374 | INFO | [JOB CREATED] 2c11c9de-c75c-453e-8209-343de57fb316
+2026-03-24 10:44:32,379 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp. Created Job ID: 2c11c9de-c75c-453e-8209-343de57fb316
+2026-03-24 10:51:31,446 | INFO | [JOB CREATED] f8073e0a-5344-4a73-acd1-a49897c4c895
+2026-03-24 10:51:31,447 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp. Created Job ID: f8073e0a-5344-4a73-acd1-a49897c4c895

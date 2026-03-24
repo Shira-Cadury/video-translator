@@ -7,6 +7,7 @@ from app.services.transcription_service import TranscriptionService
 from app.services.subtitle_service import SubtitleService
 from app.services.translation_service import TranslationService
 from app.services.summary_service import SummaryService
+from app.services.job_manager import JobManager
 import os
 import re
 import time
@@ -18,6 +19,7 @@ transcription_service = TranscriptionService()
 subtitle_service = SubtitleService()
 translation_service = TranslationService()
 summary_service = SummaryService()
+job_manager = JobManager()
 
 app = FastAPI()
 
@@ -97,9 +99,45 @@ def list_files():
     }
     
     
+@app.get("/stats")
+def get_stats():
+    def count_files(directory):
+        if os.path.exists(directory):
+            return len([f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))])
+        return 0
+    
+    return{
+        "status": "online",
+        "storage_summary": {
+            "videos": count_files("storage/video"),
+            "audio_files": count_files("storage/audio"),
+            "subtitles_json": count_files("storage/subtitles"),
+        },
+        "system_info": {
+            "log_file_exists": os.path.exists("app.log"),
+            "server_time": time.strftime("%Y-%m-%d %H:%M:%S")
+        }
+    }   
+    
+    
+@app.get("/status/{job_id}")
+def check_status(job_id: str):
+    job = job_manager.get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job ID not found")
+    return job    
+    
+    
 @app.post("/process-video")
 def process_video(request: VideoRequest):
     request_id = str(uuid.uuid4())[:8]
+    job_id = job_manager.create_job()
+    logger.info(f"Received request for URL: {request.url}. Created Job ID: {job_id}")
+    return {
+        "status": "processing",
+        "job_id": job_id,
+        "message": "Your video is being processed in the background."
+    }
     try:
         start_time = time.time()
         url = request.url
