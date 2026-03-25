@@ -39,7 +39,7 @@ class TranscriptionService:
 
         logger.info(f"Transcribing: {audio_path}")
         start = time.time()
-        MAX_TIME = 600
+        MAX_TIME = 1200
 
         try:
             result = self.model.transcribe(audio_path, fp16 =False, language="en")

@@ -13,6 +13,16 @@ import re
 import time
 import logging
 import uuid
+import threading
+
+
+STATUS_PENDING = "pending"
+STATUS_DOWNLOADING = "downloading"
+STATUS_TRANSCRIBING = "transcribing"
+STATUS_TRANSLATING = "translating"
+STATUS_FINALIZING = "finalizing"
+STATUS_COMPLETED = "completed"
+STATUS_FAILED = "failed"
 
 video_service = VideoService()
 transcription_service = TranscriptionService()
@@ -82,6 +92,47 @@ def get_video_paths(video_id: str, lang: str):
         "vtt_lang": f"storage/subtitles/{video_id}_{lang}.vtt"
     }
     
+    
+
+def process_video_job(job_id: str, url: str, request_id: str, target_lang: str, generate_summary: bool, summary_sentences: int):
+    try:
+        video_id = extract_video_id(url)
+        paths = get_video_paths(video_id, lang=target_lang)
+        
+        job_manager.update_status(job_id, STATUS_DOWNLOADING)
+        video_res = video_service.download_video(url)
+        
+        audio_path = video_service.download_audio(url)["file_path"]
+        
+        job_manager.update_status(job_id, STATUS_TRANSCRIBING)
+        trans_res = transcription_service.transcribe(audio_path, paths["json"])
+        segments = trans_res["segments"]
+        
+        job_manager.update_status(job_id, STATUS_TRANSLATING)
+        translated_segments = translation_service.translate_segments(segments, paths["trans"], target_lang=target_lang)
+        
+        job_manager.update_status(job_id, STATUS_FINALIZING)
+        subtitle_service.generate_srt(translated_segments, paths["srt_lang"])
+        
+        summary_text = None
+        if generate_summary:
+            raw_text = summary_service.build_text(translated_segments)
+            summary_text = summary_service.summarize(raw_text, paths["summary"], sentences_count=summary_sentences)
+            
+        result_data = {
+            "video_id": video_id,
+            "video_url": video_res['file_path'],
+            "subtitles": paths["srt_lang"],
+            "summary": summary_text
+        }    
+        job_manager.save_result(job_id, result_data)
+        logger.info(f"[{request_id}] Job {job_id} completed successfully!")
+    except Exception as e:
+        logger.error(f"[{request_id}] Job {job_id} failed: {str(e)}")
+        job_manager.update_status(job_id, STATUS_FAILED)
+        job_manager.save_result(job_id, {"error": str(e)})     
+    
+    
 @app.on_event("startup")
 async def startup_event():
     logger.info("--- Server starting up... Running Cleanup ---")
@@ -125,7 +176,15 @@ def check_status(job_id: str):
     job = job_manager.get_job(job_id)
     if not job:
         raise HTTPException(status_code=404, detail="Job ID not found")
-    return job    
+    response = {
+        "status": job["status"],
+        "created_at": job["created_at"]
+    }   
+    
+    if job.get("result"):
+        response["result"] = job["result"]
+        
+    return response    
     
     
 @app.post("/process-video")
@@ -133,83 +192,23 @@ def process_video(request: VideoRequest):
     request_id = str(uuid.uuid4())[:8]
     job_id = job_manager.create_job()
     logger.info(f"Received request for URL: {request.url}. Created Job ID: {job_id}")
-    return {
+    
+    thread = threading.Thread(
+        target=process_video_job,
+        args=(
+            job_id,
+            request.url,
+            request_id,
+            request.target_language,
+            request.generate_summary,
+            request.summary_sentences
+        ),
+        daemon=True
+    )
+    thread.start()
+    
+    return{
         "status": "processing",
         "job_id": job_id,
-        "message": "Your video is being processed in the background."
+        "message": "Processing started in background. Check status at /status/{job_id}"
     }
-    try:
-        start_time = time.time()
-        url = request.url
-        lang = request.target_language 
-        
-        logger.info(f"[{request_id}] Request received: {url} | Lang: {lang}")
-        
-        video_id = extract_video_id(url)
-        paths = get_video_paths(video_id, lang=lang)
-        
-        try:
-            duration = video_service.get_video_duration(url)
-            if duration > 1200:
-                logger.warning(f"[{request_id}] Long video: {duration}s. Expect delay.")
-        except Exception as e:
-            logger.warning(f"[{request_id}] Duration check skipped: {e}")
-
-        video_file_path = f"storage/video/{video_id}.mp4"
-        
-        if os.path.exists(paths["trans"]) and os.path.exists(video_file_path):
-            if not request.generate_summary or os.path.exists(paths["summary"]):
-                logger.info(f"[{request_id}] Super Fast Cache Hit! No network calls needed.")
-                
-                summary_text = None
-                if request.generate_summary and os.path.exists(paths["summary"]):
-                    with open(paths["summary"], "r", encoding="utf-8") as f:
-                        summary_text = f.read()
-                
-                return {
-                    "status": "success", "request_id": request_id, "video_id": video_id,
-                    "source": "cache", "language": lang, "summary": summary_text,
-                    "video": video_file_path, "processing_time": "0s (cached)"
-                }
-
-        logger.info(f"[{request_id}] [START] Full process for {video_id}")
-        
-        video_res = video_service.download_video(url)
-        
-        MAX_SIZE_MB = 500
-        actual_size = os.path.getsize(video_res['file_path']) / (1024 * 1024)
-        if actual_size > MAX_SIZE_MB:
-            os.remove(video_res['file_path']) 
-            logger.error(f"[{request_id}] File too large: {actual_size:.2f}MB")
-            raise HTTPException(status_code=413, detail=f"Video too heavy (Max {MAX_SIZE_MB}MB)")
-
-        audio_path = video_service.download_audio(url)["file_path"]
-        segments = transcription_service.transcribe(audio_path, paths["json"])["segments"]
-        
-        translated_segments = translation_service.translate_segments(
-            segments, paths["trans"], target_lang=lang
-        )
-        subtitle_service.generate_srt(translated_segments, paths["srt_lang"]) 
-
-        video_summary = None
-        if request.generate_summary:
-            raw_text = summary_service.build_text(translated_segments)
-            video_summary = summary_service.summarize(
-                raw_text, paths["summary"], sentences_count=request.summary_sentences
-            )
-
-        total_time = round(time.time() - start_time, 2)
-        logger.info(f"[{request_id}] Finished in {total_time}s")
-
-        return {
-            "status": "success", "request_id": request_id, "video_id": video_id,
-            "source": "processed", "language": lang, "summary": video_summary,
-            "video": video_res['file_path'], "subtitles_vtt": paths["vtt_lang"],
-            "processing_time": f"{total_time}s"
-        }
-
-    except HTTPException as e:
-        raise e 
-    except Exception as e:
-        logger.error(f"[{request_id}] Fatal: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))

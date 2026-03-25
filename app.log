@@ -37,3 +37,27 @@
 2026-03-24 10:44:32,379 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp. Created Job ID: 2c11c9de-c75c-453e-8209-343de57fb316
 2026-03-24 10:51:31,446 | INFO | [JOB CREATED] f8073e0a-5344-4a73-acd1-a49897c4c895
 2026-03-24 10:51:31,447 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp. Created Job ID: f8073e0a-5344-4a73-acd1-a49897c4c895
+2026-03-25 10:58:39,075 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 10:58:39,080 | INFO | [CLEANUP] Deleted 2 old files from storage/video
+2026-03-25 10:58:39,083 | INFO | [CLEANUP] Deleted 2 old files from storage/audio
+2026-03-25 10:58:39,091 | INFO | [CLEANUP] Deleted 12 old files from storage/subtitles
+2026-03-25 11:01:38,023 | INFO | [JOB CREATED] 2c7ee206-0fd8-4e2a-903e-cd55e688a7d8
+2026-03-25 11:01:38,023 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=Od6hnDuIY10q6KXb. Created Job ID: 2c7ee206-0fd8-4e2a-903e-cd55e688a7d8
+2026-03-25 11:02:13,130 | INFO | Transcribing: storage\audio\ra0FlN5NBG4.mp3
+2026-03-25 11:13:32,796 | ERROR | [TIMEOUT] Transcription took too long: 679.66s
+2026-03-25 11:13:32,811 | ERROR | Transcription error: Transcription timeout (Exceeded 600s)
+2026-03-25 11:13:32,817 | ERROR | [3e6030f0] Job 2c7ee206-0fd8-4e2a-903e-cd55e688a7d8 failed: 'segments'
+2026-03-25 11:20:23,032 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:21:15,850 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:23:15,991 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:28:46,257 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:30:03,457 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:33:20,590 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:40:01,037 | INFO | [JOB CREATED] aa7a8e0f-73da-4247-9d87-8555ba51e71c
+2026-03-25 11:40:01,043 | INFO | Received request for URL: https://www.youtube.com/watch?v=ra0FlN5NBG4. Created Job ID: aa7a8e0f-73da-4247-9d87-8555ba51e71c
+2026-03-25 11:40:05,553 | INFO | Transcribing: storage\audio\ra0FlN5NBG4.mp3
+2026-03-25 11:48:33,074 | INFO | Saved transcription to cache
+2026-03-25 11:48:33,080 | INFO | [TIME] Transcription: 507.53s
+2026-03-25 11:48:33,084 | INFO | [API] Translating segments via Google Translator...
+2026-03-25 11:50:31,117 | INFO | [SAVED] Translation cache created: storage/subtitles/ra0FlN5NBG4_he.json
+2026-03-25 11:50:31,492 | INFO | [5c3b0797] Job aa7a8e0f-73da-4247-9d87-8555ba51e71c completed successfully!
