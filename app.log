@@ -72,3 +72,12 @@
 2026-03-26 12:26:49,034 | INFO | --- Server starting up... Running Cleanup ---
 2026-03-26 12:26:49,043 | INFO | [CLEANUP] Deleted 4 old files from storage/subtitles
 2026-03-26 12:31:47,274 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-26 13:20:43,859 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-26 13:21:48,289 | INFO | [JOB CREATED] 497488b7-bfc0-464e-857b-762426559d1f
+2026-03-26 13:21:48,292 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=Od6hnDuIY10q6KXbg. Created Job ID: 497488b7-bfc0-464e-857b-762426559d1f
+2026-03-26 13:21:52,737 | INFO | Transcribing: storage\audio\ra0FlN5NBG4.mp3
+2026-03-26 13:28:45,473 | INFO | Saved transcription to cache
+2026-03-26 13:28:45,478 | INFO | [TIME] Transcription: 412.74s
+2026-03-26 13:28:45,483 | INFO | [API] Translating segments via Google Translator...
+2026-03-26 13:29:53,570 | INFO | [SAVED] Translation cache created: storage/subtitles/ra0FlN5NBG4_he.json
+2026-03-26 13:29:53,861 | INFO | [35c60347] Job 497488b7-bfc0-464e-857b-762426559d1f completed successfully!

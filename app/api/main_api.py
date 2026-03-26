@@ -24,6 +24,7 @@ STATUS_TRANSLATING = "translating"
 STATUS_FINALIZING = "finalizing"
 STATUS_COMPLETED = "completed"
 STATUS_FAILED = "failed"
+STATUS_CANCELLED = "cancelled"
 
 video_service = VideoService()
 transcription_service = TranscriptionService()
@@ -100,21 +101,44 @@ def get_video_paths(video_id: str, lang: str):
     
     
 
+@app.post("/cancel/{job_id}")
+def cancel_video_job(job_id: str):
+    job = job_manager.get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job ID not found")
+    
+    if job["status"] in [STATUS_COMPLETED, STATUS_FAILED]:
+        return {"message": "Job already finished."}
+    
+    job_manager.cancel_job(job_id)
+    return {"status": "cancelled", "message": f"Job {job_id} was marked for cancellation."}
+
+
 def process_video_job(job_id: str, url: str, request_id: str, target_lang: str, generate_summary: bool, summary_sentences: int):
     try:
+        if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
+            return
+        
         video_id = extract_video_id(url)
         paths = get_video_paths(video_id, lang=target_lang)
         
         job_manager.update_status(job_id, STATUS_DOWNLOADING)
-        video_res = video_service.download_video(url)
+        job_manager.update_progress(job_id, 10)
         
+        video_res = video_service.download_video(url)
         audio_res = video_service.download_audio(url)
+        
         if audio_res.get("status") != "success":
             raise Exception(f"Audio download failed: {audio_res.get('message', 'Unknown error')}")
         
         audio_path = audio_res["file_path"]
         
+        if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
+            logger.info(f"[{request_id}] Job {job_id} cancelled after download.")
+            return
+        
         job_manager.update_status(job_id, STATUS_TRANSCRIBING)
+        job_manager.update_progress(job_id, 30)
         trans_res = transcription_service.transcribe(audio_path, paths["json"])
         
         if not trans_res.get("success"):
@@ -122,10 +146,21 @@ def process_video_job(job_id: str, url: str, request_id: str, target_lang: str, 
         
         segments = trans_res["segments"]
         
+        if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
+            logger.info(f"[{request_id}] Job {job_id} cancelled after transcription.")
+            return
+        
         job_manager.update_status(job_id, STATUS_TRANSLATING)
+        job_manager.update_progress(job_id, 60)
+        
         translated_segments = translation_service.translate_segments(segments, paths["trans"], target_lang=target_lang)
         
+        if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
+            return
+        
         job_manager.update_status(job_id, STATUS_FINALIZING)
+        job_manager.update_progress(job_id, 90)
+        
         subtitle_service.generate_srt(translated_segments, paths["srt_lang"])
         
         summary_text = None
@@ -139,12 +174,16 @@ def process_video_job(job_id: str, url: str, request_id: str, target_lang: str, 
             "subtitles": paths["srt_lang"],
             "summary": summary_text
         }    
+        
+        job_manager.update_progress(job_id, 100)
         job_manager.save_result(job_id, result_data)
         logger.info(f"[{request_id}] Job {job_id} completed successfully!")
     except Exception as e:
-        logger.error(f"[{request_id}] Job {job_id} failed: {str(e)}")
-        job_manager.update_status(job_id, STATUS_FAILED)
-        job_manager.save_result(job_id, {"error": str(e)})     
+        current_status = job_manager.get_job(job_id)["status"]
+        if current_status != STATUS_CANCELLED:
+            logger.error(f"[{request_id}] Job {job_id} failed: {str(e)}")
+            job_manager.update_status(job_id, STATUS_FAILED)
+            job_manager.save_result(job_id, {"error": str(e)})     
     
     
 @app.on_event("startup")
@@ -162,6 +201,11 @@ def list_files():
         "audio": os.listdir(f"{STORAGE_PATH}/audio") if os.path.exists(f"{STORAGE_PATH}/audio") else [],
         "subtitles": os.listdir(f"{STORAGE_PATH}/subtitles") if os.path.exists(f"{STORAGE_PATH}/subtitles") else []
     }
+    
+    
+@app.get("/jobs")
+def list_all_jobs():
+    return job_manager.jobs    
     
     
 @app.get("/stats")
@@ -192,6 +236,7 @@ def check_status(job_id: str):
         raise HTTPException(status_code=404, detail="Job ID not found")
     response = {
         "status": job["status"],
+        "progress": job.get("progress", 0),
         "created_at": job["created_at"]
     }   
     
