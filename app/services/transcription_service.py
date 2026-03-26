@@ -1,3 +1,4 @@
+from app.config import MODEL_SIZE
 import whisper
 import os
 import json
@@ -14,10 +15,10 @@ class TranscriptionService:
 
     def load_model(self):
         if TranscriptionService._model is None:
-            logger.info("Loading Whisper model ('large')...")
+            logger.info(f"Loading Whisper model ('{MODEL_SIZE}')...")
             try:
-                TranscriptionService._model = whisper.load_model("large")
-                logger.info("Model loaded.")
+                TranscriptionService._model = whisper.load_model(MODEL_SIZE)
+                logger.info(f"Model {MODEL_SIZE} loaded successfully.")
             except Exception as e:
                 logger.error(f"Failed to load model: {e}")
                 TranscriptionService._model = None

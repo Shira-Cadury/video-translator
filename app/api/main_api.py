@@ -8,6 +8,7 @@ from app.services.subtitle_service import SubtitleService
 from app.services.translation_service import TranslationService
 from app.services.summary_service import SummaryService
 from app.services.job_manager import JobManager
+from app.config import LOG_FILE, STORAGE_PATH, MAX_SUMMARY_SENTENCES
 import os
 import re
 import time
@@ -33,6 +34,11 @@ job_manager = JobManager()
 
 app = FastAPI()
 
+@app.get("/health")
+def health():
+    return {"status": "ok", "timestamp": time.time()}
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], 
@@ -46,18 +52,18 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler("app.log", encoding="utf-8")
+        logging.FileHandler(LOG_FILE, encoding="utf-8")
     ]
 )
 logger = logging.getLogger(__name__)
 
-os.makedirs("storage", exist_ok=True)
-app.mount("/storage", StaticFiles(directory="storage"), name="storage")
+os.makedirs(STORAGE_PATH, exist_ok=True)
+app.mount(f"/{STORAGE_PATH}", StaticFiles(directory=STORAGE_PATH), name="storage")
 
 class VideoRequest(BaseModel):
     url: str
     generate_summary: bool = True
-    summary_sentences: int = Field(default=3, ge=1, le=10)
+    summary_sentences: int = Field(default=3, ge=1, le=MAX_SUMMARY_SENTENCES)
     target_language: str = "he" 
     
 def cleanup_old_files(folder_path, max_age_hours=24):
@@ -84,12 +90,12 @@ def extract_video_id(url: str):
 
 def get_video_paths(video_id: str, lang: str):
     return {
-        "json": f"storage/subtitles/{video_id}.json",
-        "trans": f"storage/subtitles/{video_id}_{lang}.json",
-        "summary": f"storage/subtitles/{video_id}_summary_{lang}.txt",
-        "srt_en": f"storage/subtitles/{video_id}.srt",
-        "srt_lang": f"storage/subtitles/{video_id}_{lang}.srt",
-        "vtt_lang": f"storage/subtitles/{video_id}_{lang}.vtt"
+        "json": f"{STORAGE_PATH}/subtitles/{video_id}.json",
+        "trans": f"{STORAGE_PATH}/subtitles/{video_id}_{lang}.json",
+        "summary": f"{STORAGE_PATH}/subtitles/{video_id}_summary_{lang}.txt",
+        "srt_en": f"{STORAGE_PATH}/subtitles/{video_id}.srt",
+        "srt_lang": f"{STORAGE_PATH}/subtitles/{video_id}_{lang}.srt",
+        "vtt_lang": f"{STORAGE_PATH}/subtitles/{video_id}_{lang}.vtt"
     }
     
     
@@ -102,10 +108,18 @@ def process_video_job(job_id: str, url: str, request_id: str, target_lang: str, 
         job_manager.update_status(job_id, STATUS_DOWNLOADING)
         video_res = video_service.download_video(url)
         
-        audio_path = video_service.download_audio(url)["file_path"]
+        audio_res = video_service.download_audio(url)
+        if audio_res.get("status") != "success":
+            raise Exception(f"Audio download failed: {audio_res.get('message', 'Unknown error')}")
+        
+        audio_path = audio_res["file_path"]
         
         job_manager.update_status(job_id, STATUS_TRANSCRIBING)
         trans_res = transcription_service.transcribe(audio_path, paths["json"])
+        
+        if not trans_res.get("success"):
+            raise Exception(f"Transcription failed: {trans_res.get('error', 'Unknown error')}")
+        
         segments = trans_res["segments"]
         
         job_manager.update_status(job_id, STATUS_TRANSLATING)
@@ -136,17 +150,17 @@ def process_video_job(job_id: str, url: str, request_id: str, target_lang: str, 
 @app.on_event("startup")
 async def startup_event():
     logger.info("--- Server starting up... Running Cleanup ---")
-    cleanup_old_files("storage/video")
-    cleanup_old_files("storage/audio")
-    cleanup_old_files("storage/subtitles")
+    cleanup_old_files(f"{STORAGE_PATH}/video")
+    cleanup_old_files(f"{STORAGE_PATH}/audio")
+    cleanup_old_files(f"{STORAGE_PATH}/subtitles")
     
     
 @app.get("/files")
 def list_files():
     return{
-        "videos": os.listdir("storage/video") if os.path.exists("storage/video") else [],
-        "audio": os.listdir("storage/audio") if os.path.exists("storage/audio") else [],
-        "subtitles": os.listdir("storage/subtitles") if os.path.exists("storage/subtitles") else []
+        "videos": os.listdir(f"{STORAGE_PATH}/video") if os.path.exists(f"{STORAGE_PATH}/video") else [],
+        "audio": os.listdir(f"{STORAGE_PATH}/audio") if os.path.exists(f"{STORAGE_PATH}/audio") else [],
+        "subtitles": os.listdir(f"{STORAGE_PATH}/subtitles") if os.path.exists(f"{STORAGE_PATH}/subtitles") else []
     }
     
     
@@ -160,12 +174,12 @@ def get_stats():
     return{
         "status": "online",
         "storage_summary": {
-            "videos": count_files("storage/video"),
-            "audio_files": count_files("storage/audio"),
-            "subtitles_json": count_files("storage/subtitles"),
+            "videos": count_files(f"{STORAGE_PATH}/video"),
+            "audio_files": count_files(f"{STORAGE_PATH}/audio"),
+            "subtitles_json": count_files(f"{STORAGE_PATH}/subtitles"),
         },
         "system_info": {
-            "log_file_exists": os.path.exists("app.log"),
+            "log_file_exists": os.path.exists(LOG_FILE),
             "server_time": time.strftime("%Y-%m-%d %H:%M:%S")
         }
     }   
