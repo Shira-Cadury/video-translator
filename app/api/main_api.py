@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, File, UploadFile
 from pydantic import BaseModel, Field
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles 
@@ -9,7 +9,9 @@ from app.services.translation_service import TranslationService
 from app.services.summary_service import SummaryService
 from app.services.job_manager import JobManager
 from app.config import LOG_FILE, STORAGE_PATH, MAX_SUMMARY_SENTENCES
+from app.services.video_source_service import  VideoSourceService
 import os
+import shutil
 import re
 import time
 import logging
@@ -32,6 +34,7 @@ subtitle_service = SubtitleService()
 translation_service = TranslationService()
 summary_service = SummaryService()
 job_manager = JobManager()
+video_source_service = VideoSourceService(STORAGE_PATH)
 
 app = FastAPI()
 
@@ -62,7 +65,7 @@ os.makedirs(STORAGE_PATH, exist_ok=True)
 app.mount(f"/{STORAGE_PATH}", StaticFiles(directory=STORAGE_PATH), name="storage")
 
 class VideoRequest(BaseModel):
-    url: str
+    url: str | None = None
     generate_summary: bool = True
     summary_sentences: int = Field(default=3, ge=1, le=MAX_SUMMARY_SENTENCES)
     target_language: str = "he" 
@@ -101,6 +104,35 @@ def get_video_paths(video_id: str, lang: str):
     
     
 
+@app.post("/upload-video")
+async def upload_video(file: UploadFile = File(...), target_language: str = "he", generate_summary: bool = True):
+    file_path = file_path = video_source_service.save_uploaded_file(file)
+    request_id = str(uuid.uuid4())[:8]
+    job_id = job_manager.create_job()
+    logger.info(f"File uploaded. Starting job: {job_id}")
+    
+    thread = threading.Thread(
+        target=process_video_job,
+        args=(
+            job_id,
+            file_path,
+            request_id, 
+            target_language, 
+            generate_summary,
+            3
+        ),
+        daemon=True
+    )    
+    thread.start()
+    
+    return{
+        "status": "processing",
+        "job_id": job_id,
+        "message": "Upload complete. Processing started."
+    }    
+            
+
+
 @app.post("/cancel/{job_id}")
 def cancel_video_job(job_id: str):
     job = job_manager.get_job(job_id)
@@ -114,49 +146,52 @@ def cancel_video_job(job_id: str):
     return {"status": "cancelled", "message": f"Job {job_id} was marked for cancellation."}
 
 
-def process_video_job(job_id: str, url: str, request_id: str, target_lang: str, generate_summary: bool, summary_sentences: int):
+def prepare_source(source: str, job_id: str):
+    if video_source_service.is_url(source):
+        video_id = extract_video_id(source)
+        video_res = video_service.download_video(source)
+        audio_res = video_service.download_audio(source)
+        
+        if audio_res.get("status") != "success":
+            raise Exception("YouTube audio download failed")
+        
+        return video_id, audio_res["file_path"], video_res["file_path"]
+    
+    else:
+        video_id = f"local_{job_id}"
+        audio_path = source
+        video_url = source
+        
+        return video_id, audio_path, video_url
+
+
+def process_video_job(job_id: str, source: str, request_id: str, target_lang: str, generate_summary: bool, summary_sentences: int):
     try:
         if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
-            return
-        
-        video_id = extract_video_id(url)
-        paths = get_video_paths(video_id, lang=target_lang)
+            return 
         
         job_manager.update_status(job_id, STATUS_DOWNLOADING)
         job_manager.update_progress(job_id, 10)
         
-        video_res = video_service.download_video(url)
-        audio_res = video_service.download_audio(url)
+        video_id, audio_path, video_display_url = prepare_source(source, job_id)
         
-        if audio_res.get("status") != "success":
-            raise Exception(f"Audio download failed: {audio_res.get('message', 'Unknown error')}")
-        
-        audio_path = audio_res["file_path"]
-        
-        if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
-            logger.info(f"[{request_id}] Job {job_id} cancelled after download.")
-            return
-        
+        paths = get_video_paths(video_id, lang=target_lang)
+
         job_manager.update_status(job_id, STATUS_TRANSCRIBING)
         job_manager.update_progress(job_id, 30)
-        trans_res = transcription_service.transcribe(audio_path, paths["json"])
         
+        trans_res = transcription_service.transcribe(audio_path, paths["json"])
         if not trans_res.get("success"):
             raise Exception(f"Transcription failed: {trans_res.get('error', 'Unknown error')}")
         
         segments = trans_res["segments"]
         
         if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
-            logger.info(f"[{request_id}] Job {job_id} cancelled after transcription.")
             return
-        
+            
         job_manager.update_status(job_id, STATUS_TRANSLATING)
         job_manager.update_progress(job_id, 60)
-        
         translated_segments = translation_service.translate_segments(segments, paths["trans"], target_lang=target_lang)
-        
-        if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
-            return
         
         job_manager.update_status(job_id, STATUS_FINALIZING)
         job_manager.update_progress(job_id, 90)
@@ -170,20 +205,21 @@ def process_video_job(job_id: str, url: str, request_id: str, target_lang: str, 
             
         result_data = {
             "video_id": video_id,
-            "video_url": video_res['file_path'],
+            "video_url": video_display_url,
             "subtitles": paths["srt_lang"],
             "summary": summary_text
-        }    
+        }     
         
         job_manager.update_progress(job_id, 100)
         job_manager.save_result(job_id, result_data)
         logger.info(f"[{request_id}] Job {job_id} completed successfully!")
+
     except Exception as e:
         current_status = job_manager.get_job(job_id)["status"]
         if current_status != STATUS_CANCELLED:
             logger.error(f"[{request_id}] Job {job_id} failed: {str(e)}")
             job_manager.update_status(job_id, STATUS_FAILED)
-            job_manager.save_result(job_id, {"error": str(e)})     
+            job_manager.save_result(job_id, {"error": str(e)})
     
     
 @app.on_event("startup")

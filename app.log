@@ -81,3 +81,27 @@
 2026-03-26 13:28:45,483 | INFO | [API] Translating segments via Google Translator...
 2026-03-26 13:29:53,570 | INFO | [SAVED] Translation cache created: storage/subtitles/ra0FlN5NBG4_he.json
 2026-03-26 13:29:53,861 | INFO | [35c60347] Job 497488b7-bfc0-464e-857b-762426559d1f completed successfully!
+2026-03-26 19:46:07,962 | ERROR | Form data requires "python-multipart" to be installed. 
+You can install "python-multipart" with: 
+
+pip install python-multipart
+
+2026-03-26 19:49:32,638 | ERROR | Form data requires "python-multipart" to be installed. 
+You can install "python-multipart" with: 
+
+pip install python-multipart
+
+2026-03-26 19:56:35,862 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 11:50:13,282 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 11:57:26,310 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 12:31:56,569 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 12:33:36,504 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 12:34:44,888 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\a0267230.mp4
+2026-03-27 12:34:44,889 | INFO | [JOB CREATED] 1bf2f6da-9964-40e2-a9ac-6d242d1cf18d
+2026-03-27 12:34:44,890 | INFO | File uploaded. Starting job: 1bf2f6da-9964-40e2-a9ac-6d242d1cf18d
+2026-03-27 12:34:44,892 | INFO | Transcribing: storage\video\a0267230.mp4
+2026-03-27 12:38:59,460 | INFO | Saved transcription to cache
+2026-03-27 12:38:59,465 | INFO | [TIME] Transcription: 254.57s
+2026-03-27 12:38:59,472 | INFO | [API] Translating segments via Google Translator...
+2026-03-27 12:39:56,554 | INFO | [SAVED] Translation cache created: storage/subtitles/local_1bf2f6da-9964-40e2-a9ac-6d242d1cf18d_he.json
+2026-03-27 12:39:56,852 | INFO | [b1dc231d] Job 1bf2f6da-9964-40e2-a9ac-6d242d1cf18d completed successfully!
