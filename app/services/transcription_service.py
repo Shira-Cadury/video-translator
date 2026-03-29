@@ -7,8 +7,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+MAX_AUDIO_DURATION_SEC = 1200  
+
 class TranscriptionService:
-    _model = None  
+    _model = None
 
     def __init__(self):
         self.load_model()
@@ -25,8 +27,10 @@ class TranscriptionService:
 
         self.model = TranscriptionService._model
 
-    def transcribe(self, audio_path, json_path=None):
+    def transcribe(self, audio_path, json_path=None, language="en", storage_manager=None):
         if json_path and os.path.exists(json_path):
+            if storage_manager:
+                storage_manager.touch_file(json_path)
             cached = self._load_from_cache(json_path)
             if cached:
                 logger.info("Using cached transcription")
@@ -38,17 +42,17 @@ class TranscriptionService:
         if not os.path.exists(audio_path):
             return {"success": False, "error": "Audio file not found"}
 
+        
+        duration = self._get_audio_duration(audio_path)
+        if duration and duration > MAX_AUDIO_DURATION_SEC:
+            logger.error(f"[REJECTED] Audio too long: {duration:.0f}s (max {MAX_AUDIO_DURATION_SEC}s)")
+            return {"success": False, "error": f"Audio exceeds maximum duration of {MAX_AUDIO_DURATION_SEC // 60} minutes"}
+
         logger.info(f"Transcribing: {audio_path}")
         start = time.time()
-        MAX_TIME = 1200
 
         try:
-            result = self.model.transcribe(audio_path, fp16 =False, language="en")
-            elapsed = time.time() - start
-            
-            if elapsed > MAX_TIME:
-                logger.error(f"[TIMEOUT] Transcription took too long: {elapsed:.2f}s")
-                raise Exception (f"Transcription timeout (Exceeded {MAX_TIME}s)")
+            result = self.model.transcribe(audio_path, fp16=False, language=language)
 
             if json_path:
                 self._save_to_cache(result, json_path)
@@ -65,6 +69,17 @@ class TranscriptionService:
             logger.error(f"Transcription error: {e}")
             return {"success": False, "error": str(e)}
 
+    def _get_audio_duration(self, audio_path: str):
+        """Returns audio duration in seconds, or None if it can't be determined."""
+        try:
+            import mutagen
+            audio = mutagen.File(audio_path)
+            if audio and audio.info:
+                return audio.info.length
+        except Exception as e:
+            logger.warning(f"Could not read audio duration: {e}")
+        return None
+
     def _load_from_cache(self, json_path):
         try:
             with open(json_path, "r", encoding="utf-8") as f:
@@ -80,6 +95,7 @@ class TranscriptionService:
 
     def _save_to_cache(self, data, json_path):
         try:
+            os.makedirs(os.path.dirname(json_path), exist_ok=True)
             with open(json_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
             logger.info("Saved transcription to cache")

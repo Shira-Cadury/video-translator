@@ -105,3 +105,32 @@ pip install python-multipart
 2026-03-27 12:38:59,472 | INFO | [API] Translating segments via Google Translator...
 2026-03-27 12:39:56,554 | INFO | [SAVED] Translation cache created: storage/subtitles/local_1bf2f6da-9964-40e2-a9ac-6d242d1cf18d_he.json
 2026-03-27 12:39:56,852 | INFO | [b1dc231d] Job 1bf2f6da-9964-40e2-a9ac-6d242d1cf18d completed successfully!
+2026-03-29 13:04:18,236 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:05:16,018 | INFO | Model large loaded successfully.
+2026-03-29 13:06:18,572 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:07:15,652 | INFO | Model large loaded successfully.
+2026-03-29 13:07:16,692 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 13:07:26,700 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:08:09,630 | INFO | Model large loaded successfully.
+2026-03-29 13:08:10,327 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 13:08:17,040 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:09:12,167 | INFO | Model large loaded successfully.
+2026-03-29 13:09:13,334 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 13:10:23,168 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:11:10,603 | INFO | Model large loaded successfully.
+2026-03-29 13:11:11,416 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 13:12:54,096 | INFO | [JOB CREATED] 01a05aa2-a5ba-4e02-bbf7-897325c19696
+2026-03-29 13:12:54,097 | INFO | Received request for URL: https://youtu.be/SE05iCw3qY8?si=6d3Lsbvex5HSKvWq. Created Job ID: 01a05aa2-a5ba-4e02-bbf7-897325c19696
+2026-03-29 13:12:57,412 | INFO | [DOWNLOAD] Video: Stray Kids "Lose My Breath (Stray Kids Ver.)" Live Video
+2026-03-29 13:13:03,444 | INFO | [DOWNLOAD] Audio: Stray Kids "Lose My Breath (Stray Kids Ver.)" Live Video
+2026-03-29 13:13:08,976 | INFO | Transcribing: storage\audio\SE05iCw3qY8.mp3
+2026-03-29 13:20:30,755 | INFO | Saved transcription to cache
+2026-03-29 13:20:30,762 | INFO | [TIME] Transcription: 441.79s
+2026-03-29 13:20:30,766 | INFO | [API] Translating 81 segments via Google Translator...
+2026-03-29 13:20:37,827 | INFO | [SAVED] Translation cache created: storage/subtitles/SE05iCw3qY8_iw.json
+2026-03-29 13:20:37,831 | INFO | [SAVED] SRT created: storage/subtitles/SE05iCw3qY8_iw.srt
+2026-03-29 13:20:37,854 | INFO | [SAVED] VTT created: storage/subtitles/SE05iCw3qY8_iw.vtt
+2026-03-29 13:20:37,858 | INFO | Summarizing (1915 chars)
+2026-03-29 13:20:38,109 | INFO | [TIME] Summary: 0.25s
+2026-03-29 13:20:38,111 | INFO | [SAVED] Summary saved: storage/subtitles/SE05iCw3qY8_summary_iw.txt
+2026-03-29 13:20:38,111 | INFO | [8ae13cbe] Job 01a05aa2-a5ba-4e02-bbf7-897325c19696 completed successfully!
