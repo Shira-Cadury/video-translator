@@ -10,8 +10,8 @@ from app.services.summary_service import SummaryService
 from app.services.job_manager import JobManager
 from app.config import LOG_FILE, STORAGE_PATH, MAX_SUMMARY_SENTENCES
 from app.services.video_source_service import  VideoSourceService
+from app.services.storage_manager import StorageManager
 import os
-import shutil
 import re
 import time
 import logging
@@ -35,6 +35,7 @@ translation_service = TranslationService()
 summary_service = SummaryService()
 job_manager = JobManager()
 video_source_service = VideoSourceService(STORAGE_PATH)
+storage_manager = StorageManager(STORAGE_PATH)
 
 app = FastAPI()
 
@@ -68,23 +69,7 @@ class VideoRequest(BaseModel):
     url: str | None = None
     generate_summary: bool = True
     summary_sentences: int = Field(default=3, ge=1, le=MAX_SUMMARY_SENTENCES)
-    target_language: str = "he" 
-    
-def cleanup_old_files(folder_path, max_age_hours=24):
-    if not os.path.exists(folder_path):
-        return
-    
-    now = time.time()
-    count = 0
-    for filename in os.listdir(folder_path):
-        file_path = os.path.join(folder_path, filename)
-        if os.path.isfile(file_path):
-            file_age = now - os.path.getmtime(file_path)
-            if file_age > (max_age_hours * 3600):
-                os.remove(file_path)
-                count += 1
-    if count > 0:
-        logger.info(f"[CLEANUP] Deleted {count} old files from {folder_path}")                
+    target_language: str = "he"   
 
 def extract_video_id(url: str):
     video_id_match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", url)
@@ -106,7 +91,8 @@ def get_video_paths(video_id: str, lang: str):
 
 @app.post("/upload-video")
 async def upload_video(file: UploadFile = File(...), target_language: str = "he", generate_summary: bool = True):
-    file_path = file_path = video_source_service.save_uploaded_file(file)
+    storage_manager.cleanup_if_needed()
+    file_path = video_source_service.save_uploaded_file(file)
     request_id = str(uuid.uuid4())[:8]
     job_id = job_manager.create_job()
     logger.info(f"File uploaded. Starting job: {job_id}")
@@ -149,11 +135,15 @@ def cancel_video_job(job_id: str):
 def prepare_source(source: str, job_id: str):
     if video_source_service.is_url(source):
         video_id = extract_video_id(source)
+        
         video_res = video_service.download_video(source)
         audio_res = video_service.download_audio(source)
         
         if audio_res.get("status") != "success":
             raise Exception("YouTube audio download failed")
+        
+        storage_manager.touch_file(video_res["file_path"])
+        storage_manager.touch_file(audio_res["file_path"])
         
         return video_id, audio_res["file_path"], video_res["file_path"]
     
@@ -162,10 +152,13 @@ def prepare_source(source: str, job_id: str):
         audio_path = source
         video_url = source
         
+        storage_manager.touch_file(source)
+        
         return video_id, audio_path, video_url
 
 
 def process_video_job(job_id: str, source: str, request_id: str, target_lang: str, generate_summary: bool, summary_sentences: int):
+    storage_manager.cleanup_if_needed()
     try:
         if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
             return 
@@ -225,9 +218,7 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
 @app.on_event("startup")
 async def startup_event():
     logger.info("--- Server starting up... Running Cleanup ---")
-    cleanup_old_files(f"{STORAGE_PATH}/video")
-    cleanup_old_files(f"{STORAGE_PATH}/audio")
-    cleanup_old_files(f"{STORAGE_PATH}/subtitles")
+    storage_manager.cleanup_if_needed()
     
     
 @app.get("/files")
@@ -284,6 +275,7 @@ def check_status(job_id: str):
     
 @app.post("/process-video")
 def process_video(request: VideoRequest):
+    storage_manager.cleanup_if_needed()
     request_id = str(uuid.uuid4())[:8]
     job_id = job_manager.create_job()
     logger.info(f"Received request for URL: {request.url}. Created Job ID: {job_id}")
