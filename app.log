@@ -207,3 +207,173 @@ pip install python-multipart
 2026-03-29 19:19:29,442 | INFO | [CHUNKER] Split into 3 chunks
 2026-03-29 19:19:29,479 | INFO | Processing chunk 1/3: storage\audio\chunk_c1b01bb4d7c045caad790d95418b9953.wav
 2026-03-29 19:45:40,431 | INFO | Processing chunk 2/3: storage\audio\chunk_237ddb3c147a4443ae371427113ecaed.wav
+2026-03-30 11:17:02,517 | INFO | Loading Whisper model ('large')...
+2026-03-30 11:18:03,944 | INFO | Model large loaded successfully.
+2026-03-30 11:18:04,730 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 11:18:22,349 | INFO | [JOB CREATED] f841e7d2-b9d9-4316-992b-8975f54696c8
+2026-03-30 11:18:22,349 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_. Created Job ID: f841e7d2-b9d9-4316-992b-8975f54696c8
+2026-03-30 11:18:25,060 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:18:26,887 | INFO | [DOWNLOAD] Audio: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:18:33,607 | INFO | Transcribing: storage\audio\aTuLsczTCIg.mp3 (duration: 200s)
+2026-03-30 11:18:33,607 | INFO | Processing short file directly...
+2026-03-30 11:24:54,234 | INFO | Saved transcription to cache
+2026-03-30 11:24:54,238 | INFO | [TIME] Transcription: 380.63s
+2026-03-30 11:24:54,243 | ERROR | [f2418610] Job f841e7d2-b9d9-4316-992b-8975f54696c8 failed: he --> No support for the provided language.
+Please select on of the supported languages:
+{'afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 'nepali': 'ne', 'norwegian': 'no', 'odia (oriya)': 'or', 'oromo': 'om', 'pashto': 'ps', 'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'}
+2026-03-30 11:24:54,248 | ERROR | [JOB FAILED] f841e7d2-b9d9-4316-992b-8975f54696c8
+2026-03-30 11:39:23,103 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:39:24,876 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,089 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-03-30 11:39:25,106 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/config.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,107 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/model.bin "HTTP/1.1 302 Found"
+2026-03-30 11:39:25,125 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/tokenizer.json "HTTP/1.1 307 Temporary Redirect"
+2026-03-30 11:39:25,128 | INFO | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/config.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,144 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/vocabulary.json "HTTP/1.1 307 Temporary Redirect"
+2026-03-30 11:39:25,145 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/tokenizer.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,146 | WARNING | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-03-30 11:39:25,166 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/vocabulary.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,168 | INFO | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/tokenizer.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,188 | INFO | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/vocabulary.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,209 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-03-30 11:39:25,250 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,281 | INFO | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,397 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/xet-read-token/edaa852ec7e145841d8ffdb056a99866b5f0a478 "HTTP/1.1 200 OK"
+2026-03-30 11:41:00,444 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:42:22,117 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:42:23,861 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:42:35,517 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:42:35,590 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 11:43:19,046 | INFO | [JOB CREATED] f7d30fc6-361f-4596-922f-a878b6439b45
+2026-03-30 11:43:19,046 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_. Created Job ID: f7d30fc6-361f-4596-922f-a878b6439b45
+2026-03-30 11:43:21,624 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:43:23,245 | INFO | [CACHE] Audio hit: aTuLsczTCIg
+2026-03-30 11:43:23,274 | INFO | [TRANSCRIPTION] Using cached transcription
+2026-03-30 11:43:23,275 | ERROR | [611e009c] Job f7d30fc6-361f-4596-922f-a878b6439b45 failed: he --> No support for the provided language.
+Please select on of the supported languages:
+{'afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 'nepali': 'ne', 'norwegian': 'no', 'odia (oriya)': 'or', 'oromo': 'om', 'pashto': 'ps', 'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'}
+2026-03-30 11:43:23,276 | ERROR | [JOB FAILED] f7d30fc6-361f-4596-922f-a878b6439b45
+2026-03-30 11:49:40,719 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:49:43,692 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:50:02,692 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:50:42,879 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:50:44,724 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:50:55,137 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:51:52,440 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:51:54,365 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:52:04,533 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:53:33,036 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:53:34,909 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:53:45,719 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:53:45,787 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 11:54:02,154 | INFO | [JOB CREATED] 93d624bd-be2e-4a39-8ee4-8f406eae305a
+2026-03-30 11:54:02,157 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_. Created Job ID: 93d624bd-be2e-4a39-8ee4-8f406eae305a
+2026-03-30 11:54:02,159 | INFO | [f36add34] Preparing source: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_
+2026-03-30 11:54:04,888 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:54:06,318 | INFO | [CACHE] Audio hit: aTuLsczTCIg
+2026-03-30 11:54:06,319 | INFO | [f36add34] Source ready. audio=storage\audio\aTuLsczTCIg.mp3
+2026-03-30 11:54:06,320 | INFO | [f36add34] Starting transcription...
+2026-03-30 11:54:06,323 | INFO | [TRANSCRIPTION] Using cached transcription
+2026-03-30 11:54:06,324 | INFO | [f36add34] Transcription done. 62 segments.
+2026-03-30 11:54:06,326 | INFO | [f36add34] Starting translation of 62 segments → he...
+2026-03-30 11:54:06,328 | ERROR | [f36add34] Job 93d624bd-be2e-4a39-8ee4-8f406eae305a FAILED at status 'translating': he --> No support for the provided language.
+Please select on of the supported languages:
+{'afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 'nepali': 'ne', 'norwegian': 'no', 'odia (oriya)': 'or', 'oromo': 'om', 'pashto': 'ps', 'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'}
+2026-03-30 11:54:06,332 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 199, in process_video_job
+    translated_segments = translation_service.translate_segments(
+        segments,
+    ...<2 lines>...
+        storage_manager=storage_manager
+    )
+  File "C:\my_project\VideoTranslator\app\services\translation_service.py", line 38, in translate_segments
+    self.translator = GoogleTranslator(source=self.source, target=target_lang)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\my_project\VideoTranslator\venv\Lib\site-packages\deep_translator\google.py", line 39, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        base_url=BASE_URLS.get("GOOGLE_TRANSLATE"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        **kwargs
+        ^^^^^^^^
+    )
+    ^
+  File "C:\my_project\VideoTranslator\venv\Lib\site-packages\deep_translator\base.py", line 44, in __init__
+    self._source, self._target = self._map_language_to_code(source, target)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\my_project\VideoTranslator\venv\Lib\site-packages\deep_translator\base.py", line 84, in _map_language_to_code
+    raise LanguageNotSupportedException(
+    ...<4 lines>...
+    )
+deep_translator.exceptions.LanguageNotSupportedException: he --> No support for the provided language.
+Please select on of the supported languages:
+{'afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 'nepali': 'ne', 'norwegian': 'no', 'odia (oriya)': 'or', 'oromo': 'om', 'pashto': 'ps', 'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'}
+
+2026-03-30 11:54:06,334 | ERROR | [JOB FAILED] 93d624bd-be2e-4a39-8ee4-8f406eae305a
+2026-03-30 11:55:51,499 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:55:53,199 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:56:03,838 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:57:16,668 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:57:18,653 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:57:28,820 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:57:53,285 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:57:55,008 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:58:05,449 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:58:05,515 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 11:58:29,996 | INFO | [JOB CREATED] 1a53de3b-98f5-4eb8-9476-2105ac06b405
+2026-03-30 11:58:29,996 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_. Created Job ID: 1a53de3b-98f5-4eb8-9476-2105ac06b405
+2026-03-30 11:58:29,997 | INFO | [88c285fe] Preparing source: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_
+2026-03-30 11:58:32,144 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:58:33,703 | INFO | [CACHE] Audio hit: aTuLsczTCIg
+2026-03-30 11:58:33,719 | INFO | [88c285fe] Source ready. audio=storage\audio\aTuLsczTCIg.mp3
+2026-03-30 11:58:33,719 | INFO | [88c285fe] Starting transcription...
+2026-03-30 11:58:33,721 | INFO | [TRANSCRIPTION] Using cached transcription
+2026-03-30 11:58:33,724 | INFO | [88c285fe] Transcription done. 62 segments.
+2026-03-30 11:58:33,727 | INFO | [88c285fe] Starting translation of 62 segments → he...
+2026-03-30 11:58:33,728 | INFO | [TRANSLATION] Translating 62 segments → 'he'
+2026-03-30 11:58:35,160 | INFO | [TRANSLATION] Cache saved: storage/subtitles/aTuLsczTCIg_he.json
+2026-03-30 11:58:35,161 | INFO | [88c285fe] Translation done. 62 segments.
+2026-03-30 11:58:35,165 | INFO | [SAVED] SRT created: storage/subtitles/aTuLsczTCIg_he.srt
+2026-03-30 11:58:35,191 | INFO | [SAVED] VTT created: storage/subtitles/aTuLsczTCIg_he.vtt
+2026-03-30 11:58:35,195 | INFO | Summarizing (2104 chars)
+2026-03-30 11:58:35,370 | INFO | [TIME] Summary: 0.17s
+2026-03-30 11:58:35,370 | INFO | [88c285fe] Job 1a53de3b-98f5-4eb8-9476-2105ac06b405 completed successfully!
+2026-03-30 12:01:02,708 | INFO | [JOB CREATED] b6f50f7d-e71d-4120-b3cb-f34a4e0246ff
+2026-03-30 12:01:02,716 | INFO | Received request for URL: https://youtu.be/qCq1xbf-8ls?si=JS-iVt7MkXs5OCRl. Created Job ID: b6f50f7d-e71d-4120-b3cb-f34a4e0246ff
+2026-03-30 12:01:02,718 | INFO | [581a821f] Preparing source: https://youtu.be/qCq1xbf-8ls?si=JS-iVt7MkXs5OCRl
+2026-03-30 12:01:04,104 | INFO | [DOWNLOAD] Video: [GOING SEVENTEEN] EP.135 더 게장 #2 (The Gejang #2)
+2026-03-30 12:01:13,430 | INFO | [DOWNLOAD] Audio: [GOING SEVENTEEN] EP.135 더 게장 #2 (The Gejang #2)
+2026-03-30 12:02:16,262 | INFO | [581a821f] Source ready. audio=storage\audio\qCq1xbf-8ls.mp3
+2026-03-30 12:02:16,262 | INFO | [581a821f] Starting transcription...
+2026-03-30 12:02:16,310 | INFO | [TRANSCRIPTION] Starting: storage\audio\qCq1xbf-8ls.mp3 (1404s)
+2026-03-30 12:02:16,311 | INFO | [CHUNKER] Long file (1404s), splitting into chunks...
+2026-03-30 12:02:18,429 | INFO | [CHUNKER] Chunk 1: 0s → 600s → storage\audio\chunk_23b227f5dd0d4872aa77733a1fda9450.mp3
+2026-03-30 12:02:20,322 | INFO | [CHUNKER] Chunk 2: 600s → 1200s → storage\audio\chunk_b3476a817a784cb2a56510eb99bb9811.mp3
+2026-03-30 12:02:20,950 | INFO | [CHUNKER] Chunk 3: 1200s → 1404s → storage\audio\chunk_35f569bdd0314aa5957f6cc8acdd97b2.mp3
+2026-03-30 12:02:20,950 | INFO | [CHUNKER] Split into 3 chunks
+2026-03-30 12:02:20,951 | INFO | [CHUNKER] Chunk 1/3 (offset 0s)
+2026-03-30 12:02:21,635 | INFO | Processing audio with duration 10:00.000
+2026-03-30 12:02:24,355 | INFO | VAD filter removed 01:24.176 of audio
+2026-03-30 12:31:48,494 | INFO | [CHUNKER] Chunk 1 done. Total segments so far: 271
+2026-03-30 12:31:48,495 | INFO | [CHUNKER] Chunk 2/3 (offset 600s)
+2026-03-30 12:31:49,108 | INFO | Processing audio with duration 10:00.000
+2026-03-30 12:31:50,399 | INFO | VAD filter removed 00:49.200 of audio
+2026-03-30 13:02:06,034 | INFO | [CHUNKER] Chunk 2 done. Total segments so far: 610
+2026-03-30 13:02:06,035 | INFO | [CHUNKER] Chunk 3/3 (offset 1200s)
+2026-03-30 13:02:06,323 | INFO | Processing audio with duration 03:23.867
+2026-03-30 13:02:06,673 | INFO | VAD filter removed 00:47.467 of audio
+2026-03-30 13:08:26,169 | INFO | [CHUNKER] Chunk 3 done. Total segments so far: 701
+2026-03-30 13:08:26,185 | INFO | [TRANSCRIPTION] Saved to cache
+2026-03-30 13:08:26,185 | INFO | [TRANSCRIPTION] Done in 3969.9s — 701 segments
+2026-03-30 13:08:26,185 | INFO | [581a821f] Transcription done. 701 segments.
+2026-03-30 13:08:26,185 | INFO | [581a821f] Starting translation of 701 segments → he...
+2026-03-30 13:08:26,186 | INFO | [TRANSLATION] Translating 701 segments → 'he'
+2026-03-30 13:08:39,090 | INFO | [TRANSLATION] Cache saved: storage/subtitles/qCq1xbf-8ls_he.json
+2026-03-30 13:08:39,091 | INFO | [581a821f] Translation done. 701 segments.
+2026-03-30 13:08:39,093 | INFO | [SAVED] SRT created: storage/subtitles/qCq1xbf-8ls_he.srt
+2026-03-30 13:08:39,101 | INFO | [SAVED] VTT created: storage/subtitles/qCq1xbf-8ls_he.vtt
+2026-03-30 13:08:39,104 | INFO | Summarizing (10000 chars)
+2026-03-30 13:08:39,597 | INFO | [TIME] Summary: 0.49s
+2026-03-30 13:08:39,598 | INFO | [SAVED] Summary saved: storage/subtitles/qCq1xbf-8ls_summary_he.txt
+2026-03-30 13:08:39,598 | INFO | [581a821f] Job b6f50f7d-e71d-4120-b3cb-f34a4e0246ff completed successfully!

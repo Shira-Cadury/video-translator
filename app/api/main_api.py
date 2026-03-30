@@ -19,6 +19,7 @@ import logging
 import uuid
 import threading
 import asyncio
+import traceback
 
 
 STATUS_PENDING = "pending"
@@ -29,6 +30,8 @@ STATUS_FINALIZING = "finalizing"
 STATUS_COMPLETED = "completed"
 STATUS_FAILED = "failed"
 STATUS_CANCELLED = "cancelled"
+
+AUDIO_SOURCE_LANGUAGE = "en"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -75,7 +78,7 @@ class VideoRequest(BaseModel):
     url: str | None = None
     generate_summary: bool = True
     summary_sentences: int = Field(default=3, ge=1, le=MAX_SUMMARY_SENTENCES)
-    target_language: str = "iw"
+    target_language: str = "he"
 
 
 def extract_video_id(url: str):
@@ -102,28 +105,19 @@ def health():
 @app.post("/upload-video")
 async def upload_video(
     file: UploadFile = File(...),
-    target_language: str = "iw",
+    target_language: str = "he",
     generate_summary: bool = True,
     summary_sentences: int = 3
 ):
     storage_manager.cleanup_if_needed()
-
     file_path = await asyncio.to_thread(video_source_service.save_uploaded_file, file)
-
     request_id = str(uuid.uuid4())[:8]
     job_id = job_manager.create_job()
     logger.info(f"File uploaded. Starting job: {job_id}")
 
     thread = threading.Thread(
         target=process_video_job,
-        args=(
-            job_id,
-            file_path,
-            request_id,
-            target_language,
-            generate_summary,
-            summary_sentences  
-        ),
+        args=(job_id, file_path, request_id, target_language, generate_summary, summary_sentences),
         daemon=True
     )
     thread.start()
@@ -151,26 +145,13 @@ def cancel_video_job(job_id: str):
 def prepare_source(source: str, job_id: str):
     if video_source_service.is_url(source):
         video_id = extract_video_id(source)
-
-        video_res = video_service.download_video(source)
-        audio_res = video_service.download_audio(source)
-
+        video_res, audio_res = video_service.download_both(source, storage_manager=storage_manager)
         if audio_res.get("status") != "success":
-            raise Exception("YouTube audio download failed")
-
-        storage_manager.touch_file(video_res["file_path"])
-        storage_manager.touch_file(audio_res["file_path"])
-
+            raise Exception(f"YouTube audio download failed: {audio_res.get('message', '')}")
         return video_id, audio_res["file_path"], video_res["file_path"]
-
     else:
-        video_id = f"local_{job_id}"
-        audio_path = source
-        video_url = source
-
         storage_manager.touch_file(source)
-
-        return video_id, audio_path, video_url
+        return f"local_{job_id}", source, source
 
 
 def process_video_job(job_id: str, source: str, request_id: str, target_lang: str, generate_summary: bool, summary_sentences: int):
@@ -181,42 +162,65 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
 
         job_manager.update_status(job_id, STATUS_DOWNLOADING)
         job_manager.update_progress(job_id, 10)
-
+        logger.info(f"[{request_id}] Preparing source: {source}")
         video_id, audio_path, video_display_url = prepare_source(source, job_id)
         paths = get_video_paths(video_id, lang=target_lang)
+        logger.info(f"[{request_id}] Source ready. audio={audio_path}")
 
         job_manager.update_status(job_id, STATUS_TRANSCRIBING)
         job_manager.update_progress(job_id, 30)
+        logger.info(f"[{request_id}] Starting transcription...")
 
         trans_res = transcription_service.transcribe(
-            audio_path, 
+            audio_path,
             paths["json"],
-            language=target_lang,
+            language=AUDIO_SOURCE_LANGUAGE,
             storage_manager=storage_manager,
             job_id=job_id,
             job_manager=job_manager
-            )
+        )
+
         if not trans_res.get("success"):
             raise Exception(f"Transcription failed: {trans_res.get('error', 'Unknown error')}")
 
         segments = trans_res["segments"]
+        logger.info(f"[{request_id}] Transcription done. {len(segments)} segments.")
+
+        if not segments:
+            raise Exception("Transcription produced no segments")
 
         if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
             return
 
         job_manager.update_status(job_id, STATUS_TRANSLATING)
         job_manager.update_progress(job_id, 60)
-        translated_segments = translation_service.translate_segments(segments, paths["trans"], target_lang=target_lang)
+        logger.info(f"[{request_id}] Starting translation of {len(segments)} segments → {target_lang}...")
+
+        translated_segments = translation_service.translate_segments(
+            segments,
+            paths["trans"],
+            target_lang=target_lang,
+            storage_manager=storage_manager
+        )
+
+        if not translated_segments:
+            raise Exception("Translation returned empty result")
+
+        logger.info(f"[{request_id}] Translation done. {len(translated_segments)} segments.")
 
         job_manager.update_status(job_id, STATUS_FINALIZING)
         job_manager.update_progress(job_id, 90)
 
-        subtitle_service.generate_srt(translated_segments, paths["srt_lang"])
+        subtitle_service.generate_srt(translated_segments, paths["srt_lang"], storage_manager=storage_manager)
 
         summary_text = None
         if generate_summary:
             raw_text = summary_service.build_text(translated_segments)
-            summary_text = summary_service.summarize(raw_text, paths["summary"], sentences_count=summary_sentences)
+            summary_text = summary_service.summarize(
+                raw_text, paths["summary"],
+                sentences_count=summary_sentences,
+                storage_manager=storage_manager
+            )
 
         result_data = {
             "video_id": video_id,
@@ -232,8 +236,9 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
     except Exception as e:
         current_status = job_manager.get_job(job_id)["status"]
         if current_status != STATUS_CANCELLED:
-            logger.error(f"[{request_id}] Job {job_id} failed: {str(e)}")
-            job_manager.fail_job(job_id, {"error": str(e)})   
+            logger.error(f"[{request_id}] Job {job_id} FAILED at status '{current_status}': {str(e)}")
+            logger.error(traceback.format_exc())
+            job_manager.fail_job(job_id, {"error": str(e)})
 
 
 @app.get("/files")
@@ -281,10 +286,8 @@ def check_status(job_id: str):
         "progress": job.get("progress", 0),
         "created_at": job["created_at"]
     }
-
     if job.get("result"):
         response["result"] = job["result"]
-
     return response
 
 

@@ -2,8 +2,14 @@ venv/
 .env
 __pycache__/
 *.py[cod]
+*$py.class
 .vscode/
-
+.idea/
 storage/
-
+logs/
 old_version/
+.DS_Store
+Thumbs.db
+desktop.ini
+models/
+.cache/
