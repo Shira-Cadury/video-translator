@@ -1,11 +1,12 @@
 import yt_dlp
 import os
 import logging
+import shutil
 from app.config import STORAGE_PATH
 
 logger = logging.getLogger(__name__)
 
-MAX_DURATION_SEC = 1200  
+MAX_DURATION_SEC = 7200  
 
 class VideoService:
     def __init__(self):
@@ -15,9 +16,18 @@ class VideoService:
         for path in [self.audio_path, self.video_path]:
             os.makedirs(path, exist_ok=True)
 
+    def _get_common_opts(self):
+        node_path = shutil.which('node')
+        return {
+            'quiet': True,
+            'no_warnings': True,
+            'nocheckcertificate': True,
+            'javascript_executor': node_path or 'node', 
+        }
+
     def _extract_info(self, url: str) -> dict | None:
         try:
-            with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
+            with yt_dlp.YoutubeDL(self._get_common_opts()) as ydl:
                 return ydl.extract_info(url, download=False)
         except Exception as e:
             logger.error(f"[YOUTUBE] Failed to extract info: {e}")
@@ -25,9 +35,9 @@ class VideoService:
 
     def download_audio(self, url, info: dict = None, storage_manager=None):
         ydl_opts = {
+            **self._get_common_opts(),
             'format': 'bestaudio/best',
             'outtmpl': os.path.join(self.audio_path, '%(id)s.%(ext)s'),
-            'quiet': True,
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
@@ -52,7 +62,7 @@ class VideoService:
                 return {"status": "success", "file_path": file_path, "title": title}
 
             if info.get('duration', 0) > MAX_DURATION_SEC:
-                return {"status": "error", "message": "Video too long"}
+                return {"status": "error", "message": f"Video too long ({info.get('duration')}s)"}
 
             logger.info(f"[DOWNLOAD] Audio: {title}")
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -66,9 +76,9 @@ class VideoService:
 
     def download_video(self, url, info: dict = None, storage_manager=None):
         ydl_opts = {
+            **self._get_common_opts(),
             'format': 'best[ext=mp4]',
             'outtmpl': os.path.join(self.video_path, '%(id)s.%(ext)s'),
-            'quiet': True,
         }
 
         try:

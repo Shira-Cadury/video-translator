@@ -1,12 +1,9 @@
 venv/
 .env
-
 __pycache__/
 *.py[cod]
-
 .vscode/
 
-storage/audio/*
-storage/subtitles/*
+storage/
 
-old_verison/
+old_version/

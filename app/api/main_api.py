@@ -188,7 +188,14 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
         job_manager.update_status(job_id, STATUS_TRANSCRIBING)
         job_manager.update_progress(job_id, 30)
 
-        trans_res = transcription_service.transcribe(audio_path, paths["json"])
+        trans_res = transcription_service.transcribe(
+            audio_path, 
+            paths["json"],
+            language=target_lang,
+            storage_manager=storage_manager,
+            job_id=job_id,
+            job_manager=job_manager
+            )
         if not trans_res.get("success"):
             raise Exception(f"Transcription failed: {trans_res.get('error', 'Unknown error')}")
 

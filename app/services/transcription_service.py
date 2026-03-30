@@ -1,4 +1,5 @@
 from app.config import MODEL_SIZE
+from app.services.audio_chunk_service import split_audio
 import whisper
 import os
 import json
@@ -7,7 +8,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-MAX_AUDIO_DURATION_SEC = 1200  
+MAX_AUDIO_DURATION_SEC = 7200  
 
 class TranscriptionService:
     _model = None
@@ -27,7 +28,9 @@ class TranscriptionService:
 
         self.model = TranscriptionService._model
 
-    def transcribe(self, audio_path, json_path=None, language="en", storage_manager=None):
+    def transcribe(self, audio_path, json_path=None, language="en", storage_manager=None, job_id=None, job_manager=None):
+        if language == "iw":
+            language = "he"
         if json_path and os.path.exists(json_path):
             if storage_manager:
                 storage_manager.touch_file(json_path)
@@ -44,7 +47,7 @@ class TranscriptionService:
 
         
         duration = self._get_audio_duration(audio_path)
-        if duration and duration > MAX_AUDIO_DURATION_SEC:
+        if duration and MAX_AUDIO_DURATION_SEC and duration > MAX_AUDIO_DURATION_SEC:
             logger.error(f"[REJECTED] Audio too long: {duration:.0f}s (max {MAX_AUDIO_DURATION_SEC}s)")
             return {"success": False, "error": f"Audio exceeds maximum duration of {MAX_AUDIO_DURATION_SEC // 60} minutes"}
 
@@ -52,7 +55,42 @@ class TranscriptionService:
         start = time.time()
 
         try:
-            result = self.model.transcribe(audio_path, fp16=False, language=language)
+            seconds_per_chunk = 10 * 60
+            if duration > 900:
+                logger.info(f"[CHUNKER] File is long ({duration:.0f}s), splitting into chunks...")
+                
+                chunks = split_audio(audio_path)
+                all_segments = []
+                full_text = ""
+                total_chunks = len(chunks)
+                
+                for i, chunk_path in enumerate(chunks):
+                    logger.info(f"Processing chunk {i+1}/{len(chunks)}: {chunk_path}")
+                    
+                    if job_id and job_manager:
+                        current_progress = 30 + int((i / total_chunks) * 30)
+                        job_manager.update_progress(job_id, current_progress)
+                    
+                    chunks_res = self.model.transcribe(chunk_path, fp16=False, language=language)
+                    
+                    offset = i * seconds_per_chunk
+                    
+                    current_segments = chunks_res.get("segments", [])
+                    for seg in current_segments:
+                        seg["start"] += offset
+                        seg["end"] += offset
+                    
+                    all_segments.extend(chunks_res.get("segments", []))
+                    full_text += chunks_res.get("text", "") + " "
+                    os.remove(chunk_path)
+                    
+                result = {
+                    "segments": all_segments,
+                    "text": full_text.strip()
+                }  
+            else:
+                logger.info(f"Processing short file directly...")   
+                result = self.model.transcribe(audio_path, fp16=False, language=language)  
 
             if json_path:
                 self._save_to_cache(result, json_path)
