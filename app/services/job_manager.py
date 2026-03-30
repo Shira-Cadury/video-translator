@@ -71,3 +71,9 @@ class JobManager:
                 del self.jobs[jid]
             if to_remove:
                 logger.info(f"[JOB MANAGER] Cleaned up {len(to_remove)} old jobs")
+
+
+    def update_eta(self, job_id, eta_seconds):
+        with self._lock:
+            if job_id in self.jobs:
+                self.jobs[job_id]["eta_seconds"] = eta_seconds

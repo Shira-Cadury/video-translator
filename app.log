@@ -377,3 +377,104 @@ Please select on of the supported languages:
 2026-03-30 13:08:39,597 | INFO | [TIME] Summary: 0.49s
 2026-03-30 13:08:39,598 | INFO | [SAVED] Summary saved: storage/subtitles/qCq1xbf-8ls_summary_he.txt
 2026-03-30 13:08:39,598 | INFO | [581a821f] Job b6f50f7d-e71d-4120-b3cb-f34a4e0246ff completed successfully!
+2026-03-30 18:17:39,939 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:17:42,097 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:17:52,748 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:17:52,823 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:19:51,717 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:19:53,680 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:20:03,956 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:20:04,022 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:21:11,146 | INFO | [JOB CREATED] e3067092-6e3b-4776-9e57-c1076ab20f45
+2026-03-30 18:21:11,146 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=25_3VNC5yzHBez3x. Created Job ID: e3067092-6e3b-4776-9e57-c1076ab20f45
+2026-03-30 18:21:11,147 | INFO | [1e78b212] Preparing source: https://youtu.be/aTuLsczTCIg?si=25_3VNC5yzHBez3x
+2026-03-30 18:21:14,109 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 18:21:16,075 | INFO | [CACHE] Audio hit: aTuLsczTCIg
+2026-03-30 18:21:16,078 | INFO | [1e78b212] Source ready. audio=storage\audio\aTuLsczTCIg.mp3
+2026-03-30 18:21:16,079 | INFO | [1e78b212] Starting transcription...
+2026-03-30 18:21:16,081 | INFO | [TRANSCRIPTION] Using cached transcription
+2026-03-30 18:21:16,083 | INFO | [1e78b212] Transcription done. 62 segments.
+2026-03-30 18:21:16,084 | INFO | [1e78b212] Starting translation of 62 segments → he...
+2026-03-30 18:21:16,084 | INFO | [CACHE] Translation found: storage/subtitles/aTuLsczTCIg_he.json
+2026-03-30 18:21:16,086 | INFO | [1e78b212] Translation done. 62 segments.
+2026-03-30 18:21:16,086 | INFO | [CACHE] SRT exists: storage/subtitles/aTuLsczTCIg_he.srt
+2026-03-30 18:21:16,088 | INFO | Summarizing (2104 chars)
+2026-03-30 18:21:16,228 | INFO | [TIME] Summary: 0.14s
+2026-03-30 18:21:16,228 | INFO | [1e78b212] Job e3067092-6e3b-4776-9e57-c1076ab20f45 completed successfully!
+2026-03-30 18:22:01,268 | INFO | [JOB CREATED] e5552c7e-80e9-4fa9-9209-69ed0168b864
+2026-03-30 18:22:01,285 | INFO | Received request for URL: https://youtu.be/80H_-aHTUws?si=qEqYPiv2oRRwnbUs. Created Job ID: e5552c7e-80e9-4fa9-9209-69ed0168b864
+2026-03-30 18:22:01,289 | INFO | [e03fcd56] Preparing source: https://youtu.be/80H_-aHTUws?si=qEqYPiv2oRRwnbUs
+2026-03-30 18:22:03,205 | INFO | [DOWNLOAD] Video: Stray Kids "MOUNTAINS" Video
+2026-03-30 18:22:06,469 | INFO | [DOWNLOAD] Audio: Stray Kids "MOUNTAINS" Video
+2026-03-30 18:22:14,389 | INFO | [e03fcd56] Source ready. audio=storage\audio\80H_-aHTUws.mp3
+2026-03-30 18:22:14,389 | INFO | [e03fcd56] Starting transcription...
+2026-03-30 18:22:14,425 | INFO | [TRANSCRIPTION] Starting: storage\audio\80H_-aHTUws.mp3 (192s)
+2026-03-30 18:22:14,425 | INFO | [CHUNKER] Long file (192s), splitting into chunks...
+2026-03-30 18:22:15,172 | INFO | [CHUNKER] Chunk 1: 0s → 192s → storage\audio\chunk_71c7ea0ebe0243988346f31746649aad.mp3
+2026-03-30 18:22:15,172 | INFO | [CHUNKER] Split into 1 chunks
+2026-03-30 18:22:15,172 | INFO | [CHUNKER] Chunk 1/1 (offset 0s)
+2026-03-30 18:22:15,172 | WARNING | [TEST] Simulating a fake failure
+2026-03-30 18:22:17,514 | INFO | Processing audio with duration 03:11.576
+2026-03-30 18:22:18,247 | INFO | VAD filter removed 03:11.576 of audio
+2026-03-30 18:22:18,265 | INFO | [CHUNKER] Chunk 1 done. Total segments: 0
+2026-03-30 18:22:18,266 | INFO | [TRANSCRIPTION] Saved to cache
+2026-03-30 18:22:18,267 | INFO | [TRANSCRIPTION] Done in 3.8s — 0 segments
+2026-03-30 18:22:18,267 | INFO | [e03fcd56] Transcription done. 0 segments.
+2026-03-30 18:22:18,267 | ERROR | [e03fcd56] Job e5552c7e-80e9-4fa9-9209-69ed0168b864 FAILED at status 'transcribing': Transcription produced no segments
+2026-03-30 18:22:18,269 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 190, in process_video_job
+    raise Exception("Transcription produced no segments")
+Exception: Transcription produced no segments
+
+2026-03-30 18:22:18,269 | ERROR | [JOB FAILED] e5552c7e-80e9-4fa9-9209-69ed0168b864
+2026-03-30 18:23:56,054 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:23:57,803 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:24:07,842 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:24:07,909 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:34:29,200 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:34:30,840 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:34:41,038 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:34:41,125 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:38:10,579 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:38:12,229 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:38:22,445 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:38:22,522 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:44:10,456 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:44:12,272 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:44:23,990 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:44:24,067 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:52:38,614 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:52:40,273 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:52:50,013 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:52:50,094 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:53:09,759 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:53:11,609 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:53:21,660 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:53:21,719 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:58:53,764 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:58:55,468 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:59:05,365 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:59:05,425 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 19:00:28,521 | INFO | [JOB CREATED] 1ff5fbf1-eef2-44f7-a4f2-95f0b08f2867
+2026-03-30 19:00:28,522 | INFO | Received request for URL: https://youtu.be/ZJSACc1s-WA?si=DfCHc00d9GNXpw7M. Created Job ID: 1ff5fbf1-eef2-44f7-a4f2-95f0b08f2867
+2026-03-30 19:00:28,522 | INFO | [e86f5cd2] Preparing source: https://youtu.be/ZJSACc1s-WA?si=DfCHc00d9GNXpw7M
+2026-03-30 19:00:31,223 | INFO | [DOWNLOAD] Video: Stray Kids Answer 20 Questions for 2025 | MTV
+2026-03-30 19:00:35,048 | INFO | [DOWNLOAD] Audio: Stray Kids Answer 20 Questions for 2025 | MTV
+2026-03-30 19:00:43,334 | INFO | [e86f5cd2] Source ready. audio=storage\audio\ZJSACc1s-WA.mp3
+2026-03-30 19:00:43,334 | INFO | [e86f5cd2] Starting transcription...
+2026-03-30 19:00:43,407 | INFO | [TRANSCRIPTION] Starting: storage\audio\ZJSACc1s-WA.mp3
+2026-03-30 19:00:43,407 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-03-30 19:00:44,279 | INFO | Processing audio with duration 05:12.320
+2026-03-30 19:00:45,362 | INFO | VAD filter removed 00:18.944 of audio
+2026-03-30 19:21:45,887 | INFO | [TRANSCRIPTION] Done in 1262.5s
+2026-03-30 19:21:45,888 | INFO | [e86f5cd2] Transcription done. 170 segments.
+2026-03-30 19:21:45,889 | INFO | [e86f5cd2] Starting translation of 170 segments → he...
+2026-03-30 19:21:45,891 | INFO | [TRANSLATION] Translating 170 segments → 'he'
+2026-03-30 19:21:52,769 | INFO | [TRANSLATION] Cache saved: storage/subtitles/ZJSACc1s-WA_he.json
+2026-03-30 19:21:52,770 | INFO | [e86f5cd2] Translation done. 170 segments.
+2026-03-30 19:21:52,776 | INFO | [SAVED] SRT created: storage/subtitles/ZJSACc1s-WA_he.srt
+2026-03-30 19:21:52,805 | INFO | [SAVED] VTT created: storage/subtitles/ZJSACc1s-WA_he.vtt
+2026-03-30 19:21:52,807 | INFO | Summarizing (2542 chars)
+2026-03-30 19:21:53,184 | INFO | [TIME] Summary: 0.38s
+2026-03-30 19:21:53,192 | INFO | [SAVED] Summary saved: storage/subtitles/ZJSACc1s-WA_summary_he.txt
+2026-03-30 19:21:53,195 | INFO | [e86f5cd2] Job 1ff5fbf1-eef2-44f7-a4f2-95f0b08f2867 completed successfully!

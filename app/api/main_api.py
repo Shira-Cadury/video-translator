@@ -12,6 +12,7 @@ from app.services.job_manager import JobManager
 from app.config import LOG_FILE, STORAGE_PATH, MAX_SUMMARY_SENTENCES
 from app.services.video_source_service import VideoSourceService
 from app.services.storage_manager import StorageManager
+from typing import Optional, Any
 import os
 import re
 import time
@@ -284,6 +285,7 @@ def check_status(job_id: str):
     response = {
         "status": job["status"],
         "progress": job.get("progress", 0),
+        "eta_seconds": job.get("eta_seconds"),
         "created_at": job["created_at"]
     }
     if job.get("result"):
