@@ -505,3 +505,15 @@ Exception: Transcription produced no segments
 2026-03-31 11:02:53,924 | INFO | [TIME] Summary: 0.35s
 2026-03-31 11:02:53,926 | INFO | [SAVED] Summary saved: storage/subtitles/Oz8Jbc4LVgk_summary_he.txt
 2026-03-31 11:02:53,926 | INFO | [32d769fb] == JOB COMPLETED ==  Total time: 1523.7 seconds  (25.4 minutes)
+2026-03-31 11:22:43,481 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-31 11:22:44,948 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-31 11:22:52,317 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-31 11:22:52,367 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-31 11:28:20,527 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-31 11:28:21,948 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-31 11:28:28,380 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-31 11:28:28,430 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-31 11:36:20,244 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-31 11:36:21,691 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-31 11:36:28,337 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-31 11:36:28,397 | INFO | --- Server starting up... Running Cleanup ---

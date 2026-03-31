@@ -13,6 +13,7 @@ from app.config import LOG_FILE, STORAGE_PATH, MAX_SUMMARY_SENTENCES
 from app.services.video_source_service import VideoSourceService
 from app.services.storage_manager import StorageManager
 from typing import Optional, Any
+from app.config import MODEL_SIZE
 import os
 import re
 import time
@@ -109,6 +110,16 @@ def health():
         "model_existed": storage_exists,
         "timestamp": time.time(),
         "device": "cpu"
+    }
+
+
+@app.get("/version")
+def get_version():
+    return{
+        "service": "Video-Translator-Pro",
+        "version": "1.0.0",
+        "model_used": MODEL_SIZE,
+        "status": "Production-Ready"
     }
 
 
