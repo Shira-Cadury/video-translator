@@ -478,3 +478,30 @@ Exception: Transcription produced no segments
 2026-03-30 19:21:53,184 | INFO | [TIME] Summary: 0.38s
 2026-03-30 19:21:53,192 | INFO | [SAVED] Summary saved: storage/subtitles/ZJSACc1s-WA_summary_he.txt
 2026-03-30 19:21:53,195 | INFO | [e86f5cd2] Job 1ff5fbf1-eef2-44f7-a4f2-95f0b08f2867 completed successfully!
+2026-03-31 10:36:52,533 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-31 10:36:54,640 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-31 10:37:05,408 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-31 10:37:05,463 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-31 10:37:30,258 | INFO | [JOB CREATED] 71a176f3-019e-477b-a129-f15e9ed80a11
+2026-03-31 10:37:30,258 | INFO | Received request for URL: https://youtu.be/Oz8Jbc4LVgk?si=QamwaGj1is_clCc4. Created Job ID: 71a176f3-019e-477b-a129-f15e9ed80a11
+2026-03-31 10:37:30,259 | INFO | [32d769fb] Preparing source: https://youtu.be/Oz8Jbc4LVgk?si=QamwaGj1is_clCc4
+2026-03-31 10:37:32,483 | INFO | [DOWNLOAD] Video: K-Pop Group Stray Kids Reveal Their Secret Nicknames For Each Other | Besties on Besties | Seventeen
+2026-03-31 10:37:35,172 | INFO | [DOWNLOAD] Audio: K-Pop Group Stray Kids Reveal Their Secret Nicknames For Each Other | Besties on Besties | Seventeen
+2026-03-31 10:37:42,945 | INFO | [32d769fb] Source ready. audio=storage\audio\Oz8Jbc4LVgk.mp3
+2026-03-31 10:37:42,945 | INFO | [32d769fb] Starting transcription...
+2026-03-31 10:37:42,993 | INFO | [TRANSCRIPTION] Starting: storage\audio\Oz8Jbc4LVgk.mp3
+2026-03-31 10:37:42,994 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-03-31 10:37:43,948 | INFO | Processing audio with duration 08:39.233
+2026-03-31 10:37:45,182 | INFO | VAD filter removed 00:21.056 of audio
+2026-03-31 11:02:48,817 | INFO | [TRANSCRIPTION] Done in 1505.8s
+2026-03-31 11:02:48,818 | INFO | [32d769fb] Transcription done. 332 segments.
+2026-03-31 11:02:48,818 | INFO | [32d769fb] Starting translation of 332 segments → he...
+2026-03-31 11:02:48,819 | INFO | [TRANSLATION] Translating 332 segments → 'he'
+2026-03-31 11:02:53,555 | INFO | [TRANSLATION] Cache saved: storage/subtitles/Oz8Jbc4LVgk_he.json
+2026-03-31 11:02:53,555 | INFO | [32d769fb] Translation done. 332 segments.
+2026-03-31 11:02:53,557 | INFO | [SAVED] SRT created: storage/subtitles/Oz8Jbc4LVgk_he.srt
+2026-03-31 11:02:53,569 | INFO | [SAVED] VTT created: storage/subtitles/Oz8Jbc4LVgk_he.vtt
+2026-03-31 11:02:53,570 | INFO | Summarizing (5507 chars)
+2026-03-31 11:02:53,924 | INFO | [TIME] Summary: 0.35s
+2026-03-31 11:02:53,926 | INFO | [SAVED] Summary saved: storage/subtitles/Oz8Jbc4LVgk_summary_he.txt
+2026-03-31 11:02:53,926 | INFO | [32d769fb] == JOB COMPLETED ==  Total time: 1523.7 seconds  (25.4 minutes)

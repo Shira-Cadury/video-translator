@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 MAX_AUDIO_DURATION_SEC = 7200
 CHUNK_THRESHOLD_SEC = 900
 MAX_RETRIES = 2
+CHUNK_TIMEOUT_SEC = 3600
 
 class TranscriptionService:
     _model = None
@@ -106,10 +107,16 @@ class TranscriptionService:
             chunk_result = None
             while attempt <= MAX_RETRIES:
                 try:
+                    chunk_exec_start = time.time()
                     segments_gen, _ = self.model.transcribe(
                         chunk_path, language=language, beam_size=5, vad_filter=True
                     )
                     chunk_result = self._collect_segments(segments_gen)
+                    
+                    exec_duration = time.time() - chunk_exec_start
+                    if exec_duration > CHUNK_TIMEOUT_SEC:
+                        logger.error(f"[TIMEOUT] Chunk {i + 1} took too long: {exec_duration:.1f}s")
+                        raise Exception(f"Chunk execution exceeded timeout of {CHUNK_TIMEOUT_SEC}s")
                     break
                 except Exception as e:
                     attempt += 1

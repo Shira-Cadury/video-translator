@@ -100,7 +100,16 @@ def get_video_paths(video_id: str, lang: str):
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "timestamp": time.time()}
+    model_loaded = transcription_service.model is not None
+    storage_exists = os.path.exists(STORAGE_PATH)
+    status = "ok" if model_loaded else "degraded"
+    
+    return{
+        "status": status,
+        "model_existed": storage_exists,
+        "timestamp": time.time(),
+        "device": "cpu"
+    }
 
 
 @app.post("/upload-video")
@@ -157,6 +166,7 @@ def prepare_source(source: str, job_id: str):
 
 def process_video_job(job_id: str, source: str, request_id: str, target_lang: str, generate_summary: bool, summary_sentences: int):
     storage_manager.cleanup_if_needed()
+    job_overall_start = time.time()
     try:
         if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
             return
@@ -230,9 +240,16 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
             "summary": summary_text
         }
 
+        total_duration = time.time() -job_overall_start
+        logger.info(
+            f"[{request_id}] == JOB COMPLETED ==  "
+            f"Total time: {total_duration:.1f} seconds  "
+            f"({total_duration/60:.1f} minutes)" 
+        )
+        
         job_manager.update_progress(job_id, 100)
         job_manager.save_result(job_id, result_data)
-        logger.info(f"[{request_id}] Job {job_id} completed successfully!")
+        
 
     except Exception as e:
         current_status = job_manager.get_job(job_id)["status"]
