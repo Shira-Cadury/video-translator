@@ -9,22 +9,21 @@ from app.services.subtitle_service import SubtitleService
 from app.services.translation_service import TranslationService
 from app.services.summary_service import SummaryService
 from app.services.job_manager import JobManager
-from app.config import LOG_FILE, STORAGE_PATH, MAX_SUMMARY_SENTENCES
+from app.config import LOG_FILE, STORAGE_PATH, MAX_SUMMARY_SENTENCES, MODEL_SIZE
 from app.services.video_source_service import VideoSourceService
 from app.services.storage_manager import StorageManager
-from typing import Optional, Any
-from app.config import MODEL_SIZE
+from app.services.queue_service import QueueService
 import os
 import re
 import time
 import logging
 import uuid
-import threading
 import asyncio
 import traceback
 
 
 STATUS_PENDING = "pending"
+STATUS_QUEUED = "queued"
 STATUS_DOWNLOADING = "downloading"
 STATUS_TRANSCRIBING = "transcribing"
 STATUS_TRANSLATING = "translating"
@@ -32,7 +31,6 @@ STATUS_FINALIZING = "finalizing"
 STATUS_COMPLETED = "completed"
 STATUS_FAILED = "failed"
 STATUS_CANCELLED = "cancelled"
-
 AUDIO_SOURCE_LANGUAGE = "en"
 
 logging.basicConfig(
@@ -55,6 +53,7 @@ summary_service = SummaryService()
 job_manager = JobManager()
 video_source_service = VideoSourceService(STORAGE_PATH)
 storage_manager = StorageManager(STORAGE_PATH)
+queue_service = QueueService()
 
 
 @asynccontextmanager
@@ -103,11 +102,10 @@ def get_video_paths(video_id: str, lang: str):
 def health():
     model_loaded = transcription_service.model is not None
     storage_exists = os.path.exists(STORAGE_PATH)
-    status = "ok" if model_loaded else "degraded"
-    
-    return{
-        "status": status,
-        "model_existed": storage_exists,
+    return {
+        "status": "ok" if model_loaded else "degraded",
+        "model_loaded": model_loaded,       
+        "storage_exists": storage_exists,
         "timestamp": time.time(),
         "device": "cpu"
     }
@@ -115,7 +113,7 @@ def health():
 
 @app.get("/version")
 def get_version():
-    return{
+    return {
         "service": "Video-Translator-Pro",
         "version": "1.0.0",
         "model_used": MODEL_SIZE,
@@ -136,17 +134,17 @@ async def upload_video(
     job_id = job_manager.create_job()
     logger.info(f"File uploaded. Starting job: {job_id}")
 
-    thread = threading.Thread(
-        target=process_video_job,
-        args=(job_id, file_path, request_id, target_language, generate_summary, summary_sentences),
-        daemon=True
+    job_manager.update_status(job_id, STATUS_QUEUED)
+    queue_service.add_job(
+        process_video_job,
+        job_id, file_path, request_id, target_language, generate_summary, summary_sentences
     )
-    thread.start()
 
     return {
-        "status": "processing",
+        "status": STATUS_QUEUED,
         "job_id": job_id,
-        "message": "Upload complete. Processing started."
+        "queue_position": queue_service.get_queue_size(),
+        "message": "Upload complete. Job is in queue."
     }
 
 
@@ -155,10 +153,8 @@ def cancel_video_job(job_id: str):
     job = job_manager.get_job(job_id)
     if not job:
         raise HTTPException(status_code=404, detail="Job ID not found")
-
     if job["status"] in [STATUS_COMPLETED, STATUS_FAILED]:
         return {"message": "Job already finished."}
-
     job_manager.cancel_job(job_id)
     return {"status": "cancelled", "message": f"Job {job_id} was marked for cancellation."}
 
@@ -194,12 +190,10 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
         logger.info(f"[{request_id}] Starting transcription...")
 
         trans_res = transcription_service.transcribe(
-            audio_path,
-            paths["json"],
+            audio_path, paths["json"],
             language=AUDIO_SOURCE_LANGUAGE,
             storage_manager=storage_manager,
-            job_id=job_id,
-            job_manager=job_manager
+            job_id=job_id, job_manager=job_manager
         )
 
         if not trans_res.get("success"):
@@ -216,11 +210,10 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
 
         job_manager.update_status(job_id, STATUS_TRANSLATING)
         job_manager.update_progress(job_id, 60)
-        logger.info(f"[{request_id}] Starting translation of {len(segments)} segments → {target_lang}...")
+        logger.info(f"[{request_id}] Starting translation of {len(segments)} segments -> {target_lang}...")
 
         translated_segments = translation_service.translate_segments(
-            segments,
-            paths["trans"],
+            segments, paths["trans"],
             target_lang=target_lang,
             storage_manager=storage_manager
         )
@@ -244,30 +237,45 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
                 storage_manager=storage_manager
             )
 
-        result_data = {
+        total_duration = time.time() - job_overall_start
+        logger.info(f"[{request_id}] == JOB COMPLETED == {total_duration:.1f}s ({total_duration/60:.1f} min)")
+
+        job_manager.update_progress(job_id, 100)
+        job_manager.save_result(job_id, {
             "video_id": video_id,
             "video_url": video_display_url,
             "subtitles": paths["srt_lang"],
             "summary": summary_text
-        }
-
-        total_duration = time.time() -job_overall_start
-        logger.info(
-            f"[{request_id}] == JOB COMPLETED ==  "
-            f"Total time: {total_duration:.1f} seconds  "
-            f"({total_duration/60:.1f} minutes)" 
-        )
-        
-        job_manager.update_progress(job_id, 100)
-        job_manager.save_result(job_id, result_data)
-        
+        })
 
     except Exception as e:
         current_status = job_manager.get_job(job_id)["status"]
         if current_status != STATUS_CANCELLED:
-            logger.error(f"[{request_id}] Job {job_id} FAILED at status '{current_status}': {str(e)}")
+            logger.error(f"[{request_id}] Job {job_id} FAILED at '{current_status}': {str(e)}")
             logger.error(traceback.format_exc())
             job_manager.fail_job(job_id, {"error": str(e)})
+
+
+@app.post("/process-video")
+def process_video(request: VideoRequest):
+    storage_manager.cleanup_if_needed()
+    request_id = str(uuid.uuid4())[:8]
+    job_id = job_manager.create_job()
+    logger.info(f"Received request for URL: {request.url}. Created Job ID: {job_id}")
+
+    job_manager.update_status(job_id, STATUS_QUEUED)
+    queue_service.add_job(
+        process_video_job,
+        job_id, request.url, request_id,
+        request.target_language, request.generate_summary, request.summary_sentences
+    )
+
+    return {
+        "status": STATUS_QUEUED,
+        "job_id": job_id,
+        "queue_position": queue_service.get_queue_size(),
+        "message": "Request received. Job is in queue."
+    }
 
 
 @app.get("/files")
@@ -286,11 +294,8 @@ def list_all_jobs():
 
 @app.get("/stats")
 def get_stats():
-    def count_files(directory):
-        if os.path.exists(directory):
-            return len([f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))])
-        return 0
-
+    def count_files(d):
+        return len([f for f in os.listdir(d) if os.path.isfile(os.path.join(d, f))]) if os.path.exists(d) else 0
     return {
         "status": "online",
         "storage_summary": {
@@ -321,29 +326,9 @@ def check_status(job_id: str):
     return response
 
 
-@app.post("/process-video")
-def process_video(request: VideoRequest):
-    storage_manager.cleanup_if_needed()
-    request_id = str(uuid.uuid4())[:8]
-    job_id = job_manager.create_job()
-    logger.info(f"Received request for URL: {request.url}. Created Job ID: {job_id}")
-
-    thread = threading.Thread(
-        target=process_video_job,
-        args=(
-            job_id,
-            request.url,
-            request_id,
-            request.target_language,
-            request.generate_summary,
-            request.summary_sentences
-        ),
-        daemon=True
-    )
-    thread.start()
-
+@app.get("/queue-status")
+def get_queue_info():
     return {
-        "status": "processing",
-        "job_id": job_id,
-        "message": "Processing started in background. Check status at /status/{job_id}"
+        "queue_size": queue_service.get_queue_size(),
+        "status": "active"
     }

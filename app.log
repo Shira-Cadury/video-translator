@@ -517,3 +517,97 @@ Exception: Transcription produced no segments
 2026-03-31 11:36:21,691 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
 2026-03-31 11:36:28,337 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
 2026-03-31 11:36:28,397 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-03 10:52:26,843 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-04-03 10:52:29,136 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-04-03 10:52:48,095 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-04-03 10:52:48,108 | INFO | [QUEUE] Worker thread started
+2026-04-03 10:52:48,293 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-03 10:53:25,091 | INFO | [JOB CREATED] 066abbd6-0393-4bbf-966a-f9abf4ed9c67
+2026-04-03 10:53:25,092 | INFO | Received request for URL: https://youtu.be/DNlOdUvZqLc?si=TjdBt-qUZrSBhA8f. Created Job ID: 066abbd6-0393-4bbf-966a-f9abf4ed9c67
+2026-04-03 10:53:25,092 | INFO | [QUEUE] Job 066abbd6-0393-4bbf-966a-f9abf4ed9c67 added — position 1 in queue
+2026-04-03 10:53:25,093 | INFO | [QUEUE] Starting job 066abbd6-0393-4bbf-966a-f9abf4ed9c67 (process_video_job)
+2026-04-03 10:53:25,096 | INFO | [2a85e302] Preparing source: https://youtu.be/DNlOdUvZqLc?si=TjdBt-qUZrSBhA8f
+2026-04-03 10:53:27,752 | INFO | [DOWNLOAD] Video: SOS (Prod. Marshmello)
+2026-04-03 10:53:30,682 | INFO | [DOWNLOAD] Audio: SOS (Prod. Marshmello)
+2026-04-03 10:53:37,866 | INFO | [2a85e302] Source ready. audio=storage\audio\DNlOdUvZqLc.mp3
+2026-04-03 10:53:37,866 | INFO | [2a85e302] Starting transcription...
+2026-04-03 10:53:37,959 | INFO | [TRANSCRIPTION] Starting: storage\audio\DNlOdUvZqLc.mp3
+2026-04-03 10:53:37,959 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-04-03 10:53:38,659 | INFO | Processing audio with duration 03:12.013
+2026-04-03 10:53:39,418 | INFO | VAD filter removed 03:09.741 of audio
+2026-04-03 10:53:58,386 | INFO | [TRANSCRIPTION] Done in 20.4s
+2026-04-03 10:53:58,387 | INFO | [2a85e302] Transcription done. 2 segments.
+2026-04-03 10:53:58,387 | INFO | [2a85e302] Starting translation of 2 segments -> he...
+2026-04-03 10:53:58,387 | INFO | [TRANSLATION] Translating 2 segments → 'he'
+2026-04-03 10:53:59,987 | INFO | [TRANSLATION] Cache saved: storage/subtitles/DNlOdUvZqLc_he.json
+2026-04-03 10:53:59,992 | INFO | [2a85e302] Translation done. 2 segments.
+2026-04-03 10:53:59,994 | INFO | [SAVED] SRT created: storage/subtitles/DNlOdUvZqLc_he.srt
+2026-04-03 10:54:00,007 | INFO | [SAVED] VTT created: storage/subtitles/DNlOdUvZqLc_he.vtt
+2026-04-03 10:54:00,008 | INFO | Summarizing (33 chars)
+2026-04-03 10:54:00,275 | INFO | [TIME] Summary: 0.27s
+2026-04-03 10:54:00,277 | INFO | [SAVED] Summary saved: storage/subtitles/DNlOdUvZqLc_summary_he.txt
+2026-04-03 10:54:00,278 | INFO | [2a85e302] == JOB COMPLETED == 35.2s (0.6 min)
+2026-04-03 10:54:00,281 | INFO | [QUEUE] Job 066abbd6-0393-4bbf-966a-f9abf4ed9c67 finished successfully
+2026-04-03 10:54:17,343 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\c3917ac5.mp4
+2026-04-03 10:54:17,343 | INFO | [JOB CREATED] d6a53a73-7ba4-4af0-b997-c4c658068718
+2026-04-03 10:54:17,344 | INFO | File uploaded. Starting job: d6a53a73-7ba4-4af0-b997-c4c658068718
+2026-04-03 10:54:17,344 | INFO | [QUEUE] Job d6a53a73-7ba4-4af0-b997-c4c658068718 added — position 1 in queue
+2026-04-03 10:54:17,344 | INFO | [QUEUE] Starting job d6a53a73-7ba4-4af0-b997-c4c658068718 (process_video_job)
+2026-04-03 10:54:17,345 | INFO | [b49635a3] Preparing source: storage\video\c3917ac5.mp4
+2026-04-03 10:54:17,345 | INFO | [b49635a3] Source ready. audio=storage\video\c3917ac5.mp4
+2026-04-03 10:54:17,346 | INFO | [b49635a3] Starting transcription...
+2026-04-03 10:54:17,375 | INFO | [TRANSCRIPTION] Starting: storage\video\c3917ac5.mp4
+2026-04-03 10:54:17,375 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-04-03 10:54:18,024 | INFO | Processing audio with duration 02:56.239
+2026-04-03 10:54:18,533 | INFO | VAD filter removed 02:13.039 of audio
+2026-04-03 10:55:40,438 | INFO | [TRANSCRIPTION] Done in 83.1s
+2026-04-03 10:55:40,438 | INFO | [b49635a3] Transcription done. 20 segments.
+2026-04-03 10:55:40,439 | INFO | [b49635a3] Starting translation of 20 segments -> he...
+2026-04-03 10:55:40,439 | INFO | [TRANSLATION] Translating 20 segments → 'he'
+2026-04-03 10:55:42,138 | INFO | [TRANSLATION] Cache saved: storage/subtitles/local_d6a53a73-7ba4-4af0-b997-c4c658068718_he.json
+2026-04-03 10:55:42,141 | INFO | [b49635a3] Translation done. 20 segments.
+2026-04-03 10:55:42,148 | INFO | [SAVED] SRT created: storage/subtitles/local_d6a53a73-7ba4-4af0-b997-c4c658068718_he.srt
+2026-04-03 10:55:42,171 | INFO | [SAVED] VTT created: storage/subtitles/local_d6a53a73-7ba4-4af0-b997-c4c658068718_he.vtt
+2026-04-03 10:55:42,188 | INFO | Summarizing (560 chars)
+2026-04-03 10:55:42,241 | INFO | [TIME] Summary: 0.05s
+2026-04-03 10:55:42,244 | INFO | [SAVED] Summary saved: storage/subtitles/local_d6a53a73-7ba4-4af0-b997-c4c658068718_summary_he.txt
+2026-04-03 10:55:42,246 | INFO | [b49635a3] == JOB COMPLETED == 84.9s (1.4 min)
+2026-04-03 10:55:42,246 | INFO | [QUEUE] Job d6a53a73-7ba4-4af0-b997-c4c658068718 finished successfully
+2026-04-03 10:57:52,619 | INFO | [JOB CREATED] 2562656b-9767-45c6-b7ff-aac66bb219fb
+2026-04-03 10:57:52,623 | INFO | Received request for URL: https://youtu.be/rDolt3jJRsM?si=Xbszcsmrwz1-VAQx. Created Job ID: 2562656b-9767-45c6-b7ff-aac66bb219fb
+2026-04-03 10:57:52,624 | INFO | [QUEUE] Job 2562656b-9767-45c6-b7ff-aac66bb219fb added — position 1 in queue
+2026-04-03 10:57:52,624 | INFO | [QUEUE] Starting job 2562656b-9767-45c6-b7ff-aac66bb219fb (process_video_job)
+2026-04-03 10:57:52,631 | INFO | [0213d3b9] Preparing source: https://youtu.be/rDolt3jJRsM?si=Xbszcsmrwz1-VAQx
+2026-04-03 10:57:54,176 | INFO | [DOWNLOAD] Video: ENHYPEN (엔하이픈) 'No Doubt' Official MV
+2026-04-03 10:57:57,133 | INFO | [DOWNLOAD] Audio: ENHYPEN (엔하이픈) 'No Doubt' Official MV
+2026-04-03 10:58:04,997 | INFO | [0213d3b9] Source ready. audio=storage\audio\rDolt3jJRsM.mp3
+2026-04-03 10:58:05,001 | INFO | [0213d3b9] Starting transcription...
+2026-04-03 10:58:05,002 | INFO | [TRANSCRIPTION] Starting: storage\audio\rDolt3jJRsM.mp3
+2026-04-03 10:58:05,003 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-04-03 10:58:05,551 | INFO | Processing audio with duration 03:04.146
+2026-04-03 10:58:06,001 | INFO | VAD filter removed 02:35.218 of audio
+2026-04-03 10:58:39,864 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\b4600896.mp4
+2026-04-03 10:58:39,865 | INFO | [JOB CREATED] ab09271e-0bc5-4d6d-af52-57204b980965
+2026-04-03 10:58:39,865 | INFO | File uploaded. Starting job: ab09271e-0bc5-4d6d-af52-57204b980965
+2026-04-03 10:58:39,866 | INFO | [QUEUE] Job ab09271e-0bc5-4d6d-af52-57204b980965 added — position 1 in queue
+2026-04-03 10:58:48,946 | INFO | [TRANSCRIPTION] Done in 43.9s
+2026-04-03 10:58:48,947 | INFO | [0213d3b9] Transcription done. 15 segments.
+2026-04-03 10:58:48,947 | INFO | [0213d3b9] Starting translation of 15 segments -> he...
+2026-04-03 10:58:48,947 | INFO | [TRANSLATION] Translating 15 segments → 'he'
+2026-04-03 10:58:50,238 | INFO | [TRANSLATION] Cache saved: storage/subtitles/rDolt3jJRsM_he.json
+2026-04-03 10:58:50,239 | INFO | [0213d3b9] Translation done. 15 segments.
+2026-04-03 10:58:50,257 | INFO | [SAVED] SRT created: storage/subtitles/rDolt3jJRsM_he.srt
+2026-04-03 10:58:50,274 | INFO | [SAVED] VTT created: storage/subtitles/rDolt3jJRsM_he.vtt
+2026-04-03 10:58:50,275 | INFO | Summarizing (308 chars)
+2026-04-03 10:58:50,325 | INFO | [TIME] Summary: 0.05s
+2026-04-03 10:58:50,327 | INFO | [SAVED] Summary saved: storage/subtitles/rDolt3jJRsM_summary_he.txt
+2026-04-03 10:58:50,328 | INFO | [0213d3b9] == JOB COMPLETED == 57.7s (1.0 min)
+2026-04-03 10:58:50,328 | INFO | [QUEUE] Job 2562656b-9767-45c6-b7ff-aac66bb219fb finished successfully
+2026-04-03 10:58:50,330 | INFO | [QUEUE] Starting job ab09271e-0bc5-4d6d-af52-57204b980965 (process_video_job)
+2026-04-03 10:58:50,332 | INFO | [fb273d2d] Preparing source: storage\video\b4600896.mp4
+2026-04-03 10:58:50,332 | INFO | [fb273d2d] Source ready. audio=storage\video\b4600896.mp4
+2026-04-03 10:58:50,332 | INFO | [fb273d2d] Starting transcription...
+2026-04-03 10:58:50,349 | INFO | [TRANSCRIPTION] Starting: storage\video\b4600896.mp4
+2026-04-03 10:58:50,349 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-04-03 10:58:50,914 | INFO | Processing audio with duration 02:56.239
+2026-04-03 10:58:51,313 | INFO | VAD filter removed 02:13.039 of audio
