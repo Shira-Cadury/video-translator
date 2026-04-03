@@ -21,7 +21,6 @@ import uuid
 import asyncio
 import traceback
 
-
 STATUS_PENDING = "pending"
 STATUS_QUEUED = "queued"
 STATUS_DOWNLOADING = "downloading"
@@ -55,12 +54,15 @@ video_source_service = VideoSourceService(STORAGE_PATH)
 storage_manager = StorageManager(STORAGE_PATH)
 queue_service = QueueService()
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("--- Server starting up... Running Cleanup ---")
     storage_manager.cleanup_if_needed()
     yield
+    
+    logger.info("--- Server shutting down... Cleaning up Queue ---")
+    queue_service.job_queue.join()
+    logger.info("--- All jobs finished. Goodbye! ---")
 
 app = FastAPI(lifespan=lifespan)
 
@@ -74,20 +76,17 @@ app.add_middleware(
 
 app.mount(f"/{STORAGE_PATH}", StaticFiles(directory=STORAGE_PATH), name="storage")
 
-
 class VideoRequest(BaseModel):
     url: str | None = None
     generate_summary: bool = True
     summary_sentences: int = Field(default=3, ge=1, le=MAX_SUMMARY_SENTENCES)
     target_language: str = "he"
 
-
 def extract_video_id(url: str):
     video_id_match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", url)
     if not video_id_match:
         raise HTTPException(status_code=400, detail="Invalid YouTube URL format")
     return video_id_match.group(1)
-
 
 def get_video_paths(video_id: str, lang: str):
     return {
@@ -96,7 +95,6 @@ def get_video_paths(video_id: str, lang: str):
         "summary": f"{STORAGE_PATH}/subtitles/{video_id}_summary_{lang}.txt",
         "srt_lang": f"{STORAGE_PATH}/subtitles/{video_id}_{lang}.srt",
     }
-
 
 @app.get("/health")
 def health():
@@ -110,7 +108,6 @@ def health():
         "device": "cpu"
     }
 
-
 @app.get("/version")
 def get_version():
     return {
@@ -120,7 +117,6 @@ def get_version():
         "status": "Production-Ready"
     }
 
-
 @app.post("/upload-video")
 async def upload_video(
     file: UploadFile = File(...),
@@ -128,6 +124,16 @@ async def upload_video(
     generate_summary: bool = True,
     summary_sentences: int = 3
 ):
+    MAX_FILE_SIZE_MB = 2000
+    max_size_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
+    
+    if file.size > max_size_bytes:
+        logger.warning(f"Rejecting file: {file.filename} is too large ({file.size} bytes)")
+        raise HTTPException(
+            status_code=413,
+            detail=f"File too large. Maximum allowed size is {MAX_FILE_SIZE_MB}MB."
+        )
+    
     storage_manager.cleanup_if_needed()
     file_path = await asyncio.to_thread(video_source_service.save_uploaded_file, file)
     request_id = str(uuid.uuid4())[:8]
@@ -147,7 +153,6 @@ async def upload_video(
         "message": "Upload complete. Job is in queue."
     }
 
-
 @app.post("/cancel/{job_id}")
 def cancel_video_job(job_id: str):
     job = job_manager.get_job(job_id)
@@ -157,7 +162,6 @@ def cancel_video_job(job_id: str):
         return {"message": "Job already finished."}
     job_manager.cancel_job(job_id)
     return {"status": "cancelled", "message": f"Job {job_id} was marked for cancellation."}
-
 
 def prepare_source(source: str, job_id: str):
     if video_source_service.is_url(source):
@@ -170,8 +174,9 @@ def prepare_source(source: str, job_id: str):
         storage_manager.touch_file(source)
         return f"local_{job_id}", source, source
 
-
 def process_video_job(job_id: str, source: str, request_id: str, target_lang: str, generate_summary: bool, summary_sentences: int):
+    MAX_JOB_TIME = 7200
+
     storage_manager.cleanup_if_needed()
     job_overall_start = time.time()
     try:
@@ -182,9 +187,13 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
         job_manager.update_progress(job_id, 10)
         logger.info(f"[{request_id}] Preparing source: {source}")
         video_id, audio_path, video_display_url = prepare_source(source, job_id)
+        
+        if time.time() - job_overall_start > MAX_JOB_TIME:
+            raise Exception(f"Global timeout: Download/Preparation exceeded {MAX_JOB_TIME}s")
+        
         paths = get_video_paths(video_id, lang=target_lang)
         logger.info(f"[{request_id}] Source ready. audio={audio_path}")
-
+        
         job_manager.update_status(job_id, STATUS_TRANSCRIBING)
         job_manager.update_progress(job_id, 30)
         logger.info(f"[{request_id}] Starting transcription...")
@@ -198,6 +207,9 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
 
         if not trans_res.get("success"):
             raise Exception(f"Transcription failed: {trans_res.get('error', 'Unknown error')}")
+
+        if time.time() - job_overall_start > MAX_JOB_TIME:
+            raise Exception(f"Global timeout: Transcription exceeded {MAX_JOB_TIME}s")
 
         segments = trans_res["segments"]
         logger.info(f"[{request_id}] Transcription done. {len(segments)} segments.")
@@ -220,6 +232,9 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
 
         if not translated_segments:
             raise Exception("Translation returned empty result")
+
+        if time.time() - job_overall_start > MAX_JOB_TIME:
+            raise Exception(f"Global timeout: Translation exceeded {MAX_JOB_TIME}s")
 
         logger.info(f"[{request_id}] Translation done. {len(translated_segments)} segments.")
 
@@ -255,7 +270,6 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
             logger.error(traceback.format_exc())
             job_manager.fail_job(job_id, {"error": str(e)})
 
-
 @app.post("/process-video")
 def process_video(request: VideoRequest):
     storage_manager.cleanup_if_needed()
@@ -277,7 +291,6 @@ def process_video(request: VideoRequest):
         "message": "Request received. Job is in queue."
     }
 
-
 @app.get("/files")
 def list_files():
     return {
@@ -286,11 +299,9 @@ def list_files():
         "subtitles": os.listdir(f"{STORAGE_PATH}/subtitles") if os.path.exists(f"{STORAGE_PATH}/subtitles") else []
     }
 
-
 @app.get("/jobs")
 def list_all_jobs():
     return job_manager.jobs
-
 
 @app.get("/stats")
 def get_stats():
@@ -309,7 +320,6 @@ def get_stats():
         }
     }
 
-
 @app.get("/status/{job_id}")
 def check_status(job_id: str):
     job = job_manager.get_job(job_id)
@@ -324,7 +334,6 @@ def check_status(job_id: str):
     if job.get("result"):
         response["result"] = job["result"]
     return response
-
 
 @app.get("/queue-status")
 def get_queue_info():
