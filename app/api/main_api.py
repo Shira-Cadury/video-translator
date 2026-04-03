@@ -82,11 +82,23 @@ class VideoRequest(BaseModel):
     summary_sentences: int = Field(default=3, ge=1, le=MAX_SUMMARY_SENTENCES)
     target_language: str = "he"
 
-def extract_video_id(url: str):
-    video_id_match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", url)
-    if not video_id_match:
-        raise HTTPException(status_code=400, detail="Invalid YouTube URL format")
-    return video_id_match.group(1)
+def prepare_source(source: str, job_id: str):
+    if video_source_service.is_url(source):
+        video_id = extract_video_id(source)
+        
+        if not video_id:
+            video_id = f"web_{job_id}"
+            logger.info(f"Non-YouTube link detected. Generated ID: {video_id}")
+
+        video_res, audio_res = video_service.download_both(source, storage_manager=storage_manager)
+        
+        if audio_res.get("status") != "success":
+            raise Exception(f"Download failed: {audio_res.get('message', 'Site not supported or link broken')}")
+            
+        return video_id, audio_res["file_path"], video_res["file_path"]
+    else:
+        storage_manager.touch_file(source)
+        return f"local_{job_id}", source, source
 
 def get_video_paths(video_id: str, lang: str):
     return {
