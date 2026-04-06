@@ -6,8 +6,7 @@ import google.generativeai as genai
 
 logger = logging.getLogger(__name__)
 
-GEMINI_API_KEY = "AIzaSyALxR22KG0xxNpBJ2-O37A9dtCu2UTI1fw" 
-genai.configure(api_key=GEMINI_API_KEY)
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")genai.configure(api_key=GEMINI_API_KEY)
 
 class TranslationService:
     def __init__(self, source="en", target="he"):
