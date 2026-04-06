@@ -1,0 +1,27 @@
+body {
+    font-family: Arial;
+    text-align: center;
+    margin: 40px;
+}
+
+input {
+    width: 400px;
+    padding: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#status {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#summary_he, #summary_en {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}

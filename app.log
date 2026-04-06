@@ -1,0 +1,613 @@
+2026-03-22 12:19:50,947 | ERROR | [ERROR] 'VideoService' object has no attribute 'video_service'
+2026-03-22 12:30:10,151 | ERROR | [ERROR] 'VideoService' object has no attribute 'ydl'
+2026-03-22 12:43:37,412 | INFO | [START] Full process for skso_fkQcg0
+2026-03-22 12:55:51,222 | INFO | [FINISHED] Total: 737.86s
+2026-03-23 12:16:25,436 | INFO | [f7910d99] 🚀 Request received: https://youtu.be/6YW7Zu9KO98?si=wR0vR38GbCGqopTG | Lang: he
+2026-03-23 12:16:29,164 | INFO | [f7910d99] Video duration: 212s
+2026-03-23 12:16:29,165 | INFO | [f7910d99] [START] Full process for 6YW7Zu9KO98
+2026-03-23 12:19:16,179 | INFO | [f7910d99] Finished in 170.73s
+2026-03-23 12:48:47,817 | INFO | [012bb641] 🚀 Request received: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp | Lang: he
+2026-03-23 12:48:50,837 | INFO | [012bb641] Video duration: 203s
+2026-03-23 12:48:50,837 | INFO | [012bb641] [START] Full process for ra0FlN5NBG4
+2026-03-23 12:59:41,271 | INFO | [API] Translating segments via Google Translator...
+2026-03-23 13:00:55,033 | INFO | [SAVED] Translation cache created: storage/subtitles/ra0FlN5NBG4_he.json
+2026-03-23 13:00:55,052 | INFO | [012bb641] Finished in 727.23s
+2026-03-23 13:16:09,002 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-23 13:16:09,020 | INFO | [CLEANUP] Deleted 5 old files from storage/video
+2026-03-23 13:16:09,033 | INFO | [CLEANUP] Deleted 5 old files from storage/audio
+2026-03-23 13:16:09,069 | INFO | [CLEANUP] Deleted 26 old files from storage/subtitles
+2026-03-23 13:20:31,002 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-23 13:23:31,626 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-23 13:23:31,635 | INFO | [CLEANUP] Deleted 1 old files from storage/video
+2026-03-23 13:23:31,639 | INFO | [CLEANUP] Deleted 1 old files from storage/audio
+2026-03-23 13:23:31,654 | INFO | [CLEANUP] Deleted 7 old files from storage/subtitles
+2026-03-23 13:37:46,877 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-23 13:37:58,734 | INFO | [f234d50f] Request received: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp | Lang: he
+2026-03-23 13:38:02,786 | INFO | [33aff658] Request received: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp | Lang: he
+2026-03-23 13:38:06,065 | INFO | [f234d50f] Super Fast Cache Hit! No network calls needed.
+2026-03-23 13:38:06,069 | INFO | [33aff658] Super Fast Cache Hit! No network calls needed.
+2026-03-24 09:52:51,814 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:25:12,114 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:31:22,808 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:36:55,561 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:37:58,359 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:41:55,317 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:43:29,105 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-24 10:44:32,374 | INFO | [JOB CREATED] 2c11c9de-c75c-453e-8209-343de57fb316
+2026-03-24 10:44:32,379 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp. Created Job ID: 2c11c9de-c75c-453e-8209-343de57fb316
+2026-03-24 10:51:31,446 | INFO | [JOB CREATED] f8073e0a-5344-4a73-acd1-a49897c4c895
+2026-03-24 10:51:31,447 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=7ruUm-iqs7If5uzp. Created Job ID: f8073e0a-5344-4a73-acd1-a49897c4c895
+2026-03-25 10:58:39,075 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 10:58:39,080 | INFO | [CLEANUP] Deleted 2 old files from storage/video
+2026-03-25 10:58:39,083 | INFO | [CLEANUP] Deleted 2 old files from storage/audio
+2026-03-25 10:58:39,091 | INFO | [CLEANUP] Deleted 12 old files from storage/subtitles
+2026-03-25 11:01:38,023 | INFO | [JOB CREATED] 2c7ee206-0fd8-4e2a-903e-cd55e688a7d8
+2026-03-25 11:01:38,023 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=Od6hnDuIY10q6KXb. Created Job ID: 2c7ee206-0fd8-4e2a-903e-cd55e688a7d8
+2026-03-25 11:02:13,130 | INFO | Transcribing: storage\audio\ra0FlN5NBG4.mp3
+2026-03-25 11:13:32,796 | ERROR | [TIMEOUT] Transcription took too long: 679.66s
+2026-03-25 11:13:32,811 | ERROR | Transcription error: Transcription timeout (Exceeded 600s)
+2026-03-25 11:13:32,817 | ERROR | [3e6030f0] Job 2c7ee206-0fd8-4e2a-903e-cd55e688a7d8 failed: 'segments'
+2026-03-25 11:20:23,032 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:21:15,850 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:23:15,991 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:28:46,257 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:30:03,457 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:33:20,590 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-25 11:40:01,037 | INFO | [JOB CREATED] aa7a8e0f-73da-4247-9d87-8555ba51e71c
+2026-03-25 11:40:01,043 | INFO | Received request for URL: https://www.youtube.com/watch?v=ra0FlN5NBG4. Created Job ID: aa7a8e0f-73da-4247-9d87-8555ba51e71c
+2026-03-25 11:40:05,553 | INFO | Transcribing: storage\audio\ra0FlN5NBG4.mp3
+2026-03-25 11:48:33,074 | INFO | Saved transcription to cache
+2026-03-25 11:48:33,080 | INFO | [TIME] Transcription: 507.53s
+2026-03-25 11:48:33,084 | INFO | [API] Translating segments via Google Translator...
+2026-03-25 11:50:31,117 | INFO | [SAVED] Translation cache created: storage/subtitles/ra0FlN5NBG4_he.json
+2026-03-25 11:50:31,492 | INFO | [5c3b0797] Job aa7a8e0f-73da-4247-9d87-8555ba51e71c completed successfully!
+2026-03-26 11:33:08,642 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-26 11:33:08,648 | INFO | [CLEANUP] Deleted 1 old files from storage/video
+2026-03-26 11:33:08,651 | INFO | [CLEANUP] Deleted 1 old files from storage/audio
+2026-03-26 11:35:29,707 | INFO | [JOB CREATED] aa478d58-7c05-4c95-a683-b99cadb770fc
+2026-03-26 11:35:29,708 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=Od6hnDuIY10q6KXb. Created Job ID: aa478d58-7c05-4c95-a683-b99cadb770fc
+2026-03-26 11:35:45,636 | INFO | Using cached transcription
+2026-03-26 11:35:45,637 | INFO | [CACHE] Translated segments found: storage/subtitles/ra0FlN5NBG4_he.json
+2026-03-26 11:35:45,852 | INFO | [f0f9deb9] Job aa478d58-7c05-4c95-a683-b99cadb770fc completed successfully!
+2026-03-26 12:26:49,034 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-26 12:26:49,043 | INFO | [CLEANUP] Deleted 4 old files from storage/subtitles
+2026-03-26 12:31:47,274 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-26 13:20:43,859 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-26 13:21:48,289 | INFO | [JOB CREATED] 497488b7-bfc0-464e-857b-762426559d1f
+2026-03-26 13:21:48,292 | INFO | Received request for URL: https://youtu.be/ra0FlN5NBG4?si=Od6hnDuIY10q6KXbg. Created Job ID: 497488b7-bfc0-464e-857b-762426559d1f
+2026-03-26 13:21:52,737 | INFO | Transcribing: storage\audio\ra0FlN5NBG4.mp3
+2026-03-26 13:28:45,473 | INFO | Saved transcription to cache
+2026-03-26 13:28:45,478 | INFO | [TIME] Transcription: 412.74s
+2026-03-26 13:28:45,483 | INFO | [API] Translating segments via Google Translator...
+2026-03-26 13:29:53,570 | INFO | [SAVED] Translation cache created: storage/subtitles/ra0FlN5NBG4_he.json
+2026-03-26 13:29:53,861 | INFO | [35c60347] Job 497488b7-bfc0-464e-857b-762426559d1f completed successfully!
+2026-03-26 19:46:07,962 | ERROR | Form data requires "python-multipart" to be installed. 
+You can install "python-multipart" with: 
+
+pip install python-multipart
+
+2026-03-26 19:49:32,638 | ERROR | Form data requires "python-multipart" to be installed. 
+You can install "python-multipart" with: 
+
+pip install python-multipart
+
+2026-03-26 19:56:35,862 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 11:50:13,282 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 11:57:26,310 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 12:31:56,569 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 12:33:36,504 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-27 12:34:44,888 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\a0267230.mp4
+2026-03-27 12:34:44,889 | INFO | [JOB CREATED] 1bf2f6da-9964-40e2-a9ac-6d242d1cf18d
+2026-03-27 12:34:44,890 | INFO | File uploaded. Starting job: 1bf2f6da-9964-40e2-a9ac-6d242d1cf18d
+2026-03-27 12:34:44,892 | INFO | Transcribing: storage\video\a0267230.mp4
+2026-03-27 12:38:59,460 | INFO | Saved transcription to cache
+2026-03-27 12:38:59,465 | INFO | [TIME] Transcription: 254.57s
+2026-03-27 12:38:59,472 | INFO | [API] Translating segments via Google Translator...
+2026-03-27 12:39:56,554 | INFO | [SAVED] Translation cache created: storage/subtitles/local_1bf2f6da-9964-40e2-a9ac-6d242d1cf18d_he.json
+2026-03-27 12:39:56,852 | INFO | [b1dc231d] Job 1bf2f6da-9964-40e2-a9ac-6d242d1cf18d completed successfully!
+2026-03-29 13:04:18,236 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:05:16,018 | INFO | Model large loaded successfully.
+2026-03-29 13:06:18,572 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:07:15,652 | INFO | Model large loaded successfully.
+2026-03-29 13:07:16,692 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 13:07:26,700 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:08:09,630 | INFO | Model large loaded successfully.
+2026-03-29 13:08:10,327 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 13:08:17,040 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:09:12,167 | INFO | Model large loaded successfully.
+2026-03-29 13:09:13,334 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 13:10:23,168 | INFO | Loading Whisper model ('large')...
+2026-03-29 13:11:10,603 | INFO | Model large loaded successfully.
+2026-03-29 13:11:11,416 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 13:12:54,096 | INFO | [JOB CREATED] 01a05aa2-a5ba-4e02-bbf7-897325c19696
+2026-03-29 13:12:54,097 | INFO | Received request for URL: https://youtu.be/SE05iCw3qY8?si=6d3Lsbvex5HSKvWq. Created Job ID: 01a05aa2-a5ba-4e02-bbf7-897325c19696
+2026-03-29 13:12:57,412 | INFO | [DOWNLOAD] Video: Stray Kids "Lose My Breath (Stray Kids Ver.)" Live Video
+2026-03-29 13:13:03,444 | INFO | [DOWNLOAD] Audio: Stray Kids "Lose My Breath (Stray Kids Ver.)" Live Video
+2026-03-29 13:13:08,976 | INFO | Transcribing: storage\audio\SE05iCw3qY8.mp3
+2026-03-29 13:20:30,755 | INFO | Saved transcription to cache
+2026-03-29 13:20:30,762 | INFO | [TIME] Transcription: 441.79s
+2026-03-29 13:20:30,766 | INFO | [API] Translating 81 segments via Google Translator...
+2026-03-29 13:20:37,827 | INFO | [SAVED] Translation cache created: storage/subtitles/SE05iCw3qY8_iw.json
+2026-03-29 13:20:37,831 | INFO | [SAVED] SRT created: storage/subtitles/SE05iCw3qY8_iw.srt
+2026-03-29 13:20:37,854 | INFO | [SAVED] VTT created: storage/subtitles/SE05iCw3qY8_iw.vtt
+2026-03-29 13:20:37,858 | INFO | Summarizing (1915 chars)
+2026-03-29 13:20:38,109 | INFO | [TIME] Summary: 0.25s
+2026-03-29 13:20:38,111 | INFO | [SAVED] Summary saved: storage/subtitles/SE05iCw3qY8_summary_iw.txt
+2026-03-29 13:20:38,111 | INFO | [8ae13cbe] Job 01a05aa2-a5ba-4e02-bbf7-897325c19696 completed successfully!
+2026-03-29 18:20:54,380 | INFO | Loading Whisper model ('large')...
+2026-03-29 18:21:34,051 | INFO | Model large loaded successfully.
+2026-03-29 18:21:34,665 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 18:22:17,320 | INFO | [JOB CREATED] e145de0c-8a57-4a48-baf3-aa99ae2cf888
+2026-03-29 18:22:17,324 | INFO | Received request for URL: https://youtu.be/5U3_1azWJcc?si=xbhpgYbgqjLQAhyU. Created Job ID: e145de0c-8a57-4a48-baf3-aa99ae2cf888
+2026-03-29 18:22:25,659 | ERROR | [c3a38bec] Job e145de0c-8a57-4a48-baf3-aa99ae2cf888 failed: YouTube audio download failed
+2026-03-29 18:26:15,701 | INFO | Loading Whisper model ('large')...
+2026-03-29 18:27:07,168 | INFO | Model large loaded successfully.
+2026-03-29 18:27:09,045 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 18:27:39,238 | INFO | [JOB CREATED] 9a8a271c-8aec-49a3-9107-a4415521be3b
+2026-03-29 18:27:39,239 | INFO | Received request for URL: https://youtu.be/5U3_1azWJcc?si=xbhpgYbgqjLQAhyU. Created Job ID: 9a8a271c-8aec-49a3-9107-a4415521be3b
+2026-03-29 18:27:45,882 | ERROR | [a806db7f] Job 9a8a271c-8aec-49a3-9107-a4415521be3b failed: YouTube audio download failed
+2026-03-29 18:27:45,883 | ERROR | [JOB FAILED] 9a8a271c-8aec-49a3-9107-a4415521be3b
+2026-03-29 18:36:50,723 | INFO | Loading Whisper model ('large')...
+2026-03-29 18:37:53,552 | INFO | Model large loaded successfully.
+2026-03-29 18:37:56,175 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 18:38:34,459 | INFO | [JOB CREATED] 16bd62d1-4103-46ac-81b1-c7b254b1a331
+2026-03-29 18:38:34,459 | INFO | Received request for URL: https://youtu.be/5U3_1azWJcc?si=xbhpgYbgqjLQAhyU. Created Job ID: 16bd62d1-4103-46ac-81b1-c7b254b1a331
+2026-03-29 18:38:40,468 | ERROR | [4c24d010] Job 16bd62d1-4103-46ac-81b1-c7b254b1a331 failed: YouTube audio download failed
+2026-03-29 18:38:40,468 | ERROR | [JOB FAILED] 16bd62d1-4103-46ac-81b1-c7b254b1a331
+2026-03-29 18:42:50,544 | INFO | Loading Whisper model ('large')...
+2026-03-29 18:43:52,502 | INFO | Model large loaded successfully.
+2026-03-29 18:43:54,479 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 18:44:13,231 | INFO | [JOB CREATED] 88afa28e-816b-4354-9588-2ee808bbac9f
+2026-03-29 18:44:13,232 | INFO | Received request for URL: https://youtu.be/5U3_1azWJcc?si=xbhpgYbgqjLQAhyU. Created Job ID: 88afa28e-816b-4354-9588-2ee808bbac9f
+2026-03-29 18:44:18,120 | ERROR | [fcaaa662] Job 88afa28e-816b-4354-9588-2ee808bbac9f failed: YouTube audio download failed
+2026-03-29 18:44:18,121 | ERROR | [JOB FAILED] 88afa28e-816b-4354-9588-2ee808bbac9f
+2026-03-29 18:50:16,522 | INFO | Loading Whisper model ('large')...
+2026-03-29 18:51:33,898 | INFO | Model large loaded successfully.
+2026-03-29 18:51:37,370 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 18:52:57,331 | INFO | [JOB CREATED] b81e519d-a35d-4477-924c-2ef0366b689a
+2026-03-29 18:52:57,332 | INFO | Received request for URL: https://youtu.be/fnLUyKhLwrg?si=3ZswYbkxjOJPsz3U. Created Job ID: b81e519d-a35d-4477-924c-2ef0366b689a
+2026-03-29 18:52:57,505 | INFO | [JOB CREATED] fbe298b5-8eef-4db1-8bdb-0d420c74792f
+2026-03-29 18:52:57,505 | INFO | Received request for URL: https://youtu.be/fnLUyKhLwrg?si=3ZswYbkxjOJPsz3U. Created Job ID: fbe298b5-8eef-4db1-8bdb-0d420c74792f
+2026-03-29 18:53:03,420 | ERROR | [8c2873fe] Job fbe298b5-8eef-4db1-8bdb-0d420c74792f failed: YouTube audio download failed
+2026-03-29 18:53:03,420 | ERROR | [JOB FAILED] fbe298b5-8eef-4db1-8bdb-0d420c74792f
+2026-03-29 18:53:03,638 | ERROR | [fa832273] Job b81e519d-a35d-4477-924c-2ef0366b689a failed: YouTube audio download failed
+2026-03-29 18:53:03,638 | ERROR | [JOB FAILED] b81e519d-a35d-4477-924c-2ef0366b689a
+2026-03-29 18:53:46,540 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\db1c3a32.mp4
+2026-03-29 18:53:46,541 | INFO | [JOB CREATED] 4e543465-1c90-4460-80e6-a50bf36f0913
+2026-03-29 18:53:46,541 | INFO | File uploaded. Starting job: 4e543465-1c90-4460-80e6-a50bf36f0913
+2026-03-29 18:53:46,642 | INFO | Transcribing: storage\video\db1c3a32.mp4
+2026-03-29 18:53:46,643 | INFO | Processing short file directly...
+2026-03-29 18:53:47,596 | ERROR | Transcription error: Unsupported language: iw
+2026-03-29 18:53:47,597 | ERROR | [1786ed17] Job 4e543465-1c90-4460-80e6-a50bf36f0913 failed: Transcription failed: Unsupported language: iw
+2026-03-29 18:53:47,597 | ERROR | [JOB FAILED] 4e543465-1c90-4460-80e6-a50bf36f0913
+2026-03-29 18:56:14,702 | INFO | Loading Whisper model ('large')...
+2026-03-29 18:57:37,473 | INFO | Model large loaded successfully.
+2026-03-29 18:57:39,616 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 18:57:52,080 | INFO | Loading Whisper model ('large')...
+2026-03-29 19:09:18,589 | INFO | Loading Whisper model ('large')...
+2026-03-29 19:10:24,281 | INFO | Model large loaded successfully.
+2026-03-29 19:10:25,757 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 19:10:52,907 | INFO | [JOB CREATED] 20a68ca2-190d-40dc-9484-127e5f7eb057
+2026-03-29 19:10:52,909 | INFO | Received request for URL: https://youtu.be/fnLUyKhLwrg?si=oOMyeG5sKljRfxBh. Created Job ID: 20a68ca2-190d-40dc-9484-127e5f7eb057
+2026-03-29 19:10:58,261 | ERROR | [128c3df5] Job 20a68ca2-190d-40dc-9484-127e5f7eb057 failed: YouTube audio download failed
+2026-03-29 19:10:58,262 | ERROR | [JOB FAILED] 20a68ca2-190d-40dc-9484-127e5f7eb057
+2026-03-29 19:15:33,913 | INFO | Loading Whisper model ('large')...
+2026-03-29 19:16:15,127 | INFO | Model large loaded successfully.
+2026-03-29 19:16:16,010 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 19:17:33,792 | INFO | Loading Whisper model ('large')...
+2026-03-29 19:18:06,416 | INFO | Model large loaded successfully.
+2026-03-29 19:18:06,859 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-29 19:18:36,148 | INFO | [JOB CREATED] 05617970-b1fc-4d38-8709-a29255d6ae67
+2026-03-29 19:18:36,149 | INFO | Received request for URL: https://youtu.be/fnLUyKhLwrg?si=oOMyeG5sKljRfxBh. Created Job ID: 05617970-b1fc-4d38-8709-a29255d6ae67
+2026-03-29 19:18:38,620 | INFO | [DOWNLOAD] Video: [GOING SEVENTEEN] EP.130 물배틀그라운드 #1 (WATER BATTLEGROUNDS #1)
+2026-03-29 19:18:56,177 | INFO | [DOWNLOAD] Audio: [GOING SEVENTEEN] EP.130 물배틀그라운드 #1 (WATER BATTLEGROUNDS #1)
+2026-03-29 19:19:22,789 | INFO | Transcribing: storage\audio\fnLUyKhLwrg.mp3
+2026-03-29 19:19:22,790 | INFO | [CHUNKER] File is long (1572s), splitting into chunks...
+2026-03-29 19:19:22,790 | INFO | [CHUNKER] Loading audio file: storage\audio\fnLUyKhLwrg.mp3
+2026-03-29 19:19:29,442 | INFO | [CHUNKER] Split into 3 chunks
+2026-03-29 19:19:29,479 | INFO | Processing chunk 1/3: storage\audio\chunk_c1b01bb4d7c045caad790d95418b9953.wav
+2026-03-29 19:45:40,431 | INFO | Processing chunk 2/3: storage\audio\chunk_237ddb3c147a4443ae371427113ecaed.wav
+2026-03-30 11:17:02,517 | INFO | Loading Whisper model ('large')...
+2026-03-30 11:18:03,944 | INFO | Model large loaded successfully.
+2026-03-30 11:18:04,730 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 11:18:22,349 | INFO | [JOB CREATED] f841e7d2-b9d9-4316-992b-8975f54696c8
+2026-03-30 11:18:22,349 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_. Created Job ID: f841e7d2-b9d9-4316-992b-8975f54696c8
+2026-03-30 11:18:25,060 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:18:26,887 | INFO | [DOWNLOAD] Audio: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:18:33,607 | INFO | Transcribing: storage\audio\aTuLsczTCIg.mp3 (duration: 200s)
+2026-03-30 11:18:33,607 | INFO | Processing short file directly...
+2026-03-30 11:24:54,234 | INFO | Saved transcription to cache
+2026-03-30 11:24:54,238 | INFO | [TIME] Transcription: 380.63s
+2026-03-30 11:24:54,243 | ERROR | [f2418610] Job f841e7d2-b9d9-4316-992b-8975f54696c8 failed: he --> No support for the provided language.
+Please select on of the supported languages:
+{'afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 'nepali': 'ne', 'norwegian': 'no', 'odia (oriya)': 'or', 'oromo': 'om', 'pashto': 'ps', 'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'}
+2026-03-30 11:24:54,248 | ERROR | [JOB FAILED] f841e7d2-b9d9-4316-992b-8975f54696c8
+2026-03-30 11:39:23,103 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:39:24,876 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,089 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-03-30 11:39:25,106 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/config.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,107 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/model.bin "HTTP/1.1 302 Found"
+2026-03-30 11:39:25,125 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/tokenizer.json "HTTP/1.1 307 Temporary Redirect"
+2026-03-30 11:39:25,128 | INFO | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/config.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,144 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/vocabulary.json "HTTP/1.1 307 Temporary Redirect"
+2026-03-30 11:39:25,145 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/tokenizer.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,146 | WARNING | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-03-30 11:39:25,166 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/vocabulary.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,168 | INFO | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/tokenizer.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,188 | INFO | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/vocabulary.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,209 | INFO | HTTP Request: HEAD https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-03-30 11:39:25,250 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,281 | INFO | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Systran/faster-whisper-large-v3/edaa852ec7e145841d8ffdb056a99866b5f0a478/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-03-30 11:39:25,397 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/xet-read-token/edaa852ec7e145841d8ffdb056a99866b5f0a478 "HTTP/1.1 200 OK"
+2026-03-30 11:41:00,444 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:42:22,117 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:42:23,861 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:42:35,517 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:42:35,590 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 11:43:19,046 | INFO | [JOB CREATED] f7d30fc6-361f-4596-922f-a878b6439b45
+2026-03-30 11:43:19,046 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_. Created Job ID: f7d30fc6-361f-4596-922f-a878b6439b45
+2026-03-30 11:43:21,624 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:43:23,245 | INFO | [CACHE] Audio hit: aTuLsczTCIg
+2026-03-30 11:43:23,274 | INFO | [TRANSCRIPTION] Using cached transcription
+2026-03-30 11:43:23,275 | ERROR | [611e009c] Job f7d30fc6-361f-4596-922f-a878b6439b45 failed: he --> No support for the provided language.
+Please select on of the supported languages:
+{'afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 'nepali': 'ne', 'norwegian': 'no', 'odia (oriya)': 'or', 'oromo': 'om', 'pashto': 'ps', 'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'}
+2026-03-30 11:43:23,276 | ERROR | [JOB FAILED] f7d30fc6-361f-4596-922f-a878b6439b45
+2026-03-30 11:49:40,719 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:49:43,692 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:50:02,692 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:50:42,879 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:50:44,724 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:50:55,137 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:51:52,440 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:51:54,365 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:52:04,533 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:53:33,036 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:53:34,909 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:53:45,719 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:53:45,787 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 11:54:02,154 | INFO | [JOB CREATED] 93d624bd-be2e-4a39-8ee4-8f406eae305a
+2026-03-30 11:54:02,157 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_. Created Job ID: 93d624bd-be2e-4a39-8ee4-8f406eae305a
+2026-03-30 11:54:02,159 | INFO | [f36add34] Preparing source: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_
+2026-03-30 11:54:04,888 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:54:06,318 | INFO | [CACHE] Audio hit: aTuLsczTCIg
+2026-03-30 11:54:06,319 | INFO | [f36add34] Source ready. audio=storage\audio\aTuLsczTCIg.mp3
+2026-03-30 11:54:06,320 | INFO | [f36add34] Starting transcription...
+2026-03-30 11:54:06,323 | INFO | [TRANSCRIPTION] Using cached transcription
+2026-03-30 11:54:06,324 | INFO | [f36add34] Transcription done. 62 segments.
+2026-03-30 11:54:06,326 | INFO | [f36add34] Starting translation of 62 segments → he...
+2026-03-30 11:54:06,328 | ERROR | [f36add34] Job 93d624bd-be2e-4a39-8ee4-8f406eae305a FAILED at status 'translating': he --> No support for the provided language.
+Please select on of the supported languages:
+{'afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 'nepali': 'ne', 'norwegian': 'no', 'odia (oriya)': 'or', 'oromo': 'om', 'pashto': 'ps', 'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'}
+2026-03-30 11:54:06,332 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 199, in process_video_job
+    translated_segments = translation_service.translate_segments(
+        segments,
+    ...<2 lines>...
+        storage_manager=storage_manager
+    )
+  File "C:\my_project\VideoTranslator\app\services\translation_service.py", line 38, in translate_segments
+    self.translator = GoogleTranslator(source=self.source, target=target_lang)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\my_project\VideoTranslator\venv\Lib\site-packages\deep_translator\google.py", line 39, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        base_url=BASE_URLS.get("GOOGLE_TRANSLATE"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        **kwargs
+        ^^^^^^^^
+    )
+    ^
+  File "C:\my_project\VideoTranslator\venv\Lib\site-packages\deep_translator\base.py", line 44, in __init__
+    self._source, self._target = self._map_language_to_code(source, target)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\my_project\VideoTranslator\venv\Lib\site-packages\deep_translator\base.py", line 84, in _map_language_to_code
+    raise LanguageNotSupportedException(
+    ...<4 lines>...
+    )
+deep_translator.exceptions.LanguageNotSupportedException: he --> No support for the provided language.
+Please select on of the supported languages:
+{'afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 'nepali': 'ne', 'norwegian': 'no', 'odia (oriya)': 'or', 'oromo': 'om', 'pashto': 'ps', 'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'}
+
+2026-03-30 11:54:06,334 | ERROR | [JOB FAILED] 93d624bd-be2e-4a39-8ee4-8f406eae305a
+2026-03-30 11:55:51,499 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:55:53,199 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:56:03,838 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:57:16,668 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:57:18,653 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:57:28,820 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:57:53,285 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 11:57:55,008 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 11:58:05,449 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 11:58:05,515 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 11:58:29,996 | INFO | [JOB CREATED] 1a53de3b-98f5-4eb8-9476-2105ac06b405
+2026-03-30 11:58:29,996 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_. Created Job ID: 1a53de3b-98f5-4eb8-9476-2105ac06b405
+2026-03-30 11:58:29,997 | INFO | [88c285fe] Preparing source: https://youtu.be/aTuLsczTCIg?si=G7p5WhEPNzjLOGO_
+2026-03-30 11:58:32,144 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 11:58:33,703 | INFO | [CACHE] Audio hit: aTuLsczTCIg
+2026-03-30 11:58:33,719 | INFO | [88c285fe] Source ready. audio=storage\audio\aTuLsczTCIg.mp3
+2026-03-30 11:58:33,719 | INFO | [88c285fe] Starting transcription...
+2026-03-30 11:58:33,721 | INFO | [TRANSCRIPTION] Using cached transcription
+2026-03-30 11:58:33,724 | INFO | [88c285fe] Transcription done. 62 segments.
+2026-03-30 11:58:33,727 | INFO | [88c285fe] Starting translation of 62 segments → he...
+2026-03-30 11:58:33,728 | INFO | [TRANSLATION] Translating 62 segments → 'he'
+2026-03-30 11:58:35,160 | INFO | [TRANSLATION] Cache saved: storage/subtitles/aTuLsczTCIg_he.json
+2026-03-30 11:58:35,161 | INFO | [88c285fe] Translation done. 62 segments.
+2026-03-30 11:58:35,165 | INFO | [SAVED] SRT created: storage/subtitles/aTuLsczTCIg_he.srt
+2026-03-30 11:58:35,191 | INFO | [SAVED] VTT created: storage/subtitles/aTuLsczTCIg_he.vtt
+2026-03-30 11:58:35,195 | INFO | Summarizing (2104 chars)
+2026-03-30 11:58:35,370 | INFO | [TIME] Summary: 0.17s
+2026-03-30 11:58:35,370 | INFO | [88c285fe] Job 1a53de3b-98f5-4eb8-9476-2105ac06b405 completed successfully!
+2026-03-30 12:01:02,708 | INFO | [JOB CREATED] b6f50f7d-e71d-4120-b3cb-f34a4e0246ff
+2026-03-30 12:01:02,716 | INFO | Received request for URL: https://youtu.be/qCq1xbf-8ls?si=JS-iVt7MkXs5OCRl. Created Job ID: b6f50f7d-e71d-4120-b3cb-f34a4e0246ff
+2026-03-30 12:01:02,718 | INFO | [581a821f] Preparing source: https://youtu.be/qCq1xbf-8ls?si=JS-iVt7MkXs5OCRl
+2026-03-30 12:01:04,104 | INFO | [DOWNLOAD] Video: [GOING SEVENTEEN] EP.135 더 게장 #2 (The Gejang #2)
+2026-03-30 12:01:13,430 | INFO | [DOWNLOAD] Audio: [GOING SEVENTEEN] EP.135 더 게장 #2 (The Gejang #2)
+2026-03-30 12:02:16,262 | INFO | [581a821f] Source ready. audio=storage\audio\qCq1xbf-8ls.mp3
+2026-03-30 12:02:16,262 | INFO | [581a821f] Starting transcription...
+2026-03-30 12:02:16,310 | INFO | [TRANSCRIPTION] Starting: storage\audio\qCq1xbf-8ls.mp3 (1404s)
+2026-03-30 12:02:16,311 | INFO | [CHUNKER] Long file (1404s), splitting into chunks...
+2026-03-30 12:02:18,429 | INFO | [CHUNKER] Chunk 1: 0s → 600s → storage\audio\chunk_23b227f5dd0d4872aa77733a1fda9450.mp3
+2026-03-30 12:02:20,322 | INFO | [CHUNKER] Chunk 2: 600s → 1200s → storage\audio\chunk_b3476a817a784cb2a56510eb99bb9811.mp3
+2026-03-30 12:02:20,950 | INFO | [CHUNKER] Chunk 3: 1200s → 1404s → storage\audio\chunk_35f569bdd0314aa5957f6cc8acdd97b2.mp3
+2026-03-30 12:02:20,950 | INFO | [CHUNKER] Split into 3 chunks
+2026-03-30 12:02:20,951 | INFO | [CHUNKER] Chunk 1/3 (offset 0s)
+2026-03-30 12:02:21,635 | INFO | Processing audio with duration 10:00.000
+2026-03-30 12:02:24,355 | INFO | VAD filter removed 01:24.176 of audio
+2026-03-30 12:31:48,494 | INFO | [CHUNKER] Chunk 1 done. Total segments so far: 271
+2026-03-30 12:31:48,495 | INFO | [CHUNKER] Chunk 2/3 (offset 600s)
+2026-03-30 12:31:49,108 | INFO | Processing audio with duration 10:00.000
+2026-03-30 12:31:50,399 | INFO | VAD filter removed 00:49.200 of audio
+2026-03-30 13:02:06,034 | INFO | [CHUNKER] Chunk 2 done. Total segments so far: 610
+2026-03-30 13:02:06,035 | INFO | [CHUNKER] Chunk 3/3 (offset 1200s)
+2026-03-30 13:02:06,323 | INFO | Processing audio with duration 03:23.867
+2026-03-30 13:02:06,673 | INFO | VAD filter removed 00:47.467 of audio
+2026-03-30 13:08:26,169 | INFO | [CHUNKER] Chunk 3 done. Total segments so far: 701
+2026-03-30 13:08:26,185 | INFO | [TRANSCRIPTION] Saved to cache
+2026-03-30 13:08:26,185 | INFO | [TRANSCRIPTION] Done in 3969.9s — 701 segments
+2026-03-30 13:08:26,185 | INFO | [581a821f] Transcription done. 701 segments.
+2026-03-30 13:08:26,185 | INFO | [581a821f] Starting translation of 701 segments → he...
+2026-03-30 13:08:26,186 | INFO | [TRANSLATION] Translating 701 segments → 'he'
+2026-03-30 13:08:39,090 | INFO | [TRANSLATION] Cache saved: storage/subtitles/qCq1xbf-8ls_he.json
+2026-03-30 13:08:39,091 | INFO | [581a821f] Translation done. 701 segments.
+2026-03-30 13:08:39,093 | INFO | [SAVED] SRT created: storage/subtitles/qCq1xbf-8ls_he.srt
+2026-03-30 13:08:39,101 | INFO | [SAVED] VTT created: storage/subtitles/qCq1xbf-8ls_he.vtt
+2026-03-30 13:08:39,104 | INFO | Summarizing (10000 chars)
+2026-03-30 13:08:39,597 | INFO | [TIME] Summary: 0.49s
+2026-03-30 13:08:39,598 | INFO | [SAVED] Summary saved: storage/subtitles/qCq1xbf-8ls_summary_he.txt
+2026-03-30 13:08:39,598 | INFO | [581a821f] Job b6f50f7d-e71d-4120-b3cb-f34a4e0246ff completed successfully!
+2026-03-30 18:17:39,939 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:17:42,097 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:17:52,748 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:17:52,823 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:19:51,717 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:19:53,680 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:20:03,956 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:20:04,022 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:21:11,146 | INFO | [JOB CREATED] e3067092-6e3b-4776-9e57-c1076ab20f45
+2026-03-30 18:21:11,146 | INFO | Received request for URL: https://youtu.be/aTuLsczTCIg?si=25_3VNC5yzHBez3x. Created Job ID: e3067092-6e3b-4776-9e57-c1076ab20f45
+2026-03-30 18:21:11,147 | INFO | [1e78b212] Preparing source: https://youtu.be/aTuLsczTCIg?si=25_3VNC5yzHBez3x
+2026-03-30 18:21:14,109 | INFO | [DOWNLOAD] Video: Stray Kids 'Runners' Lyrics (스트레이 키즈 Runners 가사) [Color Coded_Eng] | ShadowByYoongi
+2026-03-30 18:21:16,075 | INFO | [CACHE] Audio hit: aTuLsczTCIg
+2026-03-30 18:21:16,078 | INFO | [1e78b212] Source ready. audio=storage\audio\aTuLsczTCIg.mp3
+2026-03-30 18:21:16,079 | INFO | [1e78b212] Starting transcription...
+2026-03-30 18:21:16,081 | INFO | [TRANSCRIPTION] Using cached transcription
+2026-03-30 18:21:16,083 | INFO | [1e78b212] Transcription done. 62 segments.
+2026-03-30 18:21:16,084 | INFO | [1e78b212] Starting translation of 62 segments → he...
+2026-03-30 18:21:16,084 | INFO | [CACHE] Translation found: storage/subtitles/aTuLsczTCIg_he.json
+2026-03-30 18:21:16,086 | INFO | [1e78b212] Translation done. 62 segments.
+2026-03-30 18:21:16,086 | INFO | [CACHE] SRT exists: storage/subtitles/aTuLsczTCIg_he.srt
+2026-03-30 18:21:16,088 | INFO | Summarizing (2104 chars)
+2026-03-30 18:21:16,228 | INFO | [TIME] Summary: 0.14s
+2026-03-30 18:21:16,228 | INFO | [1e78b212] Job e3067092-6e3b-4776-9e57-c1076ab20f45 completed successfully!
+2026-03-30 18:22:01,268 | INFO | [JOB CREATED] e5552c7e-80e9-4fa9-9209-69ed0168b864
+2026-03-30 18:22:01,285 | INFO | Received request for URL: https://youtu.be/80H_-aHTUws?si=qEqYPiv2oRRwnbUs. Created Job ID: e5552c7e-80e9-4fa9-9209-69ed0168b864
+2026-03-30 18:22:01,289 | INFO | [e03fcd56] Preparing source: https://youtu.be/80H_-aHTUws?si=qEqYPiv2oRRwnbUs
+2026-03-30 18:22:03,205 | INFO | [DOWNLOAD] Video: Stray Kids "MOUNTAINS" Video
+2026-03-30 18:22:06,469 | INFO | [DOWNLOAD] Audio: Stray Kids "MOUNTAINS" Video
+2026-03-30 18:22:14,389 | INFO | [e03fcd56] Source ready. audio=storage\audio\80H_-aHTUws.mp3
+2026-03-30 18:22:14,389 | INFO | [e03fcd56] Starting transcription...
+2026-03-30 18:22:14,425 | INFO | [TRANSCRIPTION] Starting: storage\audio\80H_-aHTUws.mp3 (192s)
+2026-03-30 18:22:14,425 | INFO | [CHUNKER] Long file (192s), splitting into chunks...
+2026-03-30 18:22:15,172 | INFO | [CHUNKER] Chunk 1: 0s → 192s → storage\audio\chunk_71c7ea0ebe0243988346f31746649aad.mp3
+2026-03-30 18:22:15,172 | INFO | [CHUNKER] Split into 1 chunks
+2026-03-30 18:22:15,172 | INFO | [CHUNKER] Chunk 1/1 (offset 0s)
+2026-03-30 18:22:15,172 | WARNING | [TEST] Simulating a fake failure
+2026-03-30 18:22:17,514 | INFO | Processing audio with duration 03:11.576
+2026-03-30 18:22:18,247 | INFO | VAD filter removed 03:11.576 of audio
+2026-03-30 18:22:18,265 | INFO | [CHUNKER] Chunk 1 done. Total segments: 0
+2026-03-30 18:22:18,266 | INFO | [TRANSCRIPTION] Saved to cache
+2026-03-30 18:22:18,267 | INFO | [TRANSCRIPTION] Done in 3.8s — 0 segments
+2026-03-30 18:22:18,267 | INFO | [e03fcd56] Transcription done. 0 segments.
+2026-03-30 18:22:18,267 | ERROR | [e03fcd56] Job e5552c7e-80e9-4fa9-9209-69ed0168b864 FAILED at status 'transcribing': Transcription produced no segments
+2026-03-30 18:22:18,269 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 190, in process_video_job
+    raise Exception("Transcription produced no segments")
+Exception: Transcription produced no segments
+
+2026-03-30 18:22:18,269 | ERROR | [JOB FAILED] e5552c7e-80e9-4fa9-9209-69ed0168b864
+2026-03-30 18:23:56,054 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:23:57,803 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:24:07,842 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:24:07,909 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:34:29,200 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:34:30,840 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:34:41,038 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:34:41,125 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:38:10,579 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:38:12,229 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:38:22,445 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:38:22,522 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:44:10,456 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:44:12,272 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:44:23,990 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:44:24,067 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:52:38,614 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:52:40,273 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:52:50,013 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:52:50,094 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:53:09,759 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:53:11,609 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:53:21,660 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:53:21,719 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 18:58:53,764 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-30 18:58:55,468 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-30 18:59:05,365 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-30 18:59:05,425 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-30 19:00:28,521 | INFO | [JOB CREATED] 1ff5fbf1-eef2-44f7-a4f2-95f0b08f2867
+2026-03-30 19:00:28,522 | INFO | Received request for URL: https://youtu.be/ZJSACc1s-WA?si=DfCHc00d9GNXpw7M. Created Job ID: 1ff5fbf1-eef2-44f7-a4f2-95f0b08f2867
+2026-03-30 19:00:28,522 | INFO | [e86f5cd2] Preparing source: https://youtu.be/ZJSACc1s-WA?si=DfCHc00d9GNXpw7M
+2026-03-30 19:00:31,223 | INFO | [DOWNLOAD] Video: Stray Kids Answer 20 Questions for 2025 | MTV
+2026-03-30 19:00:35,048 | INFO | [DOWNLOAD] Audio: Stray Kids Answer 20 Questions for 2025 | MTV
+2026-03-30 19:00:43,334 | INFO | [e86f5cd2] Source ready. audio=storage\audio\ZJSACc1s-WA.mp3
+2026-03-30 19:00:43,334 | INFO | [e86f5cd2] Starting transcription...
+2026-03-30 19:00:43,407 | INFO | [TRANSCRIPTION] Starting: storage\audio\ZJSACc1s-WA.mp3
+2026-03-30 19:00:43,407 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-03-30 19:00:44,279 | INFO | Processing audio with duration 05:12.320
+2026-03-30 19:00:45,362 | INFO | VAD filter removed 00:18.944 of audio
+2026-03-30 19:21:45,887 | INFO | [TRANSCRIPTION] Done in 1262.5s
+2026-03-30 19:21:45,888 | INFO | [e86f5cd2] Transcription done. 170 segments.
+2026-03-30 19:21:45,889 | INFO | [e86f5cd2] Starting translation of 170 segments → he...
+2026-03-30 19:21:45,891 | INFO | [TRANSLATION] Translating 170 segments → 'he'
+2026-03-30 19:21:52,769 | INFO | [TRANSLATION] Cache saved: storage/subtitles/ZJSACc1s-WA_he.json
+2026-03-30 19:21:52,770 | INFO | [e86f5cd2] Translation done. 170 segments.
+2026-03-30 19:21:52,776 | INFO | [SAVED] SRT created: storage/subtitles/ZJSACc1s-WA_he.srt
+2026-03-30 19:21:52,805 | INFO | [SAVED] VTT created: storage/subtitles/ZJSACc1s-WA_he.vtt
+2026-03-30 19:21:52,807 | INFO | Summarizing (2542 chars)
+2026-03-30 19:21:53,184 | INFO | [TIME] Summary: 0.38s
+2026-03-30 19:21:53,192 | INFO | [SAVED] Summary saved: storage/subtitles/ZJSACc1s-WA_summary_he.txt
+2026-03-30 19:21:53,195 | INFO | [e86f5cd2] Job 1ff5fbf1-eef2-44f7-a4f2-95f0b08f2867 completed successfully!
+2026-03-31 10:36:52,533 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-31 10:36:54,640 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-31 10:37:05,408 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-31 10:37:05,463 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-31 10:37:30,258 | INFO | [JOB CREATED] 71a176f3-019e-477b-a129-f15e9ed80a11
+2026-03-31 10:37:30,258 | INFO | Received request for URL: https://youtu.be/Oz8Jbc4LVgk?si=QamwaGj1is_clCc4. Created Job ID: 71a176f3-019e-477b-a129-f15e9ed80a11
+2026-03-31 10:37:30,259 | INFO | [32d769fb] Preparing source: https://youtu.be/Oz8Jbc4LVgk?si=QamwaGj1is_clCc4
+2026-03-31 10:37:32,483 | INFO | [DOWNLOAD] Video: K-Pop Group Stray Kids Reveal Their Secret Nicknames For Each Other | Besties on Besties | Seventeen
+2026-03-31 10:37:35,172 | INFO | [DOWNLOAD] Audio: K-Pop Group Stray Kids Reveal Their Secret Nicknames For Each Other | Besties on Besties | Seventeen
+2026-03-31 10:37:42,945 | INFO | [32d769fb] Source ready. audio=storage\audio\Oz8Jbc4LVgk.mp3
+2026-03-31 10:37:42,945 | INFO | [32d769fb] Starting transcription...
+2026-03-31 10:37:42,993 | INFO | [TRANSCRIPTION] Starting: storage\audio\Oz8Jbc4LVgk.mp3
+2026-03-31 10:37:42,994 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-03-31 10:37:43,948 | INFO | Processing audio with duration 08:39.233
+2026-03-31 10:37:45,182 | INFO | VAD filter removed 00:21.056 of audio
+2026-03-31 11:02:48,817 | INFO | [TRANSCRIPTION] Done in 1505.8s
+2026-03-31 11:02:48,818 | INFO | [32d769fb] Transcription done. 332 segments.
+2026-03-31 11:02:48,818 | INFO | [32d769fb] Starting translation of 332 segments → he...
+2026-03-31 11:02:48,819 | INFO | [TRANSLATION] Translating 332 segments → 'he'
+2026-03-31 11:02:53,555 | INFO | [TRANSLATION] Cache saved: storage/subtitles/Oz8Jbc4LVgk_he.json
+2026-03-31 11:02:53,555 | INFO | [32d769fb] Translation done. 332 segments.
+2026-03-31 11:02:53,557 | INFO | [SAVED] SRT created: storage/subtitles/Oz8Jbc4LVgk_he.srt
+2026-03-31 11:02:53,569 | INFO | [SAVED] VTT created: storage/subtitles/Oz8Jbc4LVgk_he.vtt
+2026-03-31 11:02:53,570 | INFO | Summarizing (5507 chars)
+2026-03-31 11:02:53,924 | INFO | [TIME] Summary: 0.35s
+2026-03-31 11:02:53,926 | INFO | [SAVED] Summary saved: storage/subtitles/Oz8Jbc4LVgk_summary_he.txt
+2026-03-31 11:02:53,926 | INFO | [32d769fb] == JOB COMPLETED ==  Total time: 1523.7 seconds  (25.4 minutes)
+2026-03-31 11:22:43,481 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-31 11:22:44,948 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-31 11:22:52,317 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-31 11:22:52,367 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-31 11:28:20,527 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-31 11:28:21,948 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-31 11:28:28,380 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-31 11:28:28,430 | INFO | --- Server starting up... Running Cleanup ---
+2026-03-31 11:36:20,244 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-03-31 11:36:21,691 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-03-31 11:36:28,337 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-03-31 11:36:28,397 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-03 10:52:26,843 | INFO | [TRANSCRIPTION] Loading faster-whisper model 'large' on CPU (int8)...
+2026-04-03 10:52:29,136 | INFO | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2026-04-03 10:52:48,095 | INFO | [TRANSCRIPTION] Model 'large' loaded successfully.
+2026-04-03 10:52:48,108 | INFO | [QUEUE] Worker thread started
+2026-04-03 10:52:48,293 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-03 10:53:25,091 | INFO | [JOB CREATED] 066abbd6-0393-4bbf-966a-f9abf4ed9c67
+2026-04-03 10:53:25,092 | INFO | Received request for URL: https://youtu.be/DNlOdUvZqLc?si=TjdBt-qUZrSBhA8f. Created Job ID: 066abbd6-0393-4bbf-966a-f9abf4ed9c67
+2026-04-03 10:53:25,092 | INFO | [QUEUE] Job 066abbd6-0393-4bbf-966a-f9abf4ed9c67 added — position 1 in queue
+2026-04-03 10:53:25,093 | INFO | [QUEUE] Starting job 066abbd6-0393-4bbf-966a-f9abf4ed9c67 (process_video_job)
+2026-04-03 10:53:25,096 | INFO | [2a85e302] Preparing source: https://youtu.be/DNlOdUvZqLc?si=TjdBt-qUZrSBhA8f
+2026-04-03 10:53:27,752 | INFO | [DOWNLOAD] Video: SOS (Prod. Marshmello)
+2026-04-03 10:53:30,682 | INFO | [DOWNLOAD] Audio: SOS (Prod. Marshmello)
+2026-04-03 10:53:37,866 | INFO | [2a85e302] Source ready. audio=storage\audio\DNlOdUvZqLc.mp3
+2026-04-03 10:53:37,866 | INFO | [2a85e302] Starting transcription...
+2026-04-03 10:53:37,959 | INFO | [TRANSCRIPTION] Starting: storage\audio\DNlOdUvZqLc.mp3
+2026-04-03 10:53:37,959 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-04-03 10:53:38,659 | INFO | Processing audio with duration 03:12.013
+2026-04-03 10:53:39,418 | INFO | VAD filter removed 03:09.741 of audio
+2026-04-03 10:53:58,386 | INFO | [TRANSCRIPTION] Done in 20.4s
+2026-04-03 10:53:58,387 | INFO | [2a85e302] Transcription done. 2 segments.
+2026-04-03 10:53:58,387 | INFO | [2a85e302] Starting translation of 2 segments -> he...
+2026-04-03 10:53:58,387 | INFO | [TRANSLATION] Translating 2 segments → 'he'
+2026-04-03 10:53:59,987 | INFO | [TRANSLATION] Cache saved: storage/subtitles/DNlOdUvZqLc_he.json
+2026-04-03 10:53:59,992 | INFO | [2a85e302] Translation done. 2 segments.
+2026-04-03 10:53:59,994 | INFO | [SAVED] SRT created: storage/subtitles/DNlOdUvZqLc_he.srt
+2026-04-03 10:54:00,007 | INFO | [SAVED] VTT created: storage/subtitles/DNlOdUvZqLc_he.vtt
+2026-04-03 10:54:00,008 | INFO | Summarizing (33 chars)
+2026-04-03 10:54:00,275 | INFO | [TIME] Summary: 0.27s
+2026-04-03 10:54:00,277 | INFO | [SAVED] Summary saved: storage/subtitles/DNlOdUvZqLc_summary_he.txt
+2026-04-03 10:54:00,278 | INFO | [2a85e302] == JOB COMPLETED == 35.2s (0.6 min)
+2026-04-03 10:54:00,281 | INFO | [QUEUE] Job 066abbd6-0393-4bbf-966a-f9abf4ed9c67 finished successfully
+2026-04-03 10:54:17,343 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\c3917ac5.mp4
+2026-04-03 10:54:17,343 | INFO | [JOB CREATED] d6a53a73-7ba4-4af0-b997-c4c658068718
+2026-04-03 10:54:17,344 | INFO | File uploaded. Starting job: d6a53a73-7ba4-4af0-b997-c4c658068718
+2026-04-03 10:54:17,344 | INFO | [QUEUE] Job d6a53a73-7ba4-4af0-b997-c4c658068718 added — position 1 in queue
+2026-04-03 10:54:17,344 | INFO | [QUEUE] Starting job d6a53a73-7ba4-4af0-b997-c4c658068718 (process_video_job)
+2026-04-03 10:54:17,345 | INFO | [b49635a3] Preparing source: storage\video\c3917ac5.mp4
+2026-04-03 10:54:17,345 | INFO | [b49635a3] Source ready. audio=storage\video\c3917ac5.mp4
+2026-04-03 10:54:17,346 | INFO | [b49635a3] Starting transcription...
+2026-04-03 10:54:17,375 | INFO | [TRANSCRIPTION] Starting: storage\video\c3917ac5.mp4
+2026-04-03 10:54:17,375 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-04-03 10:54:18,024 | INFO | Processing audio with duration 02:56.239
+2026-04-03 10:54:18,533 | INFO | VAD filter removed 02:13.039 of audio
+2026-04-03 10:55:40,438 | INFO | [TRANSCRIPTION] Done in 83.1s
+2026-04-03 10:55:40,438 | INFO | [b49635a3] Transcription done. 20 segments.
+2026-04-03 10:55:40,439 | INFO | [b49635a3] Starting translation of 20 segments -> he...
+2026-04-03 10:55:40,439 | INFO | [TRANSLATION] Translating 20 segments → 'he'
+2026-04-03 10:55:42,138 | INFO | [TRANSLATION] Cache saved: storage/subtitles/local_d6a53a73-7ba4-4af0-b997-c4c658068718_he.json
+2026-04-03 10:55:42,141 | INFO | [b49635a3] Translation done. 20 segments.
+2026-04-03 10:55:42,148 | INFO | [SAVED] SRT created: storage/subtitles/local_d6a53a73-7ba4-4af0-b997-c4c658068718_he.srt
+2026-04-03 10:55:42,171 | INFO | [SAVED] VTT created: storage/subtitles/local_d6a53a73-7ba4-4af0-b997-c4c658068718_he.vtt
+2026-04-03 10:55:42,188 | INFO | Summarizing (560 chars)
+2026-04-03 10:55:42,241 | INFO | [TIME] Summary: 0.05s
+2026-04-03 10:55:42,244 | INFO | [SAVED] Summary saved: storage/subtitles/local_d6a53a73-7ba4-4af0-b997-c4c658068718_summary_he.txt
+2026-04-03 10:55:42,246 | INFO | [b49635a3] == JOB COMPLETED == 84.9s (1.4 min)
+2026-04-03 10:55:42,246 | INFO | [QUEUE] Job d6a53a73-7ba4-4af0-b997-c4c658068718 finished successfully
+2026-04-03 10:57:52,619 | INFO | [JOB CREATED] 2562656b-9767-45c6-b7ff-aac66bb219fb
+2026-04-03 10:57:52,623 | INFO | Received request for URL: https://youtu.be/rDolt3jJRsM?si=Xbszcsmrwz1-VAQx. Created Job ID: 2562656b-9767-45c6-b7ff-aac66bb219fb
+2026-04-03 10:57:52,624 | INFO | [QUEUE] Job 2562656b-9767-45c6-b7ff-aac66bb219fb added — position 1 in queue
+2026-04-03 10:57:52,624 | INFO | [QUEUE] Starting job 2562656b-9767-45c6-b7ff-aac66bb219fb (process_video_job)
+2026-04-03 10:57:52,631 | INFO | [0213d3b9] Preparing source: https://youtu.be/rDolt3jJRsM?si=Xbszcsmrwz1-VAQx
+2026-04-03 10:57:54,176 | INFO | [DOWNLOAD] Video: ENHYPEN (엔하이픈) 'No Doubt' Official MV
+2026-04-03 10:57:57,133 | INFO | [DOWNLOAD] Audio: ENHYPEN (엔하이픈) 'No Doubt' Official MV
+2026-04-03 10:58:04,997 | INFO | [0213d3b9] Source ready. audio=storage\audio\rDolt3jJRsM.mp3
+2026-04-03 10:58:05,001 | INFO | [0213d3b9] Starting transcription...
+2026-04-03 10:58:05,002 | INFO | [TRANSCRIPTION] Starting: storage\audio\rDolt3jJRsM.mp3
+2026-04-03 10:58:05,003 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-04-03 10:58:05,551 | INFO | Processing audio with duration 03:04.146
+2026-04-03 10:58:06,001 | INFO | VAD filter removed 02:35.218 of audio
+2026-04-03 10:58:39,864 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\b4600896.mp4
+2026-04-03 10:58:39,865 | INFO | [JOB CREATED] ab09271e-0bc5-4d6d-af52-57204b980965
+2026-04-03 10:58:39,865 | INFO | File uploaded. Starting job: ab09271e-0bc5-4d6d-af52-57204b980965
+2026-04-03 10:58:39,866 | INFO | [QUEUE] Job ab09271e-0bc5-4d6d-af52-57204b980965 added — position 1 in queue
+2026-04-03 10:58:48,946 | INFO | [TRANSCRIPTION] Done in 43.9s
+2026-04-03 10:58:48,947 | INFO | [0213d3b9] Transcription done. 15 segments.
+2026-04-03 10:58:48,947 | INFO | [0213d3b9] Starting translation of 15 segments -> he...
+2026-04-03 10:58:48,947 | INFO | [TRANSLATION] Translating 15 segments → 'he'
+2026-04-03 10:58:50,238 | INFO | [TRANSLATION] Cache saved: storage/subtitles/rDolt3jJRsM_he.json
+2026-04-03 10:58:50,239 | INFO | [0213d3b9] Translation done. 15 segments.
+2026-04-03 10:58:50,257 | INFO | [SAVED] SRT created: storage/subtitles/rDolt3jJRsM_he.srt
+2026-04-03 10:58:50,274 | INFO | [SAVED] VTT created: storage/subtitles/rDolt3jJRsM_he.vtt
+2026-04-03 10:58:50,275 | INFO | Summarizing (308 chars)
+2026-04-03 10:58:50,325 | INFO | [TIME] Summary: 0.05s
+2026-04-03 10:58:50,327 | INFO | [SAVED] Summary saved: storage/subtitles/rDolt3jJRsM_summary_he.txt
+2026-04-03 10:58:50,328 | INFO | [0213d3b9] == JOB COMPLETED == 57.7s (1.0 min)
+2026-04-03 10:58:50,328 | INFO | [QUEUE] Job 2562656b-9767-45c6-b7ff-aac66bb219fb finished successfully
+2026-04-03 10:58:50,330 | INFO | [QUEUE] Starting job ab09271e-0bc5-4d6d-af52-57204b980965 (process_video_job)
+2026-04-03 10:58:50,332 | INFO | [fb273d2d] Preparing source: storage\video\b4600896.mp4
+2026-04-03 10:58:50,332 | INFO | [fb273d2d] Source ready. audio=storage\video\b4600896.mp4
+2026-04-03 10:58:50,332 | INFO | [fb273d2d] Starting transcription...
+2026-04-03 10:58:50,349 | INFO | [TRANSCRIPTION] Starting: storage\video\b4600896.mp4
+2026-04-03 10:58:50,349 | INFO | [TRANSCRIPTION] Processing file directly...
+2026-04-03 10:58:50,914 | INFO | Processing audio with duration 02:56.239
+2026-04-03 10:58:51,313 | INFO | VAD filter removed 02:13.039 of audio
