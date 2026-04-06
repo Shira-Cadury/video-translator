@@ -1,3 +1,12 @@
+---
+title: Video Translator Pro
+emoji: 🎬
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # 🎬 Video Translator & Subtitle Generator
 
 A Python-based backend system that automatically generates subtitles and translations for videos.
