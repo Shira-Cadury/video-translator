@@ -14,3 +14,10 @@ desktop.ini
 models/
 .cache/
 old_verison/
+node_modules/
+frontend/
+frontend_old/
+build/
+dist/
+.env
+app.log
