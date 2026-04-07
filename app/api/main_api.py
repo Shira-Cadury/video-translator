@@ -23,6 +23,11 @@ import traceback
 import subprocess
 
 
+import nltk
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+
 STATUS_PENDING = "pending"
 STATUS_QUEUED = "queued"
 STATUS_DOWNLOADING = "downloading"
