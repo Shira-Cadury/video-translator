@@ -12,7 +12,7 @@ function App() {
   const BASE_URL = "https://shiracadury-video-translator.hf.space";
 
   const handleUpload = async () => {
-    if (!file) return alert("you forget to add a file");
+    if (!file) return alert("שכחת להוסיף קובץ");
     
     setLoading(true);
     setResult(null);
@@ -25,7 +25,7 @@ function App() {
       setStatus("queued");
     } catch (error) {
       console.error("Upload Error:", error);
-      alert("ההעלאה נכשלה. ודאי שה-Backend רץ!");
+      alert("ההעלאה נכשלה. ודאי שה-Backend רץ ב-Hugging Face!");
       setLoading(false);
     }
   };
@@ -51,6 +51,13 @@ function App() {
     }
     return () => clearInterval(interval);
   }, [jobId, status]);
+
+  const getFullUrl = (path) => {
+    if (!path) return "";
+    if (path.startsWith('http')) return path;
+    const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+    return `${BASE_URL}/${cleanPath}`;
+  };
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center p-8 font-sans">
@@ -104,23 +111,21 @@ function App() {
                     controls 
                     className="w-full h-auto"
                   >
-                    <source src={`${BASE_URL}/${result.video_url}`} type="video/mp4" />
+                    <source src={getFullUrl(result.video_url)} type="video/mp4" />
                   </video>
                 </div>
                 <div className="flex gap-4">
                   <a 
-                    href={`${BASE_URL}/${result.video_url}`} 
-                    download
+                    href={getFullUrl(result.video_url)} 
+                    download 
                     className="flex-1 text-center py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm font-semibold transition-colors"
                   >
-                    הורד סרטון
                   </a>
                   <a 
-                    href={`${BASE_URL}/${result.subtitles}`} 
+                    href={getFullUrl(result.subtitles)} 
                     download
                     className="flex-1 text-center py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm font-semibold transition-colors"
                   >
-                    הורד כתוביות (SRT)
                   </a>
                 </div>
               </div>
@@ -138,7 +143,6 @@ function App() {
               onClick={() => {setResult(null); setJobId(null); setFile(null); setStatus(""); setProgress(0);}}
               className="w-full py-3 mt-4 border border-slate-600 hover:bg-slate-700 rounded-xl text-slate-400 transition-all"
             >
-              תרגם סרטון חדש
             </button>
           </div>
         )}
