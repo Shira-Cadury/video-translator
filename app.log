@@ -611,3 +611,395 @@ Exception: Transcription produced no segments
 2026-04-03 10:58:50,349 | INFO | [TRANSCRIPTION] Processing file directly...
 2026-04-03 10:58:50,914 | INFO | Processing audio with duration 02:56.239
 2026-04-03 10:58:51,313 | INFO | VAD filter removed 02:13.039 of audio
+2026-04-13 15:29:58,714 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-13 15:29:58,717 | INFO | [QUEUE] Worker thread started
+2026-04-13 15:29:58,781 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-13 15:32:19,252 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-13 15:32:19,256 | INFO | [QUEUE] Worker thread started
+2026-04-13 15:32:19,295 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 11:00:18,772 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 11:00:18,774 | INFO | [QUEUE] Worker thread started
+2026-04-15 11:00:18,834 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 11:55:11,286 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\c6c3371e.mp4
+2026-04-15 11:55:11,287 | INFO | [JOB CREATED] 650045f5-0162-4c76-b27a-79ab79cae152
+2026-04-15 11:55:11,287 | INFO | [QUEUE] Job 650045f5-0162-4c76-b27a-79ab79cae152 added — position 1 in queue
+2026-04-15 11:55:11,288 | INFO | [QUEUE] Starting job 650045f5-0162-4c76-b27a-79ab79cae152 (process_video_job)
+2026-04-15 11:55:11,289 | INFO | [5e1a1498] Preparing source: storage\video\c6c3371e.mp4
+2026-04-15 11:55:11,290 | INFO | [5e1a1498] Source ready. audio=storage\video\c6c3371e.mp4
+2026-04-15 11:55:11,290 | INFO | [5e1a1498] Starting transcription...
+2026-04-15 11:55:11,291 | INFO | [TRANSCRIPTION] Starting transcription: storage\video\c6c3371e.mp4
+2026-04-15 11:55:15,357 | ERROR | [TRANSCRIPTION] Failed to load audio: 'AudioSegment' object has no attribute 'format'
+2026-04-15 11:55:15,370 | ERROR | [5e1a1498] Job 650045f5-0162-4c76-b27a-79ab79cae152 FAILED at 'transcribing': Transcription failed: Failed to load audio file
+2026-04-15 11:55:15,373 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 174, in process_video_job
+    raise Exception(f"Transcription failed: {trans_res.get('error')}")
+Exception: Transcription failed: Failed to load audio file
+
+2026-04-15 11:55:15,374 | ERROR | [JOB FAILED] 650045f5-0162-4c76-b27a-79ab79cae152
+2026-04-15 11:55:15,374 | INFO | [QUEUE] Job 650045f5-0162-4c76-b27a-79ab79cae152 finished successfully
+2026-04-15 12:02:20,222 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 12:02:20,225 | INFO | [QUEUE] Worker thread started
+2026-04-15 12:02:20,273 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 12:02:40,259 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\7dcaf406.mp4
+2026-04-15 12:02:40,260 | INFO | [JOB CREATED] f502d92d-814a-4816-9a35-f090a56f907d
+2026-04-15 12:02:40,260 | INFO | [QUEUE] Job f502d92d-814a-4816-9a35-f090a56f907d added — position 1 in queue
+2026-04-15 12:02:40,260 | INFO | [QUEUE] Starting job f502d92d-814a-4816-9a35-f090a56f907d (process_video_job)
+2026-04-15 12:02:40,262 | INFO | [baaa8cde] Preparing source: storage\video\7dcaf406.mp4
+2026-04-15 12:02:40,263 | INFO | [baaa8cde] Source ready. audio=storage\video\7dcaf406.mp4
+2026-04-15 12:02:40,263 | INFO | [baaa8cde] Starting transcription...
+2026-04-15 12:02:40,263 | INFO | [TRANSCRIPTION] Starting transcription: storage\video\7dcaf406.mp4
+2026-04-15 12:02:42,017 | INFO | [TRANSCRIPTION] Loaded audio: 648208ms
+2026-04-15 12:02:42,065 | INFO | [TRANSCRIPTION] Chunk sizes: [300000, 300000, 48208]ms
+2026-04-15 12:02:42,066 | INFO | [TRANSCRIPTION] Created 3 chunks from 648.2s audio
+2026-04-15 12:02:42,066 | INFO | [TRANSCRIPTION] Using 2 parallel workers for 3 chunks
+2026-04-15 12:02:48,968 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.407215 seconds
+2026-04-15 12:02:49,464 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.422530 seconds
+2026-04-15 12:02:50,005 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.926283 seconds
+2026-04-15 12:02:50,545 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:02:50,549 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:02:50,550 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:02:51,329 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:02:51,330 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:02:51,330 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:02:51,754 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.416340 seconds
+2026-04-15 12:02:52,743 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:02:52,745 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:02:52,745 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:02:52,745 | WARNING | [TRANSCRIPTION] Chunk 1 returned no results
+2026-04-15 12:02:52,747 | INFO | [TRANSCRIPTION] [1/3] Chunk 1 done
+2026-04-15 12:02:52,797 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:02:52,798 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:02:52,798 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:02:52,799 | WARNING | [TRANSCRIPTION] Chunk 0 returned no results
+2026-04-15 12:02:52,802 | INFO | [TRANSCRIPTION] [2/3] Chunk 0 done
+2026-04-15 12:02:54,905 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 520 <none>"
+2026-04-15 12:02:54,906 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.382876 seconds
+2026-04-15 12:02:55,546 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:02:55,547 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:02:55,547 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:02:56,669 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:02:56,670 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:02:56,671 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:02:56,672 | WARNING | [TRANSCRIPTION] Chunk 2 returned no results
+2026-04-15 12:02:56,673 | INFO | [TRANSCRIPTION] [3/3] Chunk 2 done
+2026-04-15 12:02:56,674 | WARNING | [TRANSCRIPTION] No segments produced!
+2026-04-15 12:02:56,675 | INFO | [TRANSCRIPTION] Saved to cache
+2026-04-15 12:02:56,676 | INFO | [TRANSCRIPTION] ✓ Done in 16.4s — 0 segments
+2026-04-15 12:02:56,694 | INFO | [baaa8cde] Transcription done. 0 segments.
+2026-04-15 12:02:56,695 | ERROR | [baaa8cde] Job f502d92d-814a-4816-9a35-f090a56f907d FAILED at 'transcribing': Transcription produced no segments
+2026-04-15 12:02:56,696 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 180, in process_video_job
+    raise Exception("Transcription produced no segments")
+Exception: Transcription produced no segments
+
+2026-04-15 12:02:56,696 | ERROR | [JOB FAILED] f502d92d-814a-4816-9a35-f090a56f907d
+2026-04-15 12:02:56,696 | INFO | [QUEUE] Job f502d92d-814a-4816-9a35-f090a56f907d finished successfully
+2026-04-15 12:09:48,814 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\a865b2e6.mp4
+2026-04-15 12:09:48,815 | INFO | [JOB CREATED] 179b55cb-2f7f-4edf-a830-f8d27d4d15e0
+2026-04-15 12:09:48,815 | INFO | [QUEUE] Job 179b55cb-2f7f-4edf-a830-f8d27d4d15e0 added — position 1 in queue
+2026-04-15 12:09:48,815 | INFO | [QUEUE] Starting job 179b55cb-2f7f-4edf-a830-f8d27d4d15e0 (process_video_job)
+2026-04-15 12:09:48,816 | INFO | [d9de4252] Preparing source: storage\video\a865b2e6.mp4
+2026-04-15 12:09:48,820 | INFO | [d9de4252] Source ready. audio=storage\video\a865b2e6.mp4
+2026-04-15 12:09:48,821 | INFO | [d9de4252] Starting transcription...
+2026-04-15 12:09:48,823 | INFO | [TRANSCRIPTION] Starting transcription: storage\video\a865b2e6.mp4
+2026-04-15 12:09:50,339 | INFO | [TRANSCRIPTION] Loaded audio: 648208ms
+2026-04-15 12:09:50,374 | INFO | [TRANSCRIPTION] Chunk sizes: [300000, 300000, 48208]ms
+2026-04-15 12:09:50,374 | INFO | [TRANSCRIPTION] Created 3 chunks from 648.2s audio
+2026-04-15 12:09:50,374 | INFO | [TRANSCRIPTION] Using 2 parallel workers for 3 chunks
+2026-04-15 12:09:57,014 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.486441 seconds
+2026-04-15 12:09:57,620 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:09:57,622 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:09:57,622 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:09:58,250 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:09:58,251 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:09:58,252 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:09:59,099 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:09:59,100 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:09:59,101 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:09:59,102 | WARNING | [TRANSCRIPTION] Chunk 1 returned no results
+2026-04-15 12:09:59,104 | INFO | [TRANSCRIPTION] [1/3] Chunk 1 done
+2026-04-15 12:09:59,567 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:09:59,578 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:09:59,579 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:09:59,579 | WARNING | [TRANSCRIPTION] Chunk 0 returned no results
+2026-04-15 12:09:59,581 | INFO | [TRANSCRIPTION] [2/3] Chunk 0 done
+2026-04-15 12:10:01,018 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:10:01,021 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:10:01,022 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:10:02,266 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:10:02,267 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:10:02,272 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:10:02,272 | WARNING | [TRANSCRIPTION] Chunk 2 returned no results
+2026-04-15 12:10:02,274 | INFO | [TRANSCRIPTION] [3/3] Chunk 2 done
+2026-04-15 12:10:02,275 | WARNING | [TRANSCRIPTION] No segments produced!
+2026-04-15 12:10:02,276 | INFO | [TRANSCRIPTION] Saved to cache
+2026-04-15 12:10:02,277 | INFO | [TRANSCRIPTION] ✓ Done in 13.5s — 0 segments
+2026-04-15 12:10:02,287 | INFO | [d9de4252] Transcription done. 0 segments.
+2026-04-15 12:10:02,288 | ERROR | [d9de4252] Job 179b55cb-2f7f-4edf-a830-f8d27d4d15e0 FAILED at 'transcribing': Transcription produced no segments
+2026-04-15 12:10:02,289 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 180, in process_video_job
+    raise Exception("Transcription produced no segments")
+Exception: Transcription produced no segments
+
+2026-04-15 12:10:02,289 | ERROR | [JOB FAILED] 179b55cb-2f7f-4edf-a830-f8d27d4d15e0
+2026-04-15 12:10:02,289 | INFO | [QUEUE] Job 179b55cb-2f7f-4edf-a830-f8d27d4d15e0 finished successfully
+2026-04-15 12:14:01,486 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 12:14:01,488 | INFO | [QUEUE] Worker thread started
+2026-04-15 12:14:01,531 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 12:14:35,466 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 12:14:35,472 | INFO | [QUEUE] Worker thread started
+2026-04-15 12:14:35,524 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 12:16:27,449 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 12:16:27,452 | INFO | [QUEUE] Worker thread started
+2026-04-15 12:16:27,496 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 12:16:57,117 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\22d70bd8.mp4
+2026-04-15 12:16:57,118 | INFO | [JOB CREATED] 8c58ed00-0426-46e7-89a1-6dfc0252d16e
+2026-04-15 12:16:57,118 | INFO | [QUEUE] Job 8c58ed00-0426-46e7-89a1-6dfc0252d16e added — position 1 in queue
+2026-04-15 12:16:57,119 | INFO | [QUEUE] Starting job 8c58ed00-0426-46e7-89a1-6dfc0252d16e (process_video_job)
+2026-04-15 12:16:57,120 | INFO | [8b800458] Preparing source: storage\video\22d70bd8.mp4
+2026-04-15 12:16:57,121 | INFO | [8b800458] Source ready. audio=storage\video\22d70bd8.mp4
+2026-04-15 12:16:57,121 | INFO | [8b800458] Starting transcription...
+2026-04-15 12:16:57,122 | INFO | [TRANSCRIPTION] Starting transcription: storage\video\22d70bd8.mp4
+2026-04-15 12:16:58,666 | INFO | [TRANSCRIPTION] Loaded audio: 648208ms
+2026-04-15 12:16:58,702 | INFO | [TRANSCRIPTION] Chunk sizes: [300000, 300000, 48208]ms
+2026-04-15 12:16:58,702 | INFO | [TRANSCRIPTION] Created 3 chunks from 648.2s audio
+2026-04-15 12:16:58,703 | INFO | [TRANSCRIPTION] Using 1 parallel workers for 3 chunks
+2026-04-15 12:17:04,982 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.479822 seconds
+2026-04-15 12:17:05,851 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:17:05,854 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:17:05,854 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:17:07,414 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:17:07,415 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:17:07,415 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:17:07,415 | WARNING | [TRANSCRIPTION] Chunk 0 returned no results
+2026-04-15 12:17:07,417 | INFO | [TRANSCRIPTION] [1/3] Chunk 0 done
+2026-04-15 12:17:14,285 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.466324 seconds
+2026-04-15 12:17:15,227 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.964922 seconds
+2026-04-15 12:17:16,547 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Connection error.
+2026-04-15 12:17:16,547 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:17:17,832 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.468526 seconds
+2026-04-15 12:17:18,639 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.958511 seconds
+2026-04-15 12:17:19,863 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Connection error.
+2026-04-15 12:17:19,863 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:17:19,863 | WARNING | [TRANSCRIPTION] Chunk 1 returned no results
+2026-04-15 12:17:19,866 | INFO | [TRANSCRIPTION] [2/3] Chunk 1 done
+2026-04-15 12:17:21,652 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:17:21,655 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:17:21,656 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:17:22,880 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:17:22,882 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:17:22,882 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:17:22,882 | WARNING | [TRANSCRIPTION] Chunk 2 returned no results
+2026-04-15 12:17:22,883 | INFO | [TRANSCRIPTION] [3/3] Chunk 2 done
+2026-04-15 12:17:22,884 | WARNING | [TRANSCRIPTION] No segments produced!
+2026-04-15 12:17:22,886 | INFO | [TRANSCRIPTION] Saved to cache
+2026-04-15 12:17:22,887 | INFO | [TRANSCRIPTION] ✓ Done in 25.8s — 0 segments
+2026-04-15 12:17:22,900 | INFO | [8b800458] Transcription done. 0 segments.
+2026-04-15 12:17:22,901 | ERROR | [8b800458] Job 8c58ed00-0426-46e7-89a1-6dfc0252d16e FAILED at 'transcribing': Transcription produced no segments
+2026-04-15 12:17:22,902 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 180, in process_video_job
+    raise Exception("Transcription produced no segments")
+Exception: Transcription produced no segments
+
+2026-04-15 12:17:22,902 | ERROR | [JOB FAILED] 8c58ed00-0426-46e7-89a1-6dfc0252d16e
+2026-04-15 12:17:22,902 | INFO | [QUEUE] Job 8c58ed00-0426-46e7-89a1-6dfc0252d16e finished successfully
+2026-04-15 12:24:18,447 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 12:24:18,449 | INFO | [QUEUE] Worker thread started
+2026-04-15 12:24:18,485 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 12:25:17,803 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 12:25:17,806 | INFO | [QUEUE] Worker thread started
+2026-04-15 12:25:17,869 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 12:25:41,117 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\94cde657.mp4
+2026-04-15 12:25:41,118 | INFO | [JOB CREATED] 7ea123ac-8393-4497-83c0-9ca55aa1e863
+2026-04-15 12:25:41,118 | INFO | [QUEUE] Job 7ea123ac-8393-4497-83c0-9ca55aa1e863 added — position 1 in queue
+2026-04-15 12:25:41,118 | INFO | [QUEUE] Starting job 7ea123ac-8393-4497-83c0-9ca55aa1e863 (process_video_job)
+2026-04-15 12:25:41,121 | INFO | [eaa96638] Preparing source: storage\video\94cde657.mp4
+2026-04-15 12:25:41,122 | INFO | [eaa96638] Source ready. audio=storage\video\94cde657.mp4
+2026-04-15 12:25:41,122 | INFO | [eaa96638] Starting transcription...
+2026-04-15 12:25:41,123 | INFO | [TRANSCRIPTION] Starting transcription: storage\video\94cde657.mp4
+2026-04-15 12:25:42,751 | INFO | [TRANSCRIPTION] Loaded audio: 648208ms
+2026-04-15 12:25:42,784 | INFO | [TRANSCRIPTION] Chunk sizes: [300000, 300000, 48208]ms
+2026-04-15 12:25:42,784 | INFO | [TRANSCRIPTION] Created 3 chunks from 648.2s audio
+2026-04-15 12:25:42,784 | INFO | [TRANSCRIPTION] Using 1 parallel workers for 3 chunks
+2026-04-15 12:25:49,123 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.389779 seconds
+2026-04-15 12:25:49,846 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:25:49,906 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:25:49,907 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:25:51,260 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.460773 seconds
+2026-04-15 12:25:52,519 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:25:52,520 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:25:52,520 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:25:52,520 | WARNING | [TRANSCRIPTION] Chunk 0 returned no results
+2026-04-15 12:25:52,523 | INFO | [TRANSCRIPTION] [1/3] Chunk 0 done
+2026-04-15 12:25:58,983 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.392905 seconds
+2026-04-15 12:25:59,602 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.859415 seconds
+2026-04-15 12:26:00,696 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Connection error.
+2026-04-15 12:26:00,697 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:26:02,240 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:26:02,241 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:26:02,241 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:26:02,242 | WARNING | [TRANSCRIPTION] Chunk 1 returned no results
+2026-04-15 12:26:02,244 | INFO | [TRANSCRIPTION] [2/3] Chunk 1 done
+2026-04-15 12:26:04,606 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:26:04,607 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:26:04,607 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:26:05,749 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:26:05,750 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:26:05,751 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:26:05,751 | WARNING | [TRANSCRIPTION] Chunk 2 returned no results
+2026-04-15 12:26:05,752 | INFO | [TRANSCRIPTION] [3/3] Chunk 2 done
+2026-04-15 12:26:05,753 | WARNING | [TRANSCRIPTION] No segments produced!
+2026-04-15 12:26:05,754 | INFO | [TRANSCRIPTION] Saved to cache
+2026-04-15 12:26:05,754 | INFO | [TRANSCRIPTION] ✓ Done in 24.6s — 0 segments
+2026-04-15 12:26:05,767 | INFO | [eaa96638] Transcription done. 0 segments.
+2026-04-15 12:26:05,768 | ERROR | [eaa96638] Job 7ea123ac-8393-4497-83c0-9ca55aa1e863 FAILED at 'transcribing': Transcription produced no segments
+2026-04-15 12:26:05,770 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 180, in process_video_job
+    raise Exception("Transcription produced no segments")
+Exception: Transcription produced no segments
+
+2026-04-15 12:26:05,774 | ERROR | [JOB FAILED] 7ea123ac-8393-4497-83c0-9ca55aa1e863
+2026-04-15 12:26:05,775 | INFO | [QUEUE] Job 7ea123ac-8393-4497-83c0-9ca55aa1e863 finished successfully
+2026-04-15 12:30:38,427 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 12:30:38,431 | INFO | [QUEUE] Worker thread started
+2026-04-15 12:30:38,480 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 12:31:29,086 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 12:31:29,088 | INFO | [QUEUE] Worker thread started
+2026-04-15 12:31:29,127 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 12:33:41,127 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\38e8fe0e.mp4
+2026-04-15 12:33:41,135 | INFO | [JOB CREATED] 63c8f8d3-2696-462a-9397-8074f5854935
+2026-04-15 12:33:41,135 | INFO | [QUEUE] Job 63c8f8d3-2696-462a-9397-8074f5854935 added — position 1 in queue
+2026-04-15 12:33:41,135 | INFO | [QUEUE] Starting job 63c8f8d3-2696-462a-9397-8074f5854935 (process_video_job)
+2026-04-15 12:33:41,136 | INFO | [70a461fb] Preparing source: storage\video\38e8fe0e.mp4
+2026-04-15 12:33:41,137 | INFO | [70a461fb] Source ready. audio=storage\video\38e8fe0e.mp4
+2026-04-15 12:33:41,138 | INFO | [70a461fb] Starting transcription...
+2026-04-15 12:33:41,138 | INFO | [TRANSCRIPTION] Starting transcription: storage\video\38e8fe0e.mp4
+2026-04-15 12:33:42,718 | INFO | [TRANSCRIPTION] Loaded audio: 648208ms
+2026-04-15 12:33:42,771 | INFO | [TRANSCRIPTION] Chunk sizes: [300000, 300000, 48208]ms
+2026-04-15 12:33:42,771 | INFO | [TRANSCRIPTION] Created 3 chunks from 648.2s audio
+2026-04-15 12:33:42,771 | INFO | [TRANSCRIPTION] Using 1 parallel workers for 3 chunks
+2026-04-15 12:33:49,232 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.498132 seconds
+2026-04-15 12:33:50,092 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:33:50,093 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:33:50,094 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:33:51,456 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.420149 seconds
+2026-04-15 12:33:52,104 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.973575 seconds
+2026-04-15 12:33:53,742 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:33:53,764 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Connection error.
+2026-04-15 12:33:53,765 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:33:53,765 | WARNING | [TRANSCRIPTION] Chunk 0 returned no results
+2026-04-15 12:33:53,767 | INFO | [TRANSCRIPTION] [1/3] Chunk 0 done
+2026-04-15 12:34:00,435 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.415286 seconds
+2026-04-15 12:34:01,303 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:34:01,305 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:34:01,317 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:34:02,586 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.454454 seconds
+2026-04-15 12:34:03,422 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.891078 seconds
+2026-04-15 12:34:05,274 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:34:05,275 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:34:05,276 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:34:05,277 | WARNING | [TRANSCRIPTION] Chunk 1 returned no results
+2026-04-15 12:34:05,280 | INFO | [TRANSCRIPTION] [2/3] Chunk 1 done
+2026-04-15 12:34:07,116 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:34:07,117 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:34:07,118 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 12:34:08,246 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 12:34:08,248 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 12:34:08,249 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 12:34:08,249 | WARNING | [TRANSCRIPTION] Chunk 2 returned no results
+2026-04-15 12:34:08,250 | INFO | [TRANSCRIPTION] [3/3] Chunk 2 done
+2026-04-15 12:34:08,251 | WARNING | [TRANSCRIPTION] No segments produced!
+2026-04-15 12:34:08,252 | INFO | [TRANSCRIPTION] Saved to cache
+2026-04-15 12:34:08,252 | INFO | [TRANSCRIPTION] ✓ Done in 27.1s — 0 segments
+2026-04-15 12:34:08,266 | INFO | [70a461fb] Transcription done. 0 segments.
+2026-04-15 12:34:08,269 | ERROR | [70a461fb] Job 63c8f8d3-2696-462a-9397-8074f5854935 FAILED at 'transcribing': Transcription produced no segments
+2026-04-15 12:34:08,271 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 180, in process_video_job
+    raise Exception("Transcription produced no segments")
+Exception: Transcription produced no segments
+
+2026-04-15 12:34:08,271 | ERROR | [JOB FAILED] 63c8f8d3-2696-462a-9397-8074f5854935
+2026-04-15 12:34:08,272 | INFO | [QUEUE] Job 63c8f8d3-2696-462a-9397-8074f5854935 finished successfully
+2026-04-15 18:00:29,489 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 18:00:29,492 | INFO | [QUEUE] Worker thread started
+2026-04-15 18:00:29,557 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 18:09:09,900 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 18:09:09,903 | INFO | [QUEUE] Worker thread started
+2026-04-15 18:09:09,950 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 18:10:36,870 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-15 18:10:36,872 | INFO | [QUEUE] Worker thread started
+2026-04-15 18:10:36,913 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-15 18:11:58,129 | INFO | [SOURCE SERVICE] File saved successfully: storage\video\ec821685.mp4
+2026-04-15 18:11:58,130 | INFO | [JOB CREATED] 33ddacf2-c355-4d8d-90c8-0c225127df30
+2026-04-15 18:11:58,130 | INFO | [QUEUE] Job 33ddacf2-c355-4d8d-90c8-0c225127df30 added — position 1 in queue
+2026-04-15 18:11:58,130 | INFO | [QUEUE] Starting job 33ddacf2-c355-4d8d-90c8-0c225127df30 (process_video_job)
+2026-04-15 18:11:58,132 | INFO | [81ab68f5] Preparing source: storage\video\ec821685.mp4
+2026-04-15 18:11:58,132 | INFO | [81ab68f5] Source ready. audio=storage\video\ec821685.mp4
+2026-04-15 18:11:58,133 | INFO | [81ab68f5] Starting transcription...
+2026-04-15 18:11:58,134 | INFO | [TRANSCRIPTION] Starting transcription: storage\video\ec821685.mp4
+2026-04-15 18:12:02,932 | INFO | [TRANSCRIPTION] Loaded audio: 648208ms
+2026-04-15 18:12:02,975 | INFO | [TRANSCRIPTION] Chunk sizes: [300000, 300000, 48208]ms
+2026-04-15 18:12:02,975 | INFO | [TRANSCRIPTION] Created 3 chunks from 648.2s audio
+2026-04-15 18:12:02,975 | INFO | [TRANSCRIPTION] Using 1 parallel workers for 3 chunks
+2026-04-15 18:12:09,728 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 18:12:09,729 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 18:12:09,730 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 18:12:11,006 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 18:12:11,007 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 18:12:11,008 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 18:12:11,008 | WARNING | [TRANSCRIPTION] Chunk 0 returned no results
+2026-04-15 18:12:11,010 | INFO | [TRANSCRIPTION] [1/3] Chunk 0 done
+2026-04-15 18:12:17,947 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 502 Bad Gateway"
+2026-04-15 18:12:17,950 | INFO | Retrying request to /openai/v1/audio/transcriptions in 0.472057 seconds
+2026-04-15 18:12:18,814 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 18:12:18,815 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 18:12:18,816 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 18:12:20,143 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 18:12:20,145 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 18:12:20,146 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 18:12:20,146 | WARNING | [TRANSCRIPTION] Chunk 1 returned no results
+2026-04-15 18:12:20,150 | INFO | [TRANSCRIPTION] [2/3] Chunk 1 done
+2026-04-15 18:12:22,009 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 18:12:22,009 | WARNING | [TRANSCRIPTION] Attempt 1/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 18:12:22,010 | INFO | [TRANSCRIPTION] Retrying in 1s...
+2026-04-15 18:12:23,237 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-04-15 18:12:23,237 | WARNING | [TRANSCRIPTION] Attempt 2/2 failed: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-04-15 18:12:23,239 | ERROR | [TRANSCRIPTION] Failed after 2 attempts
+2026-04-15 18:12:23,239 | WARNING | [TRANSCRIPTION] Chunk 2 returned no results
+2026-04-15 18:12:23,240 | INFO | [TRANSCRIPTION] [3/3] Chunk 2 done
+2026-04-15 18:12:23,243 | WARNING | [TRANSCRIPTION] No segments produced!
+2026-04-15 18:12:23,245 | INFO | [TRANSCRIPTION] Saved to cache
+2026-04-15 18:12:23,246 | INFO | [TRANSCRIPTION] ✓ Done in 25.1s — 0 segments
+2026-04-15 18:12:23,272 | INFO | [81ab68f5] Transcription done. 0 segments.
+2026-04-15 18:12:23,273 | ERROR | [81ab68f5] Job 33ddacf2-c355-4d8d-90c8-0c225127df30 FAILED at 'transcribing': Transcription produced no segments
+2026-04-15 18:12:23,274 | ERROR | Traceback (most recent call last):
+  File "C:\my_project\VideoTranslator\app\api\main_api.py", line 181, in process_video_job
+    raise Exception("Transcription produced no segments")
+Exception: Transcription produced no segments
+
+2026-04-15 18:12:23,274 | ERROR | [JOB FAILED] 33ddacf2-c355-4d8d-90c8-0c225127df30
+2026-04-15 18:12:23,274 | INFO | [QUEUE] Job 33ddacf2-c355-4d8d-90c8-0c225127df30 finished successfully
+2026-04-16 15:55:59,061 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-16 15:55:59,068 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-16 15:55:59,071 | INFO | [QUEUE] Worker thread started
+2026-04-16 15:55:59,071 | INFO | [QUEUE] Worker thread started
+2026-04-16 15:55:59,133 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-16 15:55:59,134 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-16 19:27:18,575 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-16 19:27:18,579 | INFO | [QUEUE] Worker thread started
+2026-04-16 19:27:18,596 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-16 19:27:18,600 | INFO | [QUEUE] Worker thread started
+2026-04-16 19:27:18,647 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-16 19:27:18,652 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-16 19:32:49,917 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-16 19:32:49,921 | INFO | [QUEUE] Worker thread started
+2026-04-16 19:32:49,995 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-16 19:32:50,714 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-16 19:32:50,718 | INFO | [QUEUE] Worker thread started
+2026-04-16 19:32:50,777 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-16 19:39:54,575 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-16 19:39:54,580 | INFO | [QUEUE] Worker thread started
+2026-04-16 19:39:54,662 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-16 19:39:55,668 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-16 19:39:55,672 | INFO | [QUEUE] Worker thread started
+2026-04-16 19:39:55,784 | INFO | --- Server starting up... Running Cleanup ---

@@ -13,6 +13,8 @@ from app.config import LOG_FILE, STORAGE_PATH, MAX_SUMMARY_SENTENCES, MODEL_SIZE
 from app.services.video_source_service import VideoSourceService
 from app.services.storage_manager import StorageManager
 from app.services.queue_service import QueueService
+from urllib.parse import urlparse
+from dotenv import load_dotenv
 import os
 import re
 import time
@@ -21,9 +23,9 @@ import uuid
 import asyncio
 import traceback
 import subprocess
-
-
 import nltk
+
+load_dotenv(override=True)
 nltk.download('punkt')
 nltk.download('punkt_tab')
 
@@ -237,6 +239,12 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
             job_manager.fail_job(job_id, {"error": str(e)})
 
 
+ALLOWED_MIME_TYPES = {
+    "video/mp4", "video/x-msvideo", "video/quicktime", 
+    "audio/mpeg", "audio/wav", "audio/x-wav", "audio/mp4"
+}
+ALLOWED_EXTENSIONS = {".mp4", ".avi", ".mov", ".mp3", ".wav", ".m4a"}
+
 @app.post("/upload-video")
 async def upload_video(
     file: UploadFile = File(...),
@@ -248,6 +256,15 @@ async def upload_video(
     if file.size and file.size > MAX_FILE_SIZE_MB * 1024 * 1024:
         raise HTTPException(status_code=413, detail="File too large (Max 2GB)")
 
+    if file.content_type not in ALLOWED_MIME_TYPES:
+        logger.warning(f"[SECURITY] Rejected file upload with MIME type: {file.content_type}")
+        raise HTTPException(status_code=415, detail=f"Unsupported media type: {file.file}. Please upload a valid video or audio file.")
+    
+    file_ext = os.path.splitext(file.filename)[1].lower()
+    if file_ext not in ALLOWED_EXTENSIONS:
+        logger.warning(f"[SECURITY] Rejected file upload with extension: {file_ext}")
+        raise HTTPException(status_code=415, detail=f"Unsupported file extension: {file_ext}")
+    
     storage_manager.cleanup_if_needed()
     file_path = await asyncio.to_thread(video_source_service.save_uploaded_file, file)
     request_id = str(uuid.uuid4())[:8]
@@ -266,6 +283,14 @@ async def upload_video(
 
 @app.post("/process-video")
 def process_video(request: VideoRequest):
+    if not request.url:
+        raise HTTPException(status_code=400, detail="URL field is required.")
+    
+    parsed_url = urlparse(request.url)
+    if parsed_url.scheme not in ("http", "https") or not parsed_url.netloc:
+        logger.warning(f"[SECURITY] Rejected invalid URL format: {request.url}")
+        raise HTTPException(status_code=400, detail="Invalid URL format. Please provide a valid http/https link.")
+    
     storage_manager.cleanup_if_needed()
     request_id = str(uuid.uuid4())[:8]
     job_id = job_manager.create_job()
@@ -304,9 +329,10 @@ def check_status(job_id: str):
 @app.get("/health")
 def health():
     return {
-        "status": "ok" if transcription_service.model is not None else "degraded",
-        "model_loaded": transcription_service.model is not None,
-        "model_used": MODEL_SIZE,
+        "status": "ok" if transcription_service.client is not None else "degraded",
+        "transcription_available": transcription_service.client is not None,
+        "translation_service": translation_service.__class__.__name__,
+        "model_size": MODEL_SIZE,
         "timestamp": time.time()
     }
 
