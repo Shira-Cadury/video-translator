@@ -15,6 +15,7 @@ from app.services.storage_manager import StorageManager
 from app.services.queue_service import QueueService
 from urllib.parse import urlparse
 from dotenv import load_dotenv
+from fastapi.responses import StreamingResponse
 import os
 import re
 import time
@@ -24,6 +25,7 @@ import asyncio
 import traceback
 import subprocess
 import nltk
+import json
 
 load_dotenv(override=True)
 nltk.download('punkt')
@@ -346,6 +348,42 @@ def check_status(job_id: str):
     if job.get("result"):
         response["result"] = job["result"]
     return response
+
+
+@app.get("/stream-status/{job_id}")
+async def stream_status(job_id: str):
+    job = job_manager.get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job ID not found")
+    
+    async def event_generator():
+        last_progress = -1
+        last_status = ""
+        
+        while True:
+            current_job = job_manager.get_job(job_id)
+            if not current_job:
+                break
+            
+            if current_job["progress"] != last_progress or current_job["status"] != last_status:
+                last_progress = current_job.get("progress", 0)
+                last_status = current_job["status"]
+                
+                response_data = {
+                    "status": last_status,
+                    "progress": last_progress,
+                    "eta_seconds": current_job.get("eta_seconds"),
+                }
+                if last_status == STATUS_QUEUED:
+                    response_data["queue_position"] = queue_service.get_position(job_id)
+                if current_job.get("result"):
+                    response_data["result"] = current_job["result"]
+                yield f"data: {json.dumps(response_data)}\n\n"
+                
+            if last_status in [STATUS_COMPLETED, STATUS_FAILED, STATUS_CANCELLED]:
+                break
+            await asyncio.sleep(1)
+    return StreamingResponse(event_generator(), media_type="text/event-stream")                
 
 
 @app.get("/health")

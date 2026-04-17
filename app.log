@@ -1009,3 +1009,6 @@ Exception: Transcription produced no segments
 2026-04-17 10:31:16,580 | INFO | [TRANSCRIPTION] Groq API initialized.
 2026-04-17 10:31:16,583 | INFO | [QUEUE] Worker thread started
 2026-04-17 10:31:16,656 | INFO | --- Server starting up... Running Cleanup ---
+2026-04-17 10:47:32,415 | INFO | [TRANSCRIPTION] Groq API initialized.
+2026-04-17 10:47:32,418 | INFO | [QUEUE] Worker thread started
+2026-04-17 10:47:32,464 | INFO | --- Server starting up... Running Cleanup ---
