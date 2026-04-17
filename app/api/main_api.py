@@ -121,28 +121,40 @@ def get_video_paths(video_id: str, lang: str):
 
 
 def _burn_subtitles(video_path: str, srt_path: str, output_path: str) -> str:
-    """Burn subtitles into video using ffmpeg. Returns output path on success, original on failure."""
     try:
+        MAX_BURN_TIME = 600
         cmd = [
             'ffmpeg', '-y', '-i', video_path,
             '-vf', f"subtitles={srt_path}:force_style='FontSize=20,PrimaryColour=&H00FFFF,OutlineColour=&H000000,BorderStyle=1'",
             '-c:a', 'copy', output_path
         ]
-        subprocess.run(cmd, check=True, capture_output=True)
+        
+        subprocess.run(cmd, check=True, capture_output=True, timeout=MAX_BURN_TIME)
+        
         logger.info(f"[FFMPEG] Subtitles burned into: {output_path}")
         return output_path
+    
+    except subprocess.TimeoutExpired:
+        logger.error(f"[FFMPEG] CRITICAL: Subtitle burn TIMEOUT after {MAX_BURN_TIME}s. Killing process.")
+        raise Exception(f"Video processing took too long (limit: {MAX_BURN_TIME}s)")
+    
     except subprocess.CalledProcessError as e:
-        logger.error(f"[FFMPEG] Subtitle burn failed: {e.stderr.decode()}")
-        return video_path  
+        error_msg = e.stderr.decode() if e.stderr else "Unknown error"
+        logger.error(f"[FFMPEG] Subtitle burn failed: {error_msg}")
+        raise Exception(f"FFmpeg error: {error_msg}")
+      
     except Exception as e:
         logger.error(f"[FFMPEG] Unexpected error: {e}")
-        return video_path
+        raise e
 
 
 def process_video_job(job_id: str, source: str, request_id: str, target_lang: str, generate_summary: bool, summary_sentences: int):
     MAX_JOB_TIME = 7200
     storage_manager.cleanup_if_needed()
     job_overall_start = time.time()
+
+    audio_path = None
+    raw_video_path = None
 
     try:
         if job_manager.get_job(job_id)["status"] == STATUS_CANCELLED:
@@ -238,6 +250,16 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
             logger.error(traceback.format_exc())
             job_manager.fail_job(job_id, {"error": str(e)})
 
+    finally:
+        logger.info(f"[{request_id}] Running resource cleanup for job {job_id}")
+        files_to_delete = [audio_path, raw_video_path]
+        for temp_file in files_to_delete:
+            if temp_file in files_to_delete:
+                try:
+                    os.remove(temp_file)
+                    logger.debug(f"[{request_id}] Deleted temp file: {temp_file}")
+                except Exception as e:
+                    logger.warning(f"[{request_id}] Could not delete temp file {temp_file}: {e}")    
 
 ALLOWED_MIME_TYPES = {
     "video/mp4", "video/x-msvideo", "video/quicktime", 
