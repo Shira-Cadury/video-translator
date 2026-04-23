@@ -51,6 +51,9 @@ class VideoService:
             
             if not info: raise Exception("Could not get video info")
 
+            if info.get('is_live'):
+                return {"status": "error", "message": "Live streams are not supported"}
+
             video_id = info.get('id')
             title = info.get('title')
             file_path = os.path.join(self.audio_path, f"{video_id}.mp3")
@@ -86,6 +89,10 @@ class VideoService:
                 info = self._extract_info(url)
             
             if not info: raise Exception("Could not get video info")
+
+            # התיקון הקריטי: חסימת שידורים חיים גם בווידאו
+            if info.get('is_live'):
+                return {"status": "error", "message": "Live streams are not supported"}
 
             video_id = info.get('id')
             title = info.get('title')

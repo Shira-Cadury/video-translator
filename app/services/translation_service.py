@@ -3,6 +3,7 @@ import json
 import logging
 import time 
 import google.generativeai as genai
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 logger = logging.getLogger(__name__)
 
@@ -28,9 +29,7 @@ LANGUAGE_NAMES = {
 }
 
 BATCH_SIZE = 150 
-
 RETRY_DELAY = 2
-
 
 class TranslationService:
     def __init__(self, source="en", target="he"):
@@ -88,49 +87,40 @@ Text to translate to {lang_name}:
 {lines}
 
 Remember: Output ONLY the translated lines in {lang_name} format. Nothing else."""
+        try:
+            translated_dict = self._call_gemini_with_retry(prompt, lang_name, offset, len(batch))
+                    
+            for i, seg in enumerate(batch):
+                global_idx = offset + i
+                if global_idx in translated_dict:
+                    seg['text'] = translated_dict[global_idx]
+            logger.info(f"[GEMINI] Batch {offset}: {len(translated_dict)}/{len(batch)} → {lang_name} SUCCESS")
 
-        max_retries = 2
-        for attempt in range(max_retries):
-            try:
-                response = self.model.generate_content(prompt)
+        except Exception as e:
+            logger.error(f"[GEMINI] Batch {offset}: Failed completely after all retries. Error: {e}")
+            logger.error(f"[GEMINI] Batch {offset}: Giving up, keeping original text")
 
-                if not response or not response.text:
-                    logger.error(f"[GEMINI] Empty response for batch {offset}, attempt {attempt + 1}/{max_retries}")
-                    if attempt < max_retries - 1:
-                        time.sleep(RETRY_DELAY)
-                    continue
+    @retry(
+        stop=stop_after_attempt(3), 
+        wait=wait_exponential(multiplier=2, min=2, max=15),
+        reraise=True
+    )
+    def _call_gemini_with_retry(self, prompt: str, lang_name: str, offset: int, batch_len: int) -> dict:
+        logger.info(f"[GEMINI] Sending request to API for batch {offset}...")
+        response = self.model.generate_content(prompt)
 
-                translated_dict = self._parse_translation_response(response.text, offset, len(batch))
-                
-                if not translated_dict:
-                    logger.warning(f"[GEMINI] No valid translations parsed at batch {offset}")
-                    if attempt < max_retries - 1:
-                        time.sleep(RETRY_DELAY)
-                    continue
-                
-                is_valid = self._validate_translation_language(translated_dict, lang_name, offset)
-                
-                if is_valid:
-                    for i, seg in enumerate(batch):
-                        global_idx = offset + i
-                        if global_idx in translated_dict:
-                            seg['text'] = translated_dict[global_idx]
-                    logger.info(f"[GEMINI] Batch {offset}: {len(translated_dict)}/{len(batch)} → {lang_name}")
-                    return
-                else:
-                    logger.warning(f"[GEMINI] Batch {offset}: Language validation FAILED - retrying...")
-                    if attempt < max_retries - 1:
-                        time.sleep(RETRY_DELAY)
-                        continue
-                    else:
-                        logger.error(f"[GEMINI] Batch {offset}: Failed validation after {max_retries} attempts")
+        if not response or not response.text:
+            raise ValueError(f"Empty response from Gemini")
 
-            except Exception as e:
-                logger.error(f"[GEMINI] Batch {offset} attempt {attempt + 1}: {e}")
-                if attempt == max_retries - 1:
-                    logger.error(f"[GEMINI] Batch {offset}: Giving up, keeping original text")
-                else:
-                    time.sleep(RETRY_DELAY)
+        translated_dict = self._parse_translation_response(response.text, offset, batch_len)
+        if not translated_dict:
+            raise ValueError(f"Failed to parse translations")
+
+        is_valid = self._validate_translation_language(translated_dict, lang_name, offset)
+        if not is_valid:
+            raise ValueError(f"Language validation failed for target '{lang_name}'")
+
+        return translated_dict
 
     def _parse_translation_response(self, response_text: str, offset: int, batch_size: int) -> dict:
         translated_dict = {}
