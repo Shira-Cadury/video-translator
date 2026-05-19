@@ -1,15 +1,16 @@
 import os
 import json
 import logging
-import time 
-import google.generativeai as genai
+from groq import Groq
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 logger = logging.getLogger(__name__)
 
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+if GROQ_API_KEY:
+    client = Groq(api_key=GROQ_API_KEY)
+else:
+    logger.error("GROQ_API_KEY is not set!")
 
 LANGUAGE_NAMES = {
     "he": "Hebrew",
@@ -26,14 +27,18 @@ LANGUAGE_NAMES = {
     "tr": "Turkish",
     "pt": "Portuguese",
     "it": "Italian",
+    "nl": "Dutch",
+    "pl": "Polish",
+    "el": "Greek",
+    "hi": "Hindi"
 }
 
-BATCH_SIZE = 150 
+BATCH_SIZE = 100 
 RETRY_DELAY = 2
 
 class TranslationService:
     def __init__(self, source="en", target="he"):
-        self.model = genai.GenerativeModel('gemma-3-12b-it')
+        self.model_name = 'llama-3.3-70b-versatile'
         self.default_target = target
 
     def translate_segments(self, segments, output_path=None, target_lang="he", storage_manager=None):
@@ -41,21 +46,21 @@ class TranslationService:
             return []
 
         lang_name = LANGUAGE_NAMES.get(target_lang, target_lang)
-        logger.info(f"[GEMINI] Target language: '{target_lang}' → '{lang_name}'")
+        logger.info(f"[GROQ_TRANSLATE] Target language: '{target_lang}' → '{lang_name}'")
 
         if output_path and os.path.exists(output_path):
             try:
                 with open(output_path, "r", encoding="utf-8") as f:
                     cached = json.load(f)
                     if isinstance(cached, list) and cached:
-                        logger.info(f"[GEMINI] Loaded translation from cache: {output_path}")
+                        logger.info(f"[GROQ_TRANSLATE] Loaded translation from cache: {output_path}")
                         if storage_manager:
                             storage_manager.touch_file(output_path)
                         return cached
             except Exception as e:
-                logger.warning(f"[GEMINI] Cache read failed: {e}, re-translating...")
+                logger.warning(f"[GROQ_TRANSLATE] Cache read failed: {e}, re-translating...")
 
-        logger.info(f"[GEMINI] Translating {len(segments)} segments → {lang_name}...")
+        logger.info(f"[GROQ_TRANSLATE] Translating {len(segments)} segments → {lang_name}...")
 
         translated_segments = [dict(seg) for seg in segments]
 
@@ -63,7 +68,7 @@ class TranslationService:
             batch = translated_segments[batch_start: batch_start + BATCH_SIZE]
             self._translate_batch(batch, lang_name, batch_start)
 
-        logger.info(f"[GEMINI] Translation complete. {len(translated_segments)} segments.")
+        logger.info(f"[GROQ_TRANSLATE] Translation complete. {len(translated_segments)} segments.")
 
         if output_path:
             self._save_cache(translated_segments, output_path)
@@ -88,31 +93,42 @@ Text to translate to {lang_name}:
 
 Remember: Output ONLY the translated lines in {lang_name} format. Nothing else."""
         try:
-            translated_dict = self._call_gemini_with_retry(prompt, lang_name, offset, len(batch))
+            translated_dict = self._call_groq_with_retry(prompt, lang_name, offset, len(batch))
                     
             for i, seg in enumerate(batch):
                 global_idx = offset + i
                 if global_idx in translated_dict:
                     seg['text'] = translated_dict[global_idx]
-            logger.info(f"[GEMINI] Batch {offset}: {len(translated_dict)}/{len(batch)} → {lang_name} SUCCESS")
+            logger.info(f"[GROQ_TRANSLATE] Batch {offset}: {len(translated_dict)}/{len(batch)} → {lang_name} SUCCESS")
 
         except Exception as e:
-            logger.error(f"[GEMINI] Batch {offset}: Failed completely after all retries. Error: {e}")
-            logger.error(f"[GEMINI] Batch {offset}: Giving up, keeping original text")
+            logger.error(f"[GROQ_TRANSLATE] Batch {offset}: Failed completely after all retries. Error: {e}")
+            logger.error(f"[GROQ_TRANSLATE] Batch {offset}: Giving up, keeping original text")
 
     @retry(
         stop=stop_after_attempt(3), 
         wait=wait_exponential(multiplier=2, min=2, max=15),
         reraise=True
     )
-    def _call_gemini_with_retry(self, prompt: str, lang_name: str, offset: int, batch_len: int) -> dict:
-        logger.info(f"[GEMINI] Sending request to API for batch {offset}...")
-        response = self.model.generate_content(prompt)
+    def _call_groq_with_retry(self, prompt: str, lang_name: str, offset: int, batch_len: int) -> dict:
+        logger.info(f"[GROQ_TRANSLATE] Sending request to API for batch {offset}...")
+        
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+            ],
+            model=self.model_name,
+        )
 
-        if not response or not response.text:
-            raise ValueError(f"Empty response from Gemini")
+        response_text = chat_completion.choices[0].message.content
 
-        translated_dict = self._parse_translation_response(response.text, offset, batch_len)
+        if not response_text:
+            raise ValueError(f"Empty response from Groq")
+
+        translated_dict = self._parse_translation_response(response_text, offset, batch_len)
         if not translated_dict:
             raise ValueError(f"Failed to parse translations")
 
@@ -145,7 +161,7 @@ Remember: Output ONLY the translated lines in {lang_name} format. Nothing else."
                 continue
         return translated_dict
 
-    def _validate_translation_language(self, translations: dict, target_lang: str, offset: int) -> bool:
+    def _validate_translation_language(self, translations: dict, lang_name: str, offset: int) -> bool:
         if not translations:
             return False
         
@@ -157,27 +173,32 @@ Remember: Output ONLY the translated lines in {lang_name} format. Nothing else."
         strong_english = [' is ', ' are ', ' the ', ' and ', ' a ', ' to ', ' of ']
         english_count = sum(1 for eng in strong_english if eng in sample_text)
         
-        if target_lang in ['he', 'iw']: 
+        lang_lower = lang_name.lower()
+        
+        if lang_lower in ['hebrew', 'he', 'iw']: 
             hebrew_chars = sum(1 for c in sample_text if '\u0590' <= c <= '\u05FF')
-            total_chars = len(sample_text.replace(' ', ''))
+            total_chars = max(len(sample_text.replace(' ', '')), 1)
             is_valid = hebrew_chars > total_chars * 0.35 and english_count < 2
-            logger.info(f"[GEMINI] Validate {offset}: Hebrew={hebrew_chars}/{total_chars} ({(hebrew_chars/total_chars*100):.0f}%), en_score={english_count}, ✓={is_valid}")
+            logger.info(f"[GROQ_TRANSLATE] Validate {offset}: Hebrew={hebrew_chars}/{total_chars} ({(hebrew_chars/total_chars*100):.0f}%), en_score={english_count}, ✓={is_valid}")
             return is_valid
-        elif target_lang in ['ar']:  
+            
+        elif lang_lower in ['arabic', 'ar']:  
             arabic_chars = sum(1 for c in sample_text if '\u0600' <= c <= '\u06FF')
-            total_chars = len(sample_text.replace(' ', ''))
+            total_chars = max(len(sample_text.replace(' ', '')), 1)
             is_valid = arabic_chars > total_chars * 0.35 and english_count < 2
             return is_valid
-        elif target_lang in ['en']: 
+            
+        elif lang_lower in ['english', 'en']: 
             return english_count > 0 or 'english' not in sample_text
+            
         else: 
-            return english_count < 2
+            return english_count < 3
 
     def _save_cache(self, data, path):
         try:
             os.makedirs(os.path.dirname(path), exist_ok=True)
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
-            logger.info(f"[GEMINI] Cache saved: {path}")
+            logger.info(f"[GROQ_TRANSLATE] Cache saved: {path}")
         except Exception as e:
-            logger.warning(f"[GEMINI] Could not save cache: {e}")
+            logger.warning(f"[GROQ_TRANSLATE] Could not save cache: {e}")

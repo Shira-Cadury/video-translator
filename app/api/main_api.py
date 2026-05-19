@@ -8,10 +8,11 @@ import traceback
 import subprocess
 import nltk
 import json
+import hashlib
 from contextlib import asynccontextmanager
 from urllib.parse import urlparse
 
-from fastapi import FastAPI, HTTPException, File, UploadFile, Request, Depends
+from fastapi import FastAPI, HTTPException, File, UploadFile, Request, Depends, Form
 from pydantic import BaseModel, Field
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -128,7 +129,7 @@ def extract_video_id(url: str):
     video_id_match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", url)
     if video_id_match:
         return video_id_match.group(1)
-    return None
+    return hashlib.md5(url.encode('utf-8')).hexdigest()[:15]
 
 def prepare_source(source: str, job_id: str):
     if video_source_service.is_url(source):
@@ -175,11 +176,35 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
         job_manager.update_status(job_id, STATUS_DOWNLOADING)
         job_manager.update_progress(job_id, 10)
         
+        is_url = video_source_service.is_url(source)
+        precalc_video_id = extract_video_id(source) if is_url else f"local_{job_id}"
+        paths = get_video_paths(precalc_video_id, lang=target_lang)
+        
+        burned_video_path = f"{STORAGE_PATH}/subtitles/{precalc_video_id}_{target_lang}_final.mp4"
+        
+        if is_url and os.path.exists(burned_video_path) and os.path.exists(paths["srt_lang"]):
+            logger.info(f"[{request_id}] CACHE HIT: Video already processed for language {target_lang}. Skipping everything!")
+            summary_text = None
+            if generate_summary and os.path.exists(paths["summary"]):
+                with open(paths["summary"], "r", encoding="utf-8") as f:
+                    summary_text = f.read()
+            
+            job_manager.update_progress(job_id, 100)
+            job_manager.save_result(job_id, {
+                "video_id": precalc_video_id,
+                "video_url": burned_video_path,
+                "subtitles": paths["srt_lang"],
+                "summary": summary_text
+            })
+            job_manager.update_status(job_id, STATUS_COMPLETED)
+            return 
+
         video_id, audio_path, raw_video_path = prepare_source(source, job_id)
         job_manager.update_progress(job_id, 30)
         
         paths = get_video_paths(video_id, lang=target_lang)
-        burned_video_path = f"{STORAGE_PATH}/subtitles/{video_id}_final.mp4"
+        
+        burned_video_path = f"{STORAGE_PATH}/subtitles/{video_id}_{target_lang}_final.mp4"
 
         job_manager.update_status(job_id, STATUS_TRANSCRIBING)
         trans_res = transcription_service.transcribe(
@@ -212,8 +237,11 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
         subtitle_service.generate_srt(translated_segments, paths["srt_lang"], storage_manager=storage_manager)
         
         job_manager.update_status(job_id, "burning_subtitles")
-        _burn_subtitles(raw_video_path, paths["srt_lang"], burned_video_path)
-
+        if not os.path.exists(burned_video_path):
+            logger.info(f"[{request_id}] Burning subtitles to new video...")
+            _burn_subtitles(raw_video_path, paths["srt_lang"], burned_video_path)
+        else:
+            logger.info(f"[{request_id}] Using cached burned video. Skipping FFmpeg.")
         job_manager.update_progress(job_id, 95)
         
         summary_text = None
@@ -248,9 +276,9 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
 async def upload_video(
     request: Request, 
     file: UploadFile = File(...),
-    target_language: str = "he",
-    generate_summary: bool = True,
-    summary_sentences: int = 3
+    target_language: str = Form("he"),
+    generate_summary: bool = Form(True),
+    summary_sentences: int = Form(3)
 ):
     safe_filename = os.path.basename(file.filename).replace(" ", "_")
     file_path = await asyncio.to_thread(video_source_service.save_uploaded_file, file)
@@ -332,7 +360,6 @@ def cancel_video_job(job_id: str):
 @app.get("/queue-status")
 def get_queue_info():
     return {"queue_size": queue_service.get_queue_size(), "status": "active"}
-
 
 @app.get("/search/{job_id}")
 @limiter.limit("30/minute")
