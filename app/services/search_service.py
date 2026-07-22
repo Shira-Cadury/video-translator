@@ -1,61 +1,41 @@
-import os
-import re
-import json
 import logging
-from typing import List
+from sqlalchemy.orm import Session
+from sqlalchemy import or_
+from app.database import models
 
 logger = logging.getLogger(__name__)
 
 class SearchService:
     def __init__(self, storage_path: str):
         self.storage_path = storage_path
-        self.stop_words = {
-            "את", "של", "על", "הוא", "היא", "זה", "עם", "כל", "גם", "מה", "אם", "לא", "כן",
-            "the", "a", "an", "in", "on", "at", "to", "for", "is", "are", "and"
-        }
 
-    def _get_index_path(self, job_id: str) -> str:
-        return os.path.join(self.storage_path, "subtitles", f"{job_id}_index.json")
+    def build_index(self, job_id: str, segments: list):
+        pass
 
-    def build_index(self, job_id: str, segments: List[dict]):
-        word_index = {}
-        
-        for seg in segments:
-            text = seg.get("text", "")
-            start_time = seg.get("start", 0)
-            
-            words = re.findall(r"\b[\w']+\b", text.lower())
-            
-            for word in words:
-                if len(word) < 2 or word in self.stop_words:
-                    continue
-                
-                if word not in word_index:
-                    word_index[word] = []
-                
-                word_index[word].append({
-                    "time": round(start_time, 2),
-                    "context": self._extract_context(text, word)
-                })
-        
-        index_path = self._get_index_path(job_id)
-        os.makedirs(os.path.dirname(index_path), exist_ok=True)
-        with open(index_path, "w", encoding="utf-8") as f:
-            json.dump(word_index, f, ensure_ascii=False)
-            
-        logger.info(f"[SEARCH] Index saved for {job_id} ({len(word_index)} unique words)")
+    def search(self, db: Session, job_id: str, query: str) -> dict:
+        query_clean = query.strip()
+        if not query_clean:
+            return {"query": query, "total_matches": 0, "matches": []}
 
-    def search(self, job_id: str, query: str) -> dict:
-        index_path = self._get_index_path(job_id)
-        if not os.path.exists(index_path):
-            raise ValueError("Search index not found for this video")
-        
-        with open(index_path, "r", encoding="utf-8") as f:
-            word_index = json.load(f)
-        
-        query_clean = query.lower().strip()
-        matches = word_index.get(query_clean, [])
-        
+        results = db.query(models.SubtitleSegment).filter(
+            models.SubtitleSegment.job_id == job_id,
+            or_(
+                models.SubtitleSegment.source_text.contains(query_clean),
+                models.SubtitleSegment.translated_text.contains(query_clean)
+            )
+        ).order_by(models.SubtitleSegment.segment_index).all()
+
+        matches = []
+        for seg in results:
+            text_context = seg.translated_text if query_clean in seg.translated_text else seg.source_text
+            
+            matches.append({
+                "time": round(seg.start_time, 2),
+                "context": self._extract_context(text_context, query_clean)
+            })
+
+        logger.info(f"[SEARCH DB] Found {len(matches)} matches for query '{query_clean}' in job {job_id}")
+
         return {
             "query": query,
             "total_matches": len(matches),
@@ -63,13 +43,16 @@ class SearchService:
         }
 
     def _extract_context(self, text: str, query: str, context_chars: int = 40) -> str:
-        pos = text.lower().find(query)
-        if pos == -1: return text[:50]
+        pos = text.lower().find(query.lower())
+        if pos == -1: 
+            return text[:50] + "..." if len(text) > 50 else text
         
         start = max(0, pos - context_chars)
         end = min(len(text), pos + len(query) + context_chars)
         context = text[start:end]
         
-        if start > 0: context = "..." + context
-        if end < len(text): context = context + "..."
+        if start > 0: 
+            context = "..." + context
+        if end < len(text): 
+            context = context + "..."
         return context

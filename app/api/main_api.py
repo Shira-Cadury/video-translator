@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 import re
 import time
 import logging
@@ -30,13 +32,17 @@ from app.services.translation_service import TranslationService
 from app.services.summary_service import SummaryService
 from app.services.job_manager import JobManager
 from app.config import LOG_FILE, STORAGE_PATH, MAX_SUMMARY_SENTENCES, MODEL_SIZE
+
 from app.services.video_source_service import VideoSourceService
+
 from app.services.storage_manager import StorageManager
 from app.services.queue_service import QueueService
 from app.services.search_service import SearchService
+from sqlalchemy.orm import Session
 
-load_dotenv(override=True)
-
+from app.database import crud
+from app.database.db_config import engine, Base, SessionLocal, get_db
+import app.database.models as models
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
@@ -97,6 +103,7 @@ limiter = Limiter(key_func=get_real_ip)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
     storage_manager.cleanup_if_needed()
     yield
     queue_service.job_queue.join()
@@ -157,7 +164,11 @@ def _burn_subtitles(video_path: str, srt_path: str, output_path: str) -> str:
         cmd = [
             'ffmpeg', '-y', '-i', video_path,
             '-vf', f"subtitles={safe_srt_path}:force_style='FontSize=20,PrimaryColour=&H00FFFF,OutlineColour=&H000000,BorderStyle=1'",
-            '-c:a', 'copy', output_path
+            '-c:v', 'libx264',
+            '-preset', 'ultrafast',
+            '-tune', 'zerolatency',
+            '-c:a', 'copy', 
+            output_path
         ]
         subprocess.run(cmd, check=True, capture_output=True, timeout=MAX_BURN_TIME)
         return output_path
@@ -172,9 +183,10 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
     audio_path = None
     raw_video_path = None
 
+    db = SessionLocal()
     try:
-        job_manager.update_status(job_id, STATUS_DOWNLOADING)
-        job_manager.update_progress(job_id, 10)
+        job_manager.update_status(db, job_id, STATUS_DOWNLOADING)
+        job_manager.update_progress(db, job_id, 10)
         
         is_url = video_source_service.is_url(source)
         precalc_video_id = extract_video_id(source) if is_url else f"local_{job_id}"
@@ -189,36 +201,30 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
                 with open(paths["summary"], "r", encoding="utf-8") as f:
                     summary_text = f.read()
             
-            job_manager.update_progress(job_id, 100)
-            job_manager.save_result(job_id, {
-                "video_id": precalc_video_id,
-                "video_url": burned_video_path,
-                "subtitles": paths["srt_lang"],
-                "summary": summary_text
-            })
-            job_manager.update_status(job_id, STATUS_COMPLETED)
+            job_manager.update_progress(db, job_id, 100)
+            job_manager.save_result(db, job_id, burned_path=burned_video_path, srt_path=paths["srt_lang"], summary_text=summary_text)
+            job_manager.update_status(db, job_id, STATUS_COMPLETED)
             return 
 
         video_id, audio_path, raw_video_path = prepare_source(source, job_id)
-        job_manager.update_progress(job_id, 30)
+        job_manager.update_progress(db, job_id, 30)
         
         paths = get_video_paths(video_id, lang=target_lang)
-        
         burned_video_path = f"{STORAGE_PATH}/subtitles/{video_id}_{target_lang}_final.mp4"
 
-        job_manager.update_status(job_id, STATUS_TRANSCRIBING)
+        job_manager.update_status(db, job_id, STATUS_TRANSCRIBING)
         trans_res = transcription_service.transcribe(
             audio_path, paths["json"],
             language=AUDIO_SOURCE_LANGUAGE,
             storage_manager=storage_manager,
-            job_id=job_id, job_manager=job_manager
+            job_id=job_id, job_manager=job_manager 
         )
-        job_manager.update_progress(job_id, 60)
+        job_manager.update_progress(db, job_id, 60)
 
         if not trans_res.get("success"):
             raise Exception(f"Transcription failed: {trans_res.get('error')}")
 
-        job_manager.update_status(job_id, STATUS_TRANSLATING)
+        job_manager.update_status(db, job_id, STATUS_TRANSLATING)
         translated_segments = translation_service.translate_segments(
             trans_res["segments"], paths["trans"],
             target_lang=target_lang,
@@ -226,50 +232,53 @@ def process_video_job(job_id: str, source: str, request_id: str, target_lang: st
         )
         
         try:
-            logger.info(f"[{request_id}] Building search index")
+            logger.info(f"[{request_id}] Saving translated segments to database for instant search")
+            crud.create_subtitle_segments(db, video_id=video_id, job_id=job_id, segments_list=translated_segments)
+        except Exception as e:
+            logger.error(f"[{request_id}] Failed to save segments to DB: {e}")
+
+        try:
+            logger.info(f"[{request_id}] Building legacy search index")
             search_service.build_index(job_id, translated_segments)
         except Exception as e:
             logger.warning(f"[{request_id}] Search index failed, continuing anyway: {e}")    
         
-        job_manager.update_progress(job_id, 80)
+        job_manager.update_progress(db, job_id, 80)
 
-        job_manager.update_status(job_id, STATUS_FINALIZING)
+        job_manager.update_status(db, job_id, STATUS_FINALIZING)
         subtitle_service.generate_srt(translated_segments, paths["srt_lang"], storage_manager=storage_manager)
         
-        job_manager.update_status(job_id, "burning_subtitles")
+        job_manager.update_status(db, job_id, "burning_subtitles")
         if not os.path.exists(burned_video_path):
-            logger.info(f"[{request_id}] Burning subtitles to new video...")
+            logger.info(f"[{request_id}] Burning subtitles to new video")
             _burn_subtitles(raw_video_path, paths["srt_lang"], burned_video_path)
         else:
             logger.info(f"[{request_id}] Using cached burned video. Skipping FFmpeg.")
-        job_manager.update_progress(job_id, 95)
+        job_manager.update_progress(db, job_id, 95)
         
         summary_text = None
         if generate_summary:
             raw_text = summary_service.build_text(translated_segments)
             summary_text = summary_service.summarize(raw_text, paths["summary"], sentences_count=summary_sentences, storage_manager=storage_manager)
 
-        job_manager.update_progress(job_id, 100)
-        job_manager.save_result(job_id, {
-            "video_id": video_id,
-            "video_url": burned_video_path,
-            "subtitles": paths["srt_lang"],
-            "summary": summary_text
-        })
-        job_manager.update_status(job_id, STATUS_COMPLETED)
-        logger.info(f"[{request_id}] == JOB COMPLETED == {time.time() - job_overall_start:.1f}s")
+        job_manager.update_progress(db, job_id, 100)
+        job_manager.save_result(db, job_id, burned_path=burned_video_path, srt_path=paths["srt_lang"], summary_text=summary_text)
+        job_manager.update_status(db, job_id, STATUS_COMPLETED)
+        logger.info(f"[{request_id}] JOB COMPLETED {time.time() - job_overall_start:.1f}s")
 
     except Exception as e:
         logger.error(f"Job {job_id} FAILED: {str(e)}")
         traceback.print_exc()
-        job_manager.fail_job(job_id, {"error": str(e)})
+        job_manager.fail_job(db, job_id, str(e))
     finally:
+        db.close() 
         for temp_file in [audio_path, raw_video_path]:
             if temp_file and os.path.exists(temp_file):
                 try: 
                     os.remove(temp_file)
                 except: 
                     pass
+
 
 @app.post("/upload-video")
 @limiter.limit("5/minute")
@@ -278,19 +287,25 @@ async def upload_video(
     file: UploadFile = File(...),
     target_language: str = Form("he"),
     generate_summary: bool = Form(True),
-    summary_sentences: int = Form(3)
+    summary_sentences: int = Form(3),
+    db: Session = Depends(get_db) 
 ):
     safe_filename = os.path.basename(file.filename).replace(" ", "_")
     file_path = await asyncio.to_thread(video_source_service.save_uploaded_file, file)
     request_id = str(uuid.uuid4())[:8]
-    job_id = job_manager.create_job()
-    job_manager.update_status(job_id, STATUS_QUEUED)
+    
+    video_id = f"local_{safe_filename}"
+    crud.create_video(db, video_id=video_id, source_type="local")
+    job_id = str(uuid.uuid4())
+    job_manager.create_job(db, job_id=job_id, video_id=video_id, target_language=target_language)
+    
+    job_manager.update_status(db, job_id, STATUS_QUEUED)
     queue_service.add_job(process_video_job, job_id, file_path, request_id, target_language, generate_summary, summary_sentences)
     return {"status": STATUS_QUEUED, "job_id": job_id}
 
 @app.post("/process-video")
 @limiter.limit("5/minute")
-def process_video(request: Request, body: VideoRequest): 
+def process_video(request: Request, body: VideoRequest, db: Session = Depends(get_db)): 
     if not body.url:
         raise HTTPException(status_code=400, detail="URL field is required.")
     
@@ -299,21 +314,26 @@ def process_video(request: Request, body: VideoRequest):
         raise HTTPException(status_code=400, detail="Invalid URL format")
 
     request_id = str(uuid.uuid4())[:8]
-    job_id = job_manager.create_job()
-    job_manager.update_status(job_id, STATUS_QUEUED)
+    
+    video_id = extract_video_id(body.url)
+    crud.create_video(db, video_id=video_id, source_type="web", original_url=body.url)
+    job_id = str(uuid.uuid4())
+    job_manager.create_job(db, job_id=job_id, video_id=video_id, target_language=body.target_language)
+
+    job_manager.update_status(db, job_id, STATUS_QUEUED)
     queue_service.add_job(process_video_job, job_id, body.url, request_id, body.target_language, body.generate_summary, body.summary_sentences)
     return {"status": STATUS_QUEUED, "job_id": job_id}
 
 @app.get("/status/{job_id}")
-def check_status(job_id: str):
-    job = job_manager.get_job(job_id)
+def check_status(job_id: str, db: Session = Depends(get_db)):
+    job = job_manager.get_job(db, job_id)
     if not job: 
         raise HTTPException(status_code=404, detail="Job ID not found")
     return job
 
 @app.get("/stream-status/{job_id}")
-async def stream_status(job_id: str):
-    job = job_manager.get_job(job_id)
+async def stream_status(job_id: str, db: Session = Depends(get_db)):
+    job = job_manager.get_job(db, job_id)
     if not job:
         raise HTTPException(status_code=404, detail="Job ID not found")
     
@@ -321,7 +341,7 @@ async def stream_status(job_id: str):
         last_progress = -1
         last_status = ""
         while True:
-            current_job = job_manager.get_job(job_id)
+            current_job = job_manager.get_job(db, job_id)
             if not current_job: break
             if current_job["progress"] != last_progress or current_job["status"] != last_status:
                 last_progress = current_job.get("progress", 0)
@@ -338,23 +358,30 @@ def health(request: Request):
     return {"status": "ok", "timestamp": time.time(), "transcription": "ready"}
 
 @app.get("/jobs", dependencies=[Depends(verify_admin)])
-def list_all_jobs():
-    return job_manager.jobs
+def list_all_jobs(db: Session = Depends(get_db)):
+    all_jobs = db.query(models.Job).all()
+    return [{
+        "id": j.id, 
+        "video_id": j.video_id, 
+        "status": j.status, 
+        "progress": j.progress
+    } for j in all_jobs]
 
 @app.get("/stats", dependencies=[Depends(verify_admin)])
-def get_stats():
+def get_stats(db: Session = Depends(get_db)):
+    total_jobs = db.query(models.Job).count()
     return {
         "status": "online",
         "server_time": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "active_jobs": len(job_manager.jobs)
+        "active_jobs": total_jobs
     }
 
 @app.post("/cancel/{job_id}")
-def cancel_video_job(job_id: str):
-    job = job_manager.get_job(job_id)
+def cancel_video_job(job_id: str, db: Session = Depends(get_db)):
+    job = job_manager.get_job(db, job_id)
     if not job:
         raise HTTPException(status_code=404, detail="Job ID not found")
-    job_manager.cancel_job(job_id)
+    job_manager.cancel_job(db, job_id)
     return {"status": "cancelled"}
 
 @app.get("/queue-status")
@@ -363,8 +390,8 @@ def get_queue_info():
 
 @app.get("/search/{job_id}")
 @limiter.limit("30/minute")
-def search_video_text(request: Request, job_id: str, q: str):
-    job = job_manager.get_job(job_id)
+def search_video_text(request: Request, job_id: str, q: str, db: Session = Depends(get_db)):
+    job = job_manager.get_job(db, job_id)
     if not job:
         raise HTTPException(status_code=404, detail="Job ID not found")
     
@@ -372,10 +399,8 @@ def search_video_text(request: Request, job_id: str, q: str):
         raise HTTPException(status_code=400, detail="Query is required")
     
     try:
-        result = search_service.search(job_id, q)
+        result = search_service.search(db, job_id, q)
         return result
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         logger.error(f"[SEARCH] Error: {e}")
         raise HTTPException(status_code=500, detail="Search failed")
